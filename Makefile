@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/09/12 19:37:25 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/09/13 19:22:43 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ SRC = main.c \
 	  event_key_on.c \
 	  event_key_off.c \
 	  loop.c \
+	  radar.c \
+	  tools.c \
 	  end_of_program.c
 
 OBJ_DIR = objs/

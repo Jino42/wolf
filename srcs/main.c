@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/12 22:07:18 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/13 21:08:42 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,23 @@ void	init_env(t_env *e)
 	ft_bzero(e, sizeof(t_env));
 	e->height = WIN_HEIGHT;
 	e->width = WIN_WIDTH;
+}
+
+void	init_radar(t_env *e, t_radar *radar)
+{
+	radar->len_tile = ft_max(e->width, e->height) / 8;
+	radar->len_tile /= ft_max(e->map.len_x, e->map.len_y);
+	radar->len_x = radar->len_tile * e->map.len_x;
+	radar->len_y = radar->len_tile * e->map.len_y;
+}
+
+void	init_player(t_env *e, t_player *player)
+{
+	(void)e;
+	player->pos_x = 3.2;
+	player->pos_y = 4.1;
+	player->move_speed = 0.1;
+	player->rotate_speed = 0.02;
 }
 
 void	init_mlx(t_env *e)
@@ -41,17 +58,18 @@ int		init_map(t_env *e, char *path_map)
 	line = NULL;
 	if (!fd)
 		return (ft_ret_error("Erreur de fichier\n"));
-	if (!(e->map = ft_memalloc(sizeof(char **) * SIZE_REALLOC_MAP)))
+	if (!(e->map.map = ft_memalloc(sizeof(char **) * SIZE_REALLOC_MAP)))
 		return (0);
 	while ((ret = get_next_line(fd, &line)) == 1)
 	{
 		if (line)
 		{
-			if (e->len_y && !(e->len_y % SIZE_REALLOC_MAP))
-				e->map = (char **)ft_memrealloc((void *)e->map, sizeof(char **) * e->len_y, sizeof(char **) * e->len_y + sizeof(char **) * SIZE_REALLOC_MAP);
-			e->map[e->len_y] = line;
+			if (e->map.len_y && !(e->map.len_y % SIZE_REALLOC_MAP))
+				e->map.map = (char **)ft_memrealloc((void *)e->map.map, sizeof(char **) * e->map.len_y, sizeof(char **) * e->map.len_y + sizeof(char **) * SIZE_REALLOC_MAP);
+			e->map.map[e->map.len_y] = line;
+			e->map.len_x = ft_max(e->map.len_x, ft_strlen(line));
 			line = NULL;
-			e->len_y++;
+			e->map.len_y++;
 		}
 	}
 	if (ret == -1)
@@ -65,9 +83,9 @@ void		print_map(t_env *e)
 
 	ft_printf("_____________________________\n");
 	i = 0;
-	while (i < e->len_y)
+	while (i < e->map.len_y)
 	{
-		ft_printf("%s\n", e->map[i]);
+		ft_printf("%s\n", e->map.map[i]);
 		i++;
 	}
 	ft_printf("_____________________________\n\n");
@@ -82,9 +100,9 @@ int main(int argc, char **argv)
 	init_env(&e);
 	if (!(init_map(&e, argv[1])))
 		return (0);
-	e.pos_x = 3;
-	e.pos_y = 4;
 	print_map(&e);
+	init_player(&e, &e.player);
+	init_radar(&e, &e.radar);
 	init_mlx(&e);
 	mlx_loop_hook(e.mlx, &loop, &e);
 	mlx_loop(e.mlx);
