@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/13 21:08:42 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/13 23:20:03 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	init_env(t_env *e)
 void	init_radar(t_env *e, t_radar *radar)
 {
 	radar->len_tile = ft_max(e->width, e->height) / 8;
+	radar->len_tile_fs = ft_min(e->width, e->height);
 	radar->len_tile /= ft_max(e->map.len_x, e->map.len_y);
+	radar->len_tile_fs /= ft_min(e->map.len_x, e->map.len_y);
 	radar->len_x = radar->len_tile * e->map.len_x;
 	radar->len_y = radar->len_tile * e->map.len_y;
 }
@@ -32,8 +34,11 @@ void	init_player(t_env *e, t_player *player)
 	(void)e;
 	player->pos_x = 3.2;
 	player->pos_y = 4.1;
-	player->move_speed = 0.1;
-	player->rotate_speed = 0.02;
+	player->move_speed = 0.05;
+	player->rotate_speed = 0.04;
+
+	player->dir_x = -1;
+	player->plan_y = 0.66;
 }
 
 void	init_mlx(t_env *e)

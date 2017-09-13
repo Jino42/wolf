@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/13 21:17:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/13 23:14:29 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ typedef struct	s_player
 	int				cart_pos_x;
 	float			pos_y;
 	float			pos_x;
+	float			dir_y;
+	float			dir_x;
+	float			plan_x;
+	float			plan_y;
 	float			angle;
 	float			move_speed;
 	float			rotate_speed;
@@ -51,6 +55,7 @@ typedef struct	s_map
 typedef struct	s_radar
 {
 	int			len_tile;
+	int			len_tile_fs;
 	int			len_x;
 	int			len_y;
 }				t_radar;
@@ -71,7 +76,7 @@ typedef struct	s_env
 	t_radar		radar;
 	t_player	player;
 	int			len;
-	int			fov;
+	int			fov; //Si le vecteur de direction est plus court que le plan de la caméra, le FOV sera supérieur à 90 ° 
 	int			dist_to_cam;
 }				t_env;
 
@@ -82,8 +87,10 @@ int				event_key_on(int keycode, t_env *e);
 int				event_key_off(int keycode, t_env *e);
 
 void			radar(t_env *e);
+void			radar_full_screen(t_env *e);
 
 int				round_to_inf(float nb);
 int				ft_max(int a, int b);
+int				ft_min(int a, int b);
 void			mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col);
 #endif
