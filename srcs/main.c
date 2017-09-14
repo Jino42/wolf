@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/14 17:38:31 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/14 19:13:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_env(t_env *e)
 	ft_bzero(e, sizeof(t_env));
 	e->height = WIN_HEIGHT;
 	e->width = WIN_WIDTH;
+	e->len = 64;
 }
 
 void	init_radar(t_env *e, t_radar *radar)

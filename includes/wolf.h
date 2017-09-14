@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/13 23:24:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/14 19:13:35 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 
 #include "../libft/includes/libft.h"
 #include "../libmlxji/includes/mlxji.h"
+#include <stdio.h> ////////////
 #include "mlx.h"
 #include <math.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <sys/time.h>
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
@@ -60,6 +62,14 @@ typedef struct	s_radar
 	int			len_y;
 }				t_radar;
 
+typedef struct	s_fps
+{
+	struct timeval	step;
+	struct timeval	cur;
+	int				fps;
+	int				ret_fps;
+}				t_fps;
+
 typedef struct	s_env
 {
 	void		*mlx;
@@ -72,6 +82,7 @@ typedef struct	s_env
 
 	int			key[269];
 
+	t_fps		fps;
 	t_map		map;
 	t_radar		radar;
 	t_player	player;

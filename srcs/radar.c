@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/13 23:24:13 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/14 19:13:31 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ static void draw_player_full_screen(t_env *e, t_radar *radar)
 	int coef;
 	t_pxtopx to;
 	t_px	col;
+	t_player *player;
+
+	player = &e->player;
 
 	col.r = 20;
 	col.g = 155;
@@ -117,6 +120,32 @@ static void draw_player_full_screen(t_env *e, t_radar *radar)
 	to.y2 = (int)e->player.pos_y * radar->len_tile_fs + (radar->len_tile_fs * coef / 100) + 10;
 	mlxji_draw_case(e->img, &to, &col);
 	//Pivoter Vector sur matrice de rotation
+
+	//Draw Vector Dir
+	col.r = 255;
+	col.g = 155;
+	col.b = 20;
+	to.x1 = e->player.pos_x * radar->len_tile_fs;
+	to.y1 = e->player.pos_y * radar->len_tile_fs;
+	to.x2 = (e->player.pos_x + e->player.dir_x) * radar->len_tile_fs;
+	to.y2 = (e->player.pos_y + e->player.dir_y) * radar->len_tile_fs;
+	mlxji_draw_line(e->img, &col, &to);
+
+	//Draw Vector Plan, for FOV
+
+	col.r = 0;
+	col.g = 190;
+	col.b = 25;
+	to.x1 = (player->pos_x) * radar->len_tile_fs;
+	to.y1 = (player->pos_y) * radar->len_tile_fs;
+	to.x2 = (player->pos_x - player->dir_x + player->plan_x) * radar->len_tile_fs;
+	to.y2 = (player->pos_y - player->dir_y + player->plan_y) * radar->len_tile_fs;
+	mlxji_draw_line(e->img, &col, &to);
+	to.x1 = (player->pos_x) * radar->len_tile_fs;
+	to.y1 = (player->pos_y) * radar->len_tile_fs;
+	to.x2 = (player->pos_x - player->dir_x - player->plan_x) * radar->len_tile_fs;
+	to.y2 = (player->pos_y - player->dir_y - player->plan_y) * radar->len_tile_fs;
+	mlxji_draw_line(e->img, &col, &to);
 }
 
 void	radar_full_screen(t_env *e)

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/13 23:24:12 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/14 19:11:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ static void	draw_radar(t_env *e)
 	px.y1 = 200;
 	px.x2 = px.x1 + 100;
 	px.y2 = px.y1;
+	px = rotation_point(px, e->player.angle);
+	mlxji_draw_line(e->img, &col, &px);
+	px.y1 = 0;
+	px.x1 = 0;
+	px.x2 = px.x1 + 100;
+	px.y2 = px.y1;
+	col.b = 255;
 	px = rotation_point(px, e->player.angle);
 	mlxji_draw_line(e->img, &col, &px);
 }
@@ -71,10 +78,48 @@ void		update(t_env *e)
 		move_player(e, 1);
 	if (e->key[125])
 		move_player(e, -1);
+	//MATRICE
+	//
+	float  tmp;
+	t_player *player;
+	player = &e->player;
+	
+	if (e->key[123])
+	{
+		tmp = player->dir_x * cos(-player->rotate_speed) - player->dir_y * sin(-player->rotate_speed);
+		player->dir_y = player->dir_y * cos(-player->rotate_speed) + player->dir_x * sin(-player->rotate_speed);
+		player->dir_x = tmp;
+		tmp = player->plan_x * cos(-player->rotate_speed) - player->plan_y * sin(-player->rotate_speed);
+		player->plan_y = player->plan_y * cos(-player->rotate_speed) + player->plan_x * sin(-player->rotate_speed);
+		player->plan_x = tmp;
+	}
+	if (e->key[124])
+	{
+		tmp = player->dir_x * cos(player->rotate_speed) - player->dir_y * sin(player->rotate_speed);
+		player->dir_y = player->dir_y * cos(player->rotate_speed) + player->dir_x * sin(player->rotate_speed);
+		player->dir_x = tmp;
+		tmp = player->plan_x * cos(player->rotate_speed) - player->plan_y * sin(player->rotate_speed);
+		player->plan_y = player->plan_y * cos(player->rotate_speed) + player->plan_x * sin(player->rotate_speed);
+		player->plan_x = tmp;
+	}
+}
+
+void		update_fps(t_fps *fps)
+{
+	gettimeofday(&fps->cur, NULL);
+	if (fps->cur.tv_sec - fps->step.tv_sec)
+	{
+		fps->ret_fps = fps->fps;
+		ft_printf("FPS [%i]\n", fps->ret_fps);
+		fps->fps = 0;
+		gettimeofday(&fps->step, NULL);
+	}
+	fps->fps++;
 }
 
 int			loop(t_env *e)
 {
+	update_fps(&e->fps);
 	update(e);
 	ft_bzero(e->img->data, e->height * e->width * 4);
 	draw_radar(e);
