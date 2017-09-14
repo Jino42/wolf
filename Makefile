@@ -23,12 +23,12 @@ INC = includes/
 SRC_DIR = srcs/
 
 SRC = main.c \
-	  event_key_on.c \
-	  event_key_off.c \
-	  loop.c \
-	  radar.c \
-	  tools.c \
-	  end_of_program.c
+event_key_on.c \
+event_key_off.c \
+loop.c \
+radar.c \
+tools.c \
+end_of_program.c
 
 OBJ_DIR = objs/
 
@@ -36,13 +36,15 @@ OBJET = $(SRC:.c=.o)
 
 #SDL_FLAGS = -I SDL2-2.0.5/include SDL2-2.0.5/build/.libs/libSDL2.a -framework Cocoa -framework CoreAudio -framework AudioToolbox -framework ForceFeedback -framework CoreVideo -framework Carbon -framework IOKit -liconv
 
-FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
+#FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
+FRAMEWORK = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -lm
 
 DIR_LFT = libft/
 
 DIR_MLXJI = libmlxji/
 
-DIR_MLX = minilibxcaptain/
+DIR_MLX = minilibx/
+#DIR_MLX = minilibxcaptain/
 #DIR_MLX = minilibx_macos/
 
 DIR_LIB = libs/

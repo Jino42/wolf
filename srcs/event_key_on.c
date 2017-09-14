@@ -14,6 +14,7 @@
 
 int			event_key_on(int keycode, t_env *e)
 {
+	ft_printf("keycode %i\n", keycode);
 	if (keycode == 53)
 		exit(end_of_program(e, NULL));
 	if (keycode)

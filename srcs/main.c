@@ -46,10 +46,10 @@ void	init_mlx(t_env *e)
 	e->mlx = mlx_init();
 	e->img = mlxji_new_img(e->mlx, e->width, e->height);
 	if (!e->img)
-		exit(ft_ret_error("Img non cree\n"));/////////
+		exit(0);/////////
 	e->win = mlx_new_window(e->mlx, e->width, e->height, "Wolf3d");
-	mlx_hook(e->win, KEYPRESS, KEYPRESSMASK, &event_key_on, e);
-	mlx_hook(e->win, KEYRELEASE, KEYRELEASEMASK, &event_key_off, e);
+	mlx_hook(e->win, 2, 0, &event_key_on, e);
+	mlx_hook(e->win, 3, 0, &event_key_off, e);
 }
 
 int		init_map(t_env *e, char *path_map)
@@ -62,7 +62,7 @@ int		init_map(t_env *e, char *path_map)
 	fd = open(path_map, O_RDONLY);
 	line = NULL;
 	if (!fd)
-		return (ft_ret_error("Erreur de fichier\n"));
+		return (0);
 	if (!(e->map.map = ft_memalloc(sizeof(char **) * SIZE_REALLOC_MAP)))
 		return (0);
 	while ((ret = get_next_line(fd, &line)) == 1)
@@ -78,7 +78,7 @@ int		init_map(t_env *e, char *path_map)
 		}
 	}
 	if (ret == -1)
-		return (ft_ret_error("Erreur de fichier\n")); //End Of Prog
+		return (0); //End Of Prog
 	return (1);
 }
 
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
 	t_env e;
 
 	if (argc != 2)
-		return (ft_ret_error("Miss Args\n"));
+		return (0);
 	init_env(&e);
 	if (!(init_map(&e, argv[1])))
 		return (0);

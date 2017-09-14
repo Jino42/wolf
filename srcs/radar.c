@@ -90,7 +90,9 @@ void	draw_map_full_screen(t_env *e, t_radar *radar)
 				to.x2 = (x + 1) * radar->len_tile_fs;
 				to.y1 = y * radar->len_tile_fs;
 				to.y2 = (y + 1) * radar->len_tile_fs;
-				mlxji_draw_case(e->img, &to, &col);
+				if (to.x1 < e->width &&
+					to.y1 < e->height)
+					mlxji_draw_case(e->img, &to, &col);
 			}
 			x++;
 		}
