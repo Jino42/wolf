@@ -6,41 +6,22 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/14 19:13:31 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/15 14:47:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static void draw_player(t_env *e, t_radar *radar)
-{
-	int coef;
-	t_pxtopx to;
-	t_px	col;
-
-	col.r = 20;
-	col.g = 155;
-	col.b = 255;
-	coef = (int)(e->player.pos_x * 100) % 100;
-	to.x1 = (int)e->player.pos_x * radar->len_tile + (radar->len_tile * coef / 100) - 1;
-	to.x2 = (int)e->player.pos_x * radar->len_tile + (radar->len_tile * coef / 100) + 1;
-	coef = (int)(e->player.pos_y * 100) % 100;
-	to.y1 = (int)e->player.pos_y * radar->len_tile + (radar->len_tile * coef / 100) - 1;
-	to.y2 = (int)e->player.pos_y * radar->len_tile + (radar->len_tile * coef / 100) + 1;
-	mlxji_draw_case(e->img, &to, &col);
-
-}
-
-void	draw_map(t_env *e, t_radar *radar)
+void	draw_map(t_env *e, int len_tile)
 {
 	int 		x;
 	int			y;
 	t_pxtopx	to;
 	t_px		col;
 
-	col.r = 255;
-	col.g = 0;
-	col.b = 0;
+	col.r = 155;
+	col.g = 20;
+	col.b = 10;
 	y = 0;
 	while (y < e->map.len_y)
 	{
@@ -49,47 +30,10 @@ void	draw_map(t_env *e, t_radar *radar)
 		{
 			if (e->map.map[y][x] == '1')
 			{
-				to.x1 = x * radar->len_tile;
-				to.x2 = (x + 1) * radar->len_tile;
-				to.y1 = y * radar->len_tile;
-				to.y2 = (y + 1) * radar->len_tile;
-				mlxji_draw_case(e->img, &to, &col);
-			}
-			x++;
-		}
-		y++;
-	}
-	draw_player(e, radar);
-}
-
-void	radar(t_env *e)
-{
-	draw_map(e, &e->radar);
-	draw_player(e, &e->radar);
-}
-
-void	draw_map_full_screen(t_env *e, t_radar *radar)
-{
-	int 		x;
-	int			y;
-	t_pxtopx	to;
-	t_px		col;
-
-	col.r = 255;
-	col.g = 0;
-	col.b = 0;
-	y = 0;
-	while (y < e->map.len_y)
-	{
-		x = 0;
-		while (x < e->map.len_x)
-		{
-			if (e->map.map[y][x] == '1')
-			{
-				to.x1 = x * radar->len_tile_fs;
-				to.x2 = (x + 1) * radar->len_tile_fs;
-				to.y1 = y * radar->len_tile_fs;
-				to.y2 = (y + 1) * radar->len_tile_fs;
+				to.x1 = x * len_tile;
+				to.x2 = (x + 1) * len_tile;
+				to.y1 = y * len_tile;
+				to.y2 = (y + 1) * len_tile;
 				if (to.x1 < e->width &&
 					to.y1 < e->height)
 					mlxji_draw_case(e->img, &to, &col);
@@ -100,56 +44,79 @@ void	draw_map_full_screen(t_env *e, t_radar *radar)
 	}
 }
 
-static void draw_player_full_screen(t_env *e, t_radar *radar)
+static void draw_fov(t_env *e, t_player *player, int len_tile)
 {
-	int coef;
+	t_px col;
 	t_pxtopx to;
-	t_px	col;
-	t_player *player;
-
-	player = &e->player;
-
-	col.r = 20;
-	col.g = 155;
-	col.b = 255;
-	coef = (int)(e->player.pos_x * 100) % 100;
-	to.x1 = (int)e->player.pos_x * radar->len_tile_fs + (radar->len_tile_fs * coef / 100) - 10;
-	to.x2 = (int)e->player.pos_x * radar->len_tile_fs + (radar->len_tile_fs * coef / 100) + 10;
-	coef = (int)(e->player.pos_y * 100) % 100;
-	to.y1 = (int)e->player.pos_y * radar->len_tile_fs + (radar->len_tile_fs * coef / 100) - 10;
-	to.y2 = (int)e->player.pos_y * radar->len_tile_fs + (radar->len_tile_fs * coef / 100) + 10;
-	mlxji_draw_case(e->img, &to, &col);
-	//Pivoter Vector sur matrice de rotation
-
-	//Draw Vector Dir
-	col.r = 255;
-	col.g = 155;
-	col.b = 20;
-	to.x1 = e->player.pos_x * radar->len_tile_fs;
-	to.y1 = e->player.pos_y * radar->len_tile_fs;
-	to.x2 = (e->player.pos_x + e->player.dir_x) * radar->len_tile_fs;
-	to.y2 = (e->player.pos_y + e->player.dir_y) * radar->len_tile_fs;
-	mlxji_draw_line(e->img, &col, &to);
-
-	//Draw Vector Plan, for FOV
 
 	col.r = 0;
 	col.g = 190;
 	col.b = 25;
-	to.x1 = (player->pos_x) * radar->len_tile_fs;
-	to.y1 = (player->pos_y) * radar->len_tile_fs;
-	to.x2 = (player->pos_x - player->dir_x + player->plan_x) * radar->len_tile_fs;
-	to.y2 = (player->pos_y - player->dir_y + player->plan_y) * radar->len_tile_fs;
+	to.x1 = (player->pos_x) * len_tile;
+	to.y1 = (player->pos_y) * len_tile;
+	to.x2 = (player->pos_x + player->dir_x + player->plan_x) * len_tile;
+	to.y2 = (player->pos_y + player->dir_y + player->plan_y) * len_tile;
 	mlxji_draw_line(e->img, &col, &to);
-	to.x1 = (player->pos_x) * radar->len_tile_fs;
-	to.y1 = (player->pos_y) * radar->len_tile_fs;
-	to.x2 = (player->pos_x - player->dir_x - player->plan_x) * radar->len_tile_fs;
-	to.y2 = (player->pos_y - player->dir_y - player->plan_y) * radar->len_tile_fs;
+	to.x1 = (player->pos_x) * len_tile;
+	to.y1 = (player->pos_y) * len_tile;
+	to.x2 = (player->pos_x + player->dir_x - player->plan_x) * len_tile;
+	to.y2 = (player->pos_y + player->dir_y - player->plan_y) * len_tile;
 	mlxji_draw_line(e->img, &col, &to);
+}
+
+static void draw_vector_dir(t_env *e, t_player *player, int len_tile)
+{
+	t_px col;
+	t_pxtopx to;
+
+
+	col.r = 255;
+	col.g = 155;
+	col.b = 20;
+	to.x1 = player->pos_x * len_tile;
+	to.y1 = player->pos_y * len_tile;
+	to.x2 = (player->pos_x + player->dir_x) * len_tile;
+	to.y2 = (player->pos_y + player->dir_y) * len_tile;
+	mlxji_draw_line(e->img, &col, &to);
+}
+
+static void draw_pos_player(t_env *e, t_player *player, int len_tile)
+{
+	int coef;
+	t_px col;
+	t_pxtopx to;
+
+	col.r = 20;
+	col.g = 155;
+	col.b = 255;
+	coef = (int)(player->pos_x * 100) % 100;
+	to.x1 = (int)player->pos_x * len_tile + (len_tile * coef / 100) - len_tile / 5;
+	to.x2 = (int)player->pos_x * len_tile + (len_tile * coef / 100) + len_tile / 5;
+	coef = (int)(player->pos_y * 100) % 100;
+	to.y1 = (int)player->pos_y * len_tile + (len_tile * coef / 100) - len_tile / 5;
+	to.y2 = (int)player->pos_y * len_tile + (len_tile * coef / 100) + len_tile / 5;
+	mlxji_draw_case(e->img, &to, &col);
 }
 
 void	radar_full_screen(t_env *e)
 {
-	draw_map_full_screen(e, &e->radar);
-	draw_player_full_screen(e, &e->radar);
+	t_radar *radar;
+
+	radar = &e->radar;
+	draw_map(e, radar->len_tile_fs);
+	draw_pos_player(e, &e->player, radar->len_tile_fs);
+	draw_fov(e, &e->player, radar->len_tile_fs);
+	draw_vector_dir(e, &e->player, radar->len_tile_fs);
 }
+
+void	radar(t_env *e)
+{
+	t_radar *radar;
+
+	radar = &e->radar;
+	draw_map(e, radar->len_tile);
+	draw_pos_player(e, &e->player, radar->len_tile);
+	draw_fov(e, &e->player, radar->len_tile);
+	draw_vector_dir(e, &e->player, radar->len_tile);
+}
+

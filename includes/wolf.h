@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/14 19:13:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/15 17:02:01 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
 
-# define B_VIDE '0'
-# define B_MUR '1'
+# define B_VOID '0'
+# define B_WALL '1'
 
 # define SIZE_REALLOC_MAP 10
 
@@ -86,12 +86,14 @@ typedef struct	s_env
 	t_map		map;
 	t_radar		radar;
 	t_player	player;
-	int			len;
-	int			fov; //Si le vecteur de direction est plus court que le plan de la caméra, le FOV sera supérieur à 90 ° 
-	int			dist_to_cam;
+	int			size_side;
 }				t_env;
 
 int				loop(t_env *e);
+
+void			update_key_event(t_env *e);
+
+void			move_player(t_env *e, int dir);
 
 int				end_of_program(t_env *e, char *str);
 int				event_key_on(int keycode, t_env *e);
@@ -99,9 +101,12 @@ int				event_key_off(int keycode, t_env *e);
 
 void			radar(t_env *e);
 void			radar_full_screen(t_env *e);
+void			test(t_env *e);
 
 int				round_to_inf(float nb);
+int				round_to_up(float nb);
 int				ft_max(int a, int b);
 int				ft_min(int a, int b);
 void			mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col);
+void			vector_rotation(float *x, float *y, float rotation);
 #endif

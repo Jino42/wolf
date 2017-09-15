@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:22:32 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/13 23:24:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/15 17:01:58 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 int		round_to_inf(float nb)
 {
 	return ((int)nb);
+}
+
+int		round_to_up(float nb)
+{
+	return ((int)nb + 1);
 }
 
 int		ft_max(int a, int b)
@@ -29,6 +34,15 @@ int		ft_min(int a, int b)
 	if (a < b)
 		return (a);
 	return (b);
+}
+
+void	vector_rotation(float *x, float *y, float rotation)
+{
+	float tmp;
+
+	tmp = *x * cos(rotation) - *y * sin(rotation);
+	*y = *y * cos(rotation) + *x * sin(rotation);
+	*x = tmp;
 }
 
 void	mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col)

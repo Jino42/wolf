@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/09/14 19:13:38 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/09/15 17:02:02 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,10 @@ SRC = main.c \
 event_key_on.c \
 event_key_off.c \
 loop.c \
+raycast.c \
 radar.c \
+update_key_event.c \
+move.c \
 tools.c \
 end_of_program.c
 
