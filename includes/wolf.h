@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/15 17:02:01 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/16 23:10:24 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,30 @@
 
 # define SIZE_REALLOC_MAP 10
 
+typedef struct	s_vector2d
+{
+	int			x;
+	int			y;
+}				t_vector2d;
+
+typedef struct	s_ray
+{
+	float		ray_dir_x;
+	float		ray_dir_y;
+	float		delta_len_x;
+	float		delta_len_y;
+	float		f_delta_len_x;
+	float		f_delta_len_y;
+	int			step_x;
+	int			step_y;
+	int			hit;
+}				t_ray;
+
+typedef struct	s_tools_raycast_wofl
+{/////////////////////////////////// Need Ray gen
+	float		cam;
+}				t_rw;
+
 typedef struct	s_player
 {
 	int				cart_pos_y;
@@ -44,6 +68,7 @@ typedef struct	s_player
 	float			angle;
 	float			move_speed;
 	float			rotate_speed;
+	int				len_screen;
 }				t_player;
 
 typedef struct	s_map

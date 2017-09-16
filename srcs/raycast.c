@@ -6,14 +6,35 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/16 21:18:32 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/16 23:10:36 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
 /*
-void	raycast(t_env *e)
+void	raycast(float angle)
 {
+}
+
+void	loop_raycast_wolf(t_env *e, t_player *player)
+{
+	float	cam;
+	int		x_screen;
+
+	s_screen = 0;
+	while (s_screen < player->len_screen)
+	{
+		// Need to set gen ray
+		cam = (2 * x) / len_screen - 1; //inter [-1 1]
+		raycast(cam);
+		s_screen++;
+	}
+}
+
+void	raycast_wolf(t_env *e)
+{
+	loop_raycast_wolf(e, &e->player)
 }
 */
 void	test(t_env *e)
@@ -32,8 +53,6 @@ void	test(t_env *e)
 	int hit;
 	t_player *player;
 
-	(void)f_len_y;
-	(void)step_y;
 	player = &e->player;
 	len_screen = 400;
 	x = 0;
@@ -42,7 +61,6 @@ void	test(t_env *e)
 		cam = (2 * x) / len_screen - 1; //inter [-1 1]
 		ray_dir_x = player->dir_x + player->plan_x * cam;
 		ray_dir_y = player->dir_y + player->plan_y * cam;
-
 		if (x == len_screen / 2)
 		{
 			printf("\033[31m");

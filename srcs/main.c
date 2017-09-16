@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/15 17:01:57 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/16 22:56:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init_player(t_env *e, t_player *player)
 
 	player->dir_x = 1;
 	player->plan_y = 0.66;
+	player->len_screen = 360;
 }
 
 void	init_mlx(t_env *e)
