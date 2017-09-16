@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/16 21:18:32 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/16 19:55:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	test(t_env *e)
 		//need len per [x] and [y]
 		len_x = sqrt(1+(pow(ray_dir_y, 2) / pow(ray_dir_x, 2)));
 		len_y = sqrt(1+(pow(ray_dir_x, 2) / pow(ray_dir_y, 2)));
-		if (ray_dir_x < 0)
+		if (player->dir_x < 0)
 		{
 			step_x = -1;
 			f_len_x = (e->player.pos_x - (int)e->player.pos_x) * len_x;
@@ -62,7 +62,7 @@ void	test(t_env *e)
 			step_x = 1;
 			f_len_x = ((int)e->player.pos_x + 1 - e->player.pos_x) * len_x;
 		}
-		if (ray_dir_y < 0)
+		if (player->dir_y < 0)
 		{
 			step_y = -1;
 			f_len_y = (e->player.pos_y - (int)e->player.pos_y) * len_y;
@@ -72,72 +72,72 @@ void	test(t_env *e)
 			step_y = 1;
 			f_len_y = ((int)e->player.pos_y + 1 - e->player.pos_y) * len_y;
 		}
-		hit = 0; 
-		int last_y; //last = 'x' 'y'
-		int map_x = (int)player->pos_x;
-		int map_y = (int)player->pos_y;
-		while (!hit)
+	hit = 0; 
+	int last_y; //last = 'x' 'y'
+	int map_x = (int)player->pos_x;
+	int map_y = (int)player->pos_y;
+	while (!hit)
+	{
+		if (f_len_x < f_len_y)
 		{
-			if (f_len_x < f_len_y)
-			{
-				map_x += step_x;
-				f_len_x += len_x; 
-				last_y = 0;
-			}
-			else
-			{
-				map_y += step_y;
-				f_len_y += len_y;
-				last_y = 1;
-			}
-			if (e->map.map[map_y][map_x] != B_VOID)
-			{
-	//			ft_printf("%2.f Okkk !! [%i][%i]\n", x, map_y, map_x);
-				hit = 1;
-			}
+			map_x += step_x;
+			f_len_x += len_x; 
+			last_y = 0;
 		}
-	
-		float dist_w;	
-		if (!last_y)
-			dist_w = (map_x - player->pos_x + (1 - step_x) / 2) / ray_dir_x;
 		else
-			dist_w = (map_y - player->pos_y + (1 - step_y) / 2) / ray_dir_y;//cos(cam);
+		{
+			map_y += step_y;
+			f_len_y += len_y;
+			last_y = 1;
+		}
+		if (e->map.map[map_y][map_x] != B_VOID)
+		{
+	//		ft_printf("%i Okkk !! [%i][%i]\n", x, map_y, map_x);
+			hit = 1;
+		}
+	}
 
-		float wall;
-		if (!last_y)
-			wall = player->pos_y + dist_w * ray_dir_y;
-		else
-			wall = player->pos_x + dist_w * ray_dir_x;
-		wall -= floor(wall);
-		if (x==200)
-		{
-			if (!last_y)
-				printf("last : x %.2f\n", fabs((map_x - player->pos_x + (1 - step_x) / 2)));
-			else
-				printf("last : y %.2f\n", fabs((map_y - player->pos_y + (1 - step_y) / 2)));
-			printf("Dist : %.2f\n", dist_w);
-			printf("Cam : %.2f\n", cam);
-		}
-	
-		t_px col;
-		t_pxtopx to;
-	
-		col.r = 10;
-		col.b = 225;
-		col.g = 50;
-		int lt = e->radar.len_tile_fs;
-		to.x1 = player->pos_x * lt;
-		to.y1 = player->pos_y * lt;
+	float dist_w;
+	if (!last_y)
+		dist_w = (map_x - player->pos_x + (1 - step_x) / 2) *1 / ray_dir_x; //pour X distance, la longueur de la droite fait tant
+	else
+		dist_w = (map_y - player->pos_y + (1 - step_y) / 2) * 1 / ray_dir_y;
+	float w_x;
+	if (!last_y)
+		w_x = player->pos_y + dist_w * ray_dir_y; //rescale lenght de x en Y 
+	else
+		w_x = player->pos_x + dist_w * ray_dir_x; 
+	if(x==200)
+	{
 		if (last_y)
-			to.x2 = (map_x + wall) * lt;
+			printf("last = y : pos_x = %.2f\n", player->pos_x);
 		else
-			to.x2 = (map_x + (1 - step_x) / 2) * lt;
-		if (last_y)
-			to.y2 = (map_y + (1 - step_y) / 2) * lt;
-		else
-			to.y2 = (map_y + wall) * lt;
-//		printf("X1 [%i] Y1[%i] || X2 [%i] Y2[%i]\n", to.x1, to.y1, to.x2, to.y2);
-		mlxji_draw_line(e->img, &col, &to);
-		x++;
+			printf("last = x : pos_y = %.2f\n", player->pos_y);
+		printf("Dist %.2f\n", dist_w);
+		printf("w_x %.2f\n", w_x);
+	}
+	w_x -= floor((w_x));
+	if(x==200)
+		printf("w_x %.2f\n", w_x);
+	t_px col;
+	t_pxtopx to;
+
+	col.r = 10;
+	col.b = 225;
+	col.g = 50;
+	int lt = e->radar.len_tile_fs;
+	to.x1 = player->pos_x * lt;
+	to.y1 = player->pos_y * lt;
+	if (last_y)
+		to.x2 = (map_x + w_x) * lt;
+	else
+		to.x2 = (map_x + (1 - step_x) / 2) * lt;
+	if (last_y)
+		to.y2 = (map_y + (1 - step_y) / 2) * lt;
+	else
+		to.y2 = (map_y + w_x) * lt;
+//	printf("X1 [%i] Y1[%i] || X2 [%i] Y2[%i]\n", to.x1, to.y1, to.x2, to.y2);
+	mlxji_draw_line(e->img, &col, &to);
+	x++;
 	}
 }
