@@ -6,39 +6,127 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/16 23:10:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/17 14:47:02 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-/*
-void	raycast(float angle)
+void	direction_ray(t_ray *ray)
 {
+	if (ray->ray_dir_x < 0)
+	{
+		ray->step_x = -1;
+		ray->f_delta_len_x = (ray->ray_start_x - ray->to.x1) * ray->delta_len_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->f_delta_len_x = (ray->to.x1 + 1 - ray->ray_start_x) * ray->delta_len_x;
+	}
+	if (ray->ray_dir_y < 0)
+	{
+		ray->step_y = -1;
+		ray->f_delta_len_y = (ray->ray_start_y - ray->to.y1) * ray->delta_len_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->f_delta_len_y = (ray->to.y1 + 1 - ray->ray_start_y) * ray->delta_len_y;
+	}
+}
+
+void	raycast(t_ray *ray)
+{
+	ray->delta_len_x = sqrt(1 + (pow(ray->ray_dir_y, 2) /
+								pow(ray->ray_dir_x, 2)));
+	ray->delta_len_y = sqrt(1 + (pow(ray->ray_dir_x, 2) /
+								pow(ray->ray_dir_y, 2)));
+	direction_ray(ray);
+	ray->hit = 0;
+	ray->side = 0;
+	int map_x = ray->to.x1;
+	int map_y = ray->to.y1;
+	while (!ray->hit)
+	{
+		if (ray->f_delta_len_x < ray->f_delta_len_y)
+		{
+			map_x += ray->step_x;
+			ray->f_delta_len_x += ray->delta_len_x; 
+			ray->side = 'x';
+		}
+		else
+		{
+			map_y += ray->step_y;
+			ray->f_delta_len_y += ray->delta_len_y;
+			ray->side = 'y';
+		}
+		if (ray->map->map[map_y][map_x] != B_VOID) //flag
+			ray->hit = 1;
+	}
+	float dist_w;	
+	if (ray->side == 'x')
+		dist_w = (map_x - ray->ray_start_x + (1 - ray->step_x) / 2) / ray->ray_dir_x;
+	else
+		dist_w = (map_y - ray->ray_start_y + (1 - ray->step_y) / 2) / ray->ray_dir_y;;
+
+	float wall;
+	if (ray->side == 'x')
+		wall = ray->ray_start_y + dist_w * ray->ray_dir_y;
+	else
+		wall = ray->ray_start_x + dist_w * ray->ray_dir_x;
+	wall -= floor(wall);
+	if (ray->side == 'x')
+		ray->end.x = (map_x + (1 - ray->step_x) / 2);
+	else
+		ray->end.x = (map_x + wall);
+	if (ray->side == 'y')
+		ray->end.y = (map_y + (1 - ray->step_y) / 2);
+	else
+		ray->end.y = (map_y + wall);
 }
 
 void	loop_raycast_wolf(t_env *e, t_player *player)
 {
 	float	cam;
-	int		x_screen;
+	t_ray	ray;
+	float	s_screen;
+	int lt = e->radar.len_tile_fs;
 
+	(void)e;
+	ft_bzero(&ray, sizeof(t_ray));
+	ray.map = &e->map;
+	ray.to.x1 = (int)player->pos_x;
+	ray.to.y1 = (int)player->pos_y;
+	ray.ray_start_x = player->pos_x;
+	ray.ray_start_y = player->pos_y;
 	s_screen = 0;
 	while (s_screen < player->len_screen)
 	{
-		// Need to set gen ray
-		cam = (2 * x) / len_screen - 1; //inter [-1 1]
-		raycast(cam);
+		cam = (2 * s_screen) / player->len_screen - 1; //inter [-1 1]
+		ray.ray_dir_x = player->dir_x + player->plan_x * cam;
+		ray.ray_dir_y = player->dir_y + player->plan_y * cam;
+		raycast(&ray);
+		e->col.r = 100;
+		t_pxtopx to;
+		to.x1 = player->pos_x * lt;
+		to.y1 = player->pos_y * lt;
+		to.x2 = ray.end.x * lt;
+		to.y2 = ray.end.y * lt;
+		mlxji_draw_line(e->img, &e->col, &to);
 		s_screen++;
 	}
 }
 
 void	raycast_wolf(t_env *e)
 {
-	loop_raycast_wolf(e, &e->player)
+	loop_raycast_wolf(e, &e->player);
 }
-*/
+
 void	test(t_env *e)
 {
+	raycast_wolf(e);
+	/*
 	float x;
 	float cam;
 	float ray_dir_x;
@@ -158,4 +246,5 @@ void	test(t_env *e)
 		mlxji_draw_line(e->img, &col, &to);
 		x++;
 	}
+*/
 }

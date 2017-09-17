@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/16 23:10:24 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/17 14:35:18 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,27 @@
 
 # define SIZE_REALLOC_MAP 10
 
-typedef struct	s_vector2d
+typedef struct	s_map
 {
-	int			x;
-	int			y;
-}				t_vector2d;
+	char		**map;
+	int			len_x;
+	int			len_y;
+
+}				t_map;
+
+typedef struct	s_fvector2d
+{
+	float			x;
+	float			y;
+}				t_fvector2d;
 
 typedef struct	s_ray
 {
+	t_map		*map;
+	t_pxtopx	to;
+	t_fvector2d	end;
+	float		ray_start_x;
+	float		ray_start_y;
 	float		ray_dir_x;
 	float		ray_dir_y;
 	float		delta_len_x;
@@ -48,12 +61,10 @@ typedef struct	s_ray
 	int			step_x;
 	int			step_y;
 	int			hit;
+	int			x;
+	int			y;
+	int			side;
 }				t_ray;
-
-typedef struct	s_tools_raycast_wofl
-{/////////////////////////////////// Need Ray gen
-	float		cam;
-}				t_rw;
 
 typedef struct	s_player
 {
@@ -70,14 +81,6 @@ typedef struct	s_player
 	float			rotate_speed;
 	int				len_screen;
 }				t_player;
-
-typedef struct	s_map
-{
-	char		**map;
-	int			len_x;
-	int			len_y;
-
-}				t_map;
 
 typedef struct	s_radar
 {
@@ -100,6 +103,7 @@ typedef struct	s_env
 	void		*mlx;
 	void		*win;
 	t_img		*img;
+	t_px		col;
 	int			flag;
 
 	int			height;
