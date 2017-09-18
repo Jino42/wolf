@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/09/16 13:39:36 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/09/18 18:17:09 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ event_key_on.c \
 event_key_off.c \
 loop.c \
 raycast.c \
+raycast_wolf.c \
 radar.c \
 update_key_event.c \
 move.c \

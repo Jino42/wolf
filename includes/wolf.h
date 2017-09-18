@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/17 14:35:18 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/18 18:17:08 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,28 @@ typedef struct	s_fvector2d
 	float			y;
 }				t_fvector2d;
 
+typedef struct	s_ivector2d
+{
+	int			x;
+	int			y;
+}				t_ivector2d;
+
 typedef struct	s_ray
 {
 	t_map		*map;
-	t_pxtopx	to;
+	t_fvector2d	dir;
+
+	float		dist_wall;
 	t_fvector2d	end;
-	float		ray_start_x;
-	float		ray_start_y;
-	float		ray_dir_x;
-	float		ray_dir_y;
-	float		delta_len_x;
-	float		delta_len_y;
-	float		f_delta_len_x;
-	float		f_delta_len_y;
+	t_fvector2d	start;
+	int			hit;
+
+	t_fvector2d	delta_len;
+	t_fvector2d	len;
 	int			step_x;
 	int			step_y;
-	int			hit;
-	int			x;
-	int			y;
 	int			side;
+	t_ivector2d	pos_map;
 }				t_ray;
 
 typedef struct	s_player
@@ -79,6 +82,7 @@ typedef struct	s_player
 	float			angle;
 	float			move_speed;
 	float			rotate_speed;
+	float			jump;
 	int				len_screen;
 }				t_player;
 
@@ -116,6 +120,7 @@ typedef struct	s_env
 	t_radar		radar;
 	t_player	player;
 	int			size_side;
+	int			size_half_side;
 }				t_env;
 
 int				loop(t_env *e);
@@ -130,7 +135,10 @@ int				event_key_off(int keycode, t_env *e);
 
 void			radar(t_env *e);
 void			radar_full_screen(t_env *e);
-void			test(t_env *e);
+void			raycast_wolf(t_env *e, t_player *player);
+
+int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
+void			init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 
 int				round_to_inf(float nb);
 int				round_to_up(float nb);

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/15 14:47:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/18 15:56:43 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,3 @@ void	radar(t_env *e)
 	draw_fov(e, &e->player, radar->len_tile);
 	draw_vector_dir(e, &e->player, radar->len_tile);
 }
-

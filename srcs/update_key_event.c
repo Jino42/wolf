@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:10:13 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/15 14:45:27 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/18 18:17:04 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,8 @@ void		update_key_event(t_env *e)
 		e->player.dir_x *= 0.9;
 		e->player.dir_y *= 0.9;
 	}
+	if (e->key[91])
+		player->jump += 1;
+	if (e->key[84])
+		player->jump -= 1;
 }
