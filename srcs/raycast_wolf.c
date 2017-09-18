@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 18:17:02 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/18 20:33:35 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,4 @@ void		raycast_wolf(t_env *e, t_player *player)
 		raycast_wolf_aff_3d(e, player, &ray, s_screen);
 		s_screen++;
 	}
-	ray_dir.x = 7.6 - player->pos_x;
-	ray_dir.y = 7.6 - player->pos_y;
-	int len = sqrt(pow(ray_dir.x, 2) + pow(ray_dir.y, 2));
-	ray_dir.x /= len;
-	ray_dir.y /= len;
-	printf("My [%.2f-%.2f][%.2f-%.2f]\nEn %.2f %.2f\n",
-			player->dir_x - player->plan_x,
-			player->dir_x + player->plan_x,
-			player->dir_y - player->plan_y,
-			player->dir_y + player->plan_y,
-			ray_dir.x,
-			ray_dir.y);
-	if (ray_dir.x < player->dir_x + player->plan_x &&
-			ray_dir.x > player->dir_x - player->plan_x &&
-			ray_dir.y < player->dir_y + player->plan_y &&
-			ray_dir.y > player->dir_y - player->plan_y)
-		ft_printf("VISU\n");
 }
