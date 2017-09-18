@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 21:02:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 23:25:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/18 23:34:57 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,12 @@ int			main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (!fd)
 		return (0);
-	read(fd, &bmp, BMP_HEAD_FILE);
+	read(fd, &bmp.type, 2);
+	read(fd, &bmp.file_size, 12);
+//	read(fd, &bmp.private1, 4);
+//	read(fd, &bmp.offset, 4);
 	read(fd, &bmp.info_reader_size, BMP_HEAD);
 	ft_printf("%i\n", bmp.width);
-//	datas = ft_memalloc(bmp.width * 4 * bmp.height);
 	lseek(fd, bmp.offset, SEEK_SET);
 	void *mlx = mlx_init();
 	t_img *img = mlxji_new_img(mlx, 1000, 1000);
