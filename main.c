@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 21:02:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 23:34:57 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/19 21:41:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define BMP_HEAD_FILE 14
+#define BMP_HEAD_TYPE 2
+#define BMP_HEAD_FILE 12
 #define BMP_HEAD 40
+#define BMP_TYPE_BM 19778
 
 typedef struct	s_bmp
 {
@@ -40,44 +42,64 @@ typedef struct	s_bmp
 	int		color_important;
 }				t_bmp;
 
+void		read_bmp()
+{
+}
+
 int			main(int argc, char **argv)
 {
-	void	*datas;
-	t_bmp bmp;
 	int fd;
-	unsigned char tab[39];
-	bzero(tab, 39);
+	unsigned char	*datas;
+	t_bmp bmp;
+	unsigned char tab[3];
 	fd = open(argv[1], O_RDONLY);
 	if (!fd)
 		return (0);
-	read(fd, &bmp.type, 2);
-	read(fd, &bmp.file_size, 12);
-//	read(fd, &bmp.private1, 4);
-//	read(fd, &bmp.offset, 4);
+	read(fd, &bmp.type, BMP_HEAD_TYPE);
+	read(fd, &bmp.file_size, BMP_HEAD_FILE);
 	read(fd, &bmp.info_reader_size, BMP_HEAD);
-	ft_printf("%i\n", bmp.width);
+	if (bmp.compression || bmp.bpp != 24 || bmp.type != BMP_TYPE_BM)
+		return (0);
 	lseek(fd, bmp.offset, SEEK_SET);
 	void *mlx = mlx_init();
 	t_img *img = mlxji_new_img(mlx, 1000, 1000);
 	void *win;
 	win = mlx_new_window(mlx, 1000, 1000, "Wolf3d");
-	int x, y = 0;
+	if (!(datas = ft_memalloc((bmp.height * bmp.width * 4))))
+		exit(0);
+	int x, y = bmp.height - 1;
+	int lool = bmp.width * 4;
+	while (y >= 0)
+	{
+		x = bmp.width - 1;
+		while (x >= 0)
+		{
+			read(fd, tab, 3);
+			datas[x * 4 + y * lool] = tab[0];
+			datas[x * 4 + y * lool + 1] = tab[1];
+			datas[x * 4 + y * lool + 2] = tab[2];
+			x--;
+		}
+		if (bmp.width % 4)
+			read(fd, tab, bmp.width % 4);
+		y--;
+	}
+	y = 0;
 	while (y < bmp.height)
 	{
 		x = 0;
 		while (x < bmp.width)
 		{
-			read(fd, tab, 3);
-			img->data[x * 4 + y * img->size_line] = tab[0];
-			img->data[x * 4 + y * img->size_line + 1] = tab[1];
-			img->data[x * 4 + y * img->size_line + 2] = tab[2];
+			img->data[x * 4 + y * img->size_line] =
+							datas[x * 4 + y * lool];
+			img->data[x * 4 + y * img->size_line + 1] =
+							datas[x * 4 + y * lool + 1];
+			img->data[x * 4 + y * img->size_line + 2] =
+							datas[x * 4 + y * lool + 2];
 			x++;
 		}
-		if (x % 4)
-			read(fd, tab, x % 4);
 		y++;
 	}
-	ft_printf("OUI\n");
 	mlx_put_image_to_window(mlx, win, img->img, 0, 0);
 	mlx_loop(mlx);
 	close(fd);
