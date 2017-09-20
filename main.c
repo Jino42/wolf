@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 21:02:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 15:47:22 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 22:42:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,33 +100,33 @@ int			main(int argc, char **argv)
 	unsigned char	*datas;
 	t_bmp bmp;
 
-	/*
+/*	
 	   fd = open(argv[1], O_RDONLY);
 	   if (!(fd))
 	   return (0);
 	   void *mlx = mlx_init();
-	   t_img *img = mlxji_new_img(mlx, 1000, 1000);
+	   t_img *img = mlxji_new_img(mlx, 2000, 1500);
 	   void *win;
-	   win = mlx_new_window(mlx, 1000, 1000, "Wolf3d");
+	   win = mlx_new_window(mlx, 2000, 1500, "Wolf3d");
 	   int x, y;
 	   unsigned char tab[4];
 	   y = 0;
-	   while (y < 362)
+	   while (y < 1200) //362)
 	   {
 	   x = 0;
-	   while (x < 644)
+	   while (x < 1920)//644)
 	   {
-	   read(fd, tab, 4);
-	   img->data[x * 4 + y * img->size_line] = tab[0];
-	   img->data[x * 4 + y * img->size_line + 1] = tab[1];
-	   img->data[x * 4 + y * img->size_line + 2] = tab[2];
-	   x++;
+		   read(fd, tab, 4);
+		   img->data[x * 4 + y * img->size_line] = tab[0];
+		   img->data[x * 4 + y * img->size_line + 1] = tab[1];
+		   img->data[x * 4 + y * img->size_line + 2] = tab[2];
+		   x++;
 	   }
 	   y++;
 	   }
 	   mlx_put_image_to_window(mlx, win, img->img, 0, 0);
 	   mlx_loop(mlx);
-	   */
+*/	   
 	if (argc != 3)
 		return (ft_ret_error("Nombre d'arguments incorrects"));
 	if (!(set_bmp(&bmp, &fd, argv[1])))

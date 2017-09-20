@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 19:21:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 23:15:33 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct	s_env
 	t_radar		radar;
 	t_player	player;
 	unsigned char	*text;
+	unsigned char	*skybox;
 	int			size_side;
 	int			size_half_side;
 }				t_env;
