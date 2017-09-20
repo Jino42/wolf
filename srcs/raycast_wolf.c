@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 20:33:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 17:55:50 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ static void	raycast_wolf_aff_2d(t_env *e, t_player *player,
 	mlxji_draw_line(e->img, &e->col, &to);
 }
 
+void		draw_y_line(t_img *img, t_px *px, t_pxtopx *to)
+{
+	while (to->y1 < to->y2)
+	{
+		img->data[to->x1 * 4 + to->y1 * img->size_line] = px->b;
+		img->data[to->x1 * 4 + to->y1 * img->size_line + 1] = px->g;
+		img->data[to->x1 * 4 + to->y1 * img->size_line + 2] = px->r;
+		to->y1++;
+	}
+}
+
 static void	raycast_wolf_aff_3d(t_env *e, t_player *player, t_ray *ray, int nb_cast)
 {
 	int	height_half_wall;
@@ -37,9 +48,12 @@ static void	raycast_wolf_aff_3d(t_env *e, t_player *player, t_ray *ray, int nb_c
 	col.r = 10;
 	col.b = 50;
 	col.g = 100;
+	float	len_pp;
 	height_half_wall = e->size_side / ray->dist_wall / 2;
+	//ft_printf("Len pp %i\n", len_pp);
 	start_y = e->size_half_side - height_half_wall + e->player.jump;
 	end_y = height_half_wall + e->size_half_side + e->player.jump;
+	len_pp = (float)(end_y - start_y) / TEXT_Y;
 	if (end_y >= e->size_side)
 		end_y = e->size_side - 1;
 	if (start_y < 0)
@@ -50,8 +64,25 @@ static void	raycast_wolf_aff_3d(t_env *e, t_player *player, t_ray *ray, int nb_c
 	to.x2 = (nb_cast+1);
 //	to.x2 = ((nb_cast+2)) * e->width / player->len_screen;
 	to.y2 = end_y;
-//	mlxji_draw_case(e->img, &to, &col); LEENN
-	mlxji_draw_line(e->img, &col, &to);
+//	mlxji_draw_case(e->img, &to, &col); LEEN
+
+	to.y2 = start_y;
+	float len = 0;
+	int	place_x = ray->percent_wall * 64;
+	int i = 0;
+	while (to.y2 < end_y && i < 64 )
+	{
+		to.y1 = to.y2;
+		to.y2 = start_y + len;
+		col.b = e->text[place_x * 4 + i * TEXT_Y * 4 + 0];
+		col.g = e->text[place_x * 4 + i * TEXT_Y * 4 + 1];
+		col.r = e->text[place_x * 4 + i * TEXT_Y * 4 + 2];
+		if (to.y2 >= e->size_side)
+			to.y2 = e->size_side - 1;
+		draw_y_line(e->img, &col, &to);
+		len += len_pp;
+		i++;
+	}
 }
 
 void		raycast_wolf(t_env *e, t_player *player)

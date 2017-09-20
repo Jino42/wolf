@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 20:33:14 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 16:14:08 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_ret_error("Miss Args\n"));
 	init_env(&e);
+	if (!(import_texture(&e)))
+		return (ft_ret_error("Erreur de textures\n"));
 	if (!(init_map(&e, argv[1])))
 		return (0);
 	print_map(&e);

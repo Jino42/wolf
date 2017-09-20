@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 15:56:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 16:03:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ static int		raycast_hit(t_ray *ray)
 }
 static void		raycast_dist_wall(t_ray *ray)
 {
-	float percent_wall;
-
 	if (ray->side == 'x')
 		ray->dist_wall = (ray->pos_map.x - ray->start.x +
 							(1 - ray->step_x) / 2) / ray->dir.x;
@@ -86,18 +84,18 @@ static void		raycast_dist_wall(t_ray *ray)
 		ray->dist_wall = (ray->pos_map.y - ray->start.y +
 							(1 - ray->step_y) / 2) / ray->dir.y;;
 	if (ray->side == 'x')
-		percent_wall = ray->start.y + ray->dist_wall * ray->dir.y;
+		ray->percent_wall = ray->start.y + ray->dist_wall * ray->dir.y;
 	else
-		percent_wall = ray->start.x + ray->dist_wall * ray->dir.x;
-	percent_wall -= (int)percent_wall;
+		ray->percent_wall = ray->start.x + ray->dist_wall * ray->dir.x;
+	ray->percent_wall -= (int)ray->percent_wall;
 	if (ray->side == 'x')
 		ray->end.x = (ray->pos_map.x + (1 - ray->step_x) / 2);
 	else
-		ray->end.x = (ray->pos_map.x + percent_wall);
+		ray->end.x = (ray->pos_map.x + ray->percent_wall);
 	if (ray->side == 'y')
 		ray->end.y = (ray->pos_map.y + (1 - ray->step_y) / 2);
 	else
-		ray->end.y = (ray->pos_map.y + percent_wall);
+		ray->end.y = (ray->pos_map.y + ray->percent_wall);
 }
 
 int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir)

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 18:17:08 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 16:19:05 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
+
+# define TEXT_X 64
+# define TEXT_Y 64
 
 # define B_VOID '0'
 # define B_WALL '1'
@@ -57,6 +60,7 @@ typedef struct	s_ray
 	t_fvector2d	dir;
 
 	float		dist_wall;
+	float		percent_wall;
 	t_fvector2d	end;
 	t_fvector2d	start;
 	int			hit;
@@ -119,6 +123,7 @@ typedef struct	s_env
 	t_map		map;
 	t_radar		radar;
 	t_player	player;
+	unsigned char	*text;
 	int			size_side;
 	int			size_half_side;
 }				t_env;
@@ -129,6 +134,7 @@ void			update_key_event(t_env *e);
 
 void			move_player(t_env *e, int dir);
 
+int				import_texture(t_env *e);
 int				end_of_program(t_env *e, char *str);
 int				event_key_on(int keycode, t_env *e);
 int				event_key_off(int keycode, t_env *e);

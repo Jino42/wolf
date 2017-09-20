@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/09/19 19:34:33 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/09/20 16:14:22 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ radar.c \
 update_key_event.c \
 move.c \
 tools.c \
+import_texture.c \
 end_of_program.c
 
 OBJ_DIR = objs/
@@ -45,8 +46,8 @@ DIR_LFT = libft/
 DIR_MLXJI = libmlxji/
 
 #DIR_MLX = minilibx/
-DIR_MLX = minilibxcaptain/
-#DIR_MLX = minilibx_macos/
+#DIR_MLX = minilibxcaptain/
+DIR_MLX = minilibx_macos/
 
 FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
 #FRAMEWORK = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -lm
