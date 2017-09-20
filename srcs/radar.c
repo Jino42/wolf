@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 15:56:43 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 19:23:37 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,13 @@ static void draw_pos_player(t_env *e, t_player *player, int len_tile)
 	mlxji_draw_case(e->img, &to, &col);
 }
 
-void	radar_full_screen(t_env *e)
-{
-	t_radar *radar;
-
-	radar = &e->radar;
-	draw_map(e, radar->len_tile_fs);
-	draw_pos_player(e, &e->player, radar->len_tile_fs);
-	draw_fov(e, &e->player, radar->len_tile_fs);
-	draw_vector_dir(e, &e->player, radar->len_tile_fs);
-}
-
 void	radar(t_env *e)
 {
 	t_radar *radar;
 
 	radar = &e->radar;
-	draw_map(e, radar->len_tile);
-	draw_pos_player(e, &e->player, radar->len_tile);
-	draw_fov(e, &e->player, radar->len_tile);
-	draw_vector_dir(e, &e->player, radar->len_tile);
+	draw_map(e, radar->lt);
+	draw_pos_player(e, &e->player, radar->lt);
+	draw_fov(e, &e->player, radar->lt);
+	draw_vector_dir(e, &e->player, radar->lt);
 }

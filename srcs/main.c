@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 16:14:08 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 19:24:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_env(t_env *e)
 	e->width = WIN_WIDTH;
 	e->size_side = e->height;
 	e->size_half_side = e->height / 2;
+	e->flag |= F_3D;
 }
 
 void	init_radar(t_env *e, t_radar *radar)
@@ -29,6 +30,7 @@ void	init_radar(t_env *e, t_radar *radar)
 	radar->len_tile_fs /= ft_min(e->map.len_x, e->map.len_y);
 	radar->len_x = radar->len_tile * e->map.len_x;
 	radar->len_y = radar->len_tile * e->map.len_y;
+	radar->lt = radar->len_tile;
 }
 
 void	init_player(t_env *e, t_player *player)

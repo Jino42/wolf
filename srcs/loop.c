@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 20:00:49 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 19:26:05 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int			loop(t_env *e)
 	ft_bzero(e->img->data, e->height * e->width * 4);
 	raycast_wolf(e, &e->player);
 	radar(e);
-//	radar_full_screen(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	return (1);
 }

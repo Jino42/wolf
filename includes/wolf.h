@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 16:19:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/20 19:21:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 
 # define B_VOID '0'
 # define B_WALL '1'
+
+# define F_AFF_BASIC (1 << 0)
+# define F_3D (1 << 1)
 
 # define SIZE_REALLOC_MAP 10
 
@@ -94,6 +97,7 @@ typedef struct	s_radar
 {
 	int			len_tile;
 	int			len_tile_fs;
+	int			lt;
 	int			len_x;
 	int			len_y;
 }				t_radar;
@@ -112,6 +116,7 @@ typedef struct	s_env
 	void		*win;
 	t_img		*img;
 	t_px		col;
+	t_pxtopx	to;
 	int			flag;
 
 	int			height;
