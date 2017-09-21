@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 22:30:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 23:04:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ static void	raycast_wolf_aff_2d(t_env *e, t_player *player,
 
 static void	aff_3d_basic(t_env *e, int nb_cast, int start_y, int end_y)
 {
-	e->to.x1 = (nb_cast+1);
+	e->to.x1 = (nb_cast + 1);
 	e->to.y1 = start_y;
-	e->to.x2 = (nb_cast+1);
+	e->to.x2 = (nb_cast + 1);
 	e->to.y2 = end_y;
 	mlxji_draw_y_line(e->img, &e->to, COL_GREEN_SMOOTH);
 }
 
-static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast, int start_y, float len_pp)
+static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
+									int start_y, float len_pp)
 {
 	float		len;
 	int			i;
@@ -60,13 +61,13 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast, int start_y, float le
 	}
 }
 
-static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int start_y, int end)
+static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int end)
 {
 	int			i;
 	int			text_x;
 
-	(void)ray;(void)start_y;
-	e->to.x1 = nb_cast+1;
+	(void)ray;
+	e->to.x1 = nb_cast + 1;
 	e->to.y2 = 0;
 	i = 0;
 	text_x = e->to.x1 + e->player.angle * 300;
@@ -84,14 +85,13 @@ static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int start_y, int end)
 	}
 }
 
-static void	raycast_wolf_aff_3d(t_env *e, t_player *player, t_ray *ray, int nb_cast)
+static void	raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 {
-	int	height_half_wall;
-	int start_y;
-	int end_y;
+	int		height_half_wall;
+	int		start_y;
+	int		end_y;
 	float	len_pp;
 
-	(void)player;
 	height_half_wall = e->size_side / ray->dist_wall / 2;
 	start_y = e->size_half_side - height_half_wall + e->player.jump;
 	end_y = height_half_wall + e->size_half_side + e->player.jump;
@@ -108,21 +108,20 @@ static void	raycast_wolf_aff_3d(t_env *e, t_player *player, t_ray *ray, int nb_c
 		len_pp = (float)(end_y - start_y) / TEXT_Y;
 		aff_3d_text(e, ray, nb_cast, start_y, len_pp);
 	}
-	
 	if (end_y >= e->size_side)
 		end_y = e->size_side - 1;
 	if (start_y < 0)
 		start_y = 0;
-	aff_3d_sky(e, ray, nb_cast, 0, start_y);
+	aff_3d_sky(e, ray, nb_cast, start_y);
 }
 
 void		raycast_wolf(t_env *e, t_player *player)
 {
 	t_fvector2d	ray_dir;
 	t_fvector2d	ray_start;
-	float	cam;
-	float	s_screen;
-	t_ray ray;
+	float		cam;
+	float		s_screen;
+	t_ray		ray;
 
 	ft_bzero(&ray, sizeof(t_ray));
 	s_screen = 0;
@@ -132,11 +131,11 @@ void		raycast_wolf(t_env *e, t_player *player)
 		ray_dir.x = player->dir.x + player->plan.x * cam;
 		ray_dir.y = player->dir.y + player->plan.y * cam;
 		ray_start.x = player->pos.x;
-		ray_start.y = player->pos.y;	
+		ray_start.y = player->pos.y;
 		raycast(&ray, &e->map, ray_start, ray_dir);
 		raycast_wolf_aff_2d(e, player, &ray, e->radar.lt);
 		if (e->flag & F_3D)
-			raycast_wolf_aff_3d(e, player, &ray, s_screen);
+			raycast_wolf_aff_3d(e, &ray, s_screen);
 		s_screen++;
 	}
 }

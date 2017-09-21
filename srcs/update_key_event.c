@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:10:13 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 18:48:24 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 22:40:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void		update_key_event(t_env *e)
 	if (e->key[123])
 	{
 		e->player.angle -= e->player.rotate_speed;
-		vector_rotation(&player->dir.x, &player->dir.y, -player->rotate_speed);
-		vector_rotation(&player->plan.x, &player->plan.y, -player->rotate_speed);
+		fvector_rotation(&player->dir, -player->rotate_speed);
+		fvector_rotation(&player->plan, -player->rotate_speed);
 	}
 	if (e->key[124])
 	{
 		e->player.angle += e->player.rotate_speed;
-		vector_rotation(&player->dir.x, &player->dir.y, player->rotate_speed);
-		vector_rotation(&player->plan.x, &player->plan.y, player->rotate_speed);
+		fvector_rotation(&player->dir, player->rotate_speed);
+		fvector_rotation(&player->plan, player->rotate_speed);
 	}
 	if (e->key[126])
 		move_player(e, 1);

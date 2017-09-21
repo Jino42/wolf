@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 22:33:45 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 22:36:22 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void		direction_raycast(t_ray *ray)
 	}
 }
 
-void		init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir)
+void			init_raycast(t_ray *ray, t_map *map,
+							t_fvector2d start, t_fvector2d dir)
 {
 	ray->map = map;
 	ray->pos_map.x = (int)start.x;
@@ -61,7 +62,7 @@ static int		raycast_hit(t_ray *ray)
 		if (ray->len.x < ray->len.y)
 		{
 			ray->pos_map.x += ray->step_x;
-			ray->len.x += ray->delta_len.x; 
+			ray->len.x += ray->delta_len.x;
 			ray->side = 'x';
 		}
 		else
@@ -70,11 +71,12 @@ static int		raycast_hit(t_ray *ray)
 			ray->len.y += ray->delta_len.y;
 			ray->side = 'y';
 		}
-		if (ray->map->map[ray->pos_map.y][ray->pos_map.x] != B_VOID) //flag
+		if (ray->map->map[ray->pos_map.y][ray->pos_map.x] != B_VOID)
 			ray->hit = 1;
 	}
 	return (ray->hit);
 }
+
 static void		raycast_dist_wall(t_ray *ray)
 {
 	if (ray->side == 'x')
@@ -82,7 +84,7 @@ static void		raycast_dist_wall(t_ray *ray)
 							(1 - ray->step_x) / 2) / ray->dir.x;
 	else
 		ray->dist_wall = (ray->pos_map.y - ray->start.y +
-							(1 - ray->step_y) / 2) / ray->dir.y;;
+							(1 - ray->step_y) / 2) / ray->dir.y;
 	if (ray->side == 'x')
 		ray->percent_wall = ray->start.y + ray->dist_wall * ray->dir.y;
 	else
@@ -98,7 +100,8 @@ static void		raycast_dist_wall(t_ray *ray)
 		ray->end.y = (ray->pos_map.y + ray->percent_wall);
 }
 
-int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir)
+int				raycast(t_ray *ray, t_map *map,
+						t_fvector2d start, t_fvector2d dir)
 {
 	init_raycast(ray, map, start, dir);
 	if (!raycast_hit(ray))

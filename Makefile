@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/09/21 19:09:03 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/09/21 22:46:03 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ radar.c \
 update_key_event.c \
 move.c \
 tools.c \
+init_var.c \
+init_map.c \
 import_texture.c \
 end_of_program.c
 

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 21:12:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 22:50:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,10 @@ int				mlxji_rgb_to_int(t_px *col);
 void			mlxji_draw_case(t_img *img, t_pxtopx *px, int col);
 void			mlxji_draw_y_line(t_img *img, t_pxtopx *to, int col);
 void			mlxji_draw_x_line(t_img *img, t_pxtopx *to, t_px *px);
-void			vector_rotation(float *x, float *y, float rotation);
+void			fvector_rotation(t_fvector2d *vec, float rotation);
+
+void			init_var(t_env *e);
+void			init_env(t_env *e);
+int				init_map(t_env *e, char *s);
+
 #endif

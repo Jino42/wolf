@@ -1,0 +1,18 @@
+free :
+map
+mlx : win img
+textures
+END OF MAP ?
+-------------------->
+End of Prog
+
+Map :
+all pb
+more intel
+
+Text :
+add tab text /!\
+all pb
+
+Rayprinting
+aff_3dtex & sky ->tosame
