@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 23:15:29 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 17:40:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,30 +81,33 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast, int start_y, float le
 		i++;
 	}
 }
-/*
+
 static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int start_y, int end)
 {
 	int			i;
+	int			text_x;
 
 	(void)ray;(void)start_y;
-	e->to.x1 = nb_cast+1 + (int)fabs(e->player.dir_x * 100);
+	e->to.x1 = nb_cast+1;
 	e->to.y2 = 0;
 	i = 0;
+	text_x = e->to.x1 + e->player.angle * 300;
+	if (text_x < 0)
+		text_x = 1920 - text_x;
 	while (i < end)
 	{
 		e->to.y1 = e->to.y2;
 		e->to.y2 = e->to.y1 + 1;
-		e->col.b = e->skybox[e->to.x1 * 4 + i * 1920 * 4 + 0];
-		e->col.g = e->skybox[e->to.x1 * 4 + i * 1920 * 4 + 1];
-		e->col.r = e->skybox[e->to.x1 * 4 + i * 1920 * 4 + 2];
+		e->col.b = e->skybox[text_x * 4 + i * 1920 * 4 + 0];
+		e->col.g = e->skybox[text_x * 4 + i * 1920 * 4 + 1];
+		e->col.r = e->skybox[text_x * 4 + i * 1920 * 4 + 2];
 		if (e->to.y2 >= e->size_side)
 			e->to.y2 = e->size_side - 1;
 		draw_y_line(e->img, &e->col, &e->to);
 		i++;
 	}
-	ft_printf("%i < %i\n", i, end);
 }
-*/
+
 static void	raycast_wolf_aff_3d(t_env *e, t_player *player, t_ray *ray, int nb_cast)
 {
 	int	height_half_wall;
@@ -134,8 +137,7 @@ static void	raycast_wolf_aff_3d(t_env *e, t_player *player, t_ray *ray, int nb_c
 		end_y = e->size_side - 1;
 	if (start_y < 0)
 		start_y = 0;
-	len_pp = (float)(start_y) / 1200;
-	//aff_3d_sky(e, ray, nb_cast, 0, start_y);
+	aff_3d_sky(e, ray, nb_cast, 0, start_y);
 }
 
 void		raycast_wolf(t_env *e, t_player *player)
