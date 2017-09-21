@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 23:15:33 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:45:20 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 #include <fcntl.h>
 #include <sys/time.h>
 
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1200
+# define WIN_HEIGHT 720
 
 # define TEXT_X 64
 # define TEXT_Y 64
@@ -80,12 +80,9 @@ typedef struct	s_player
 {
 	int				cart_pos_y;
 	int				cart_pos_x;
-	float			pos_y;
-	float			pos_x;
-	float			dir_y;
-	float			dir_x;
-	float			plan_x;
-	float			plan_y;
+	t_fvector2d		pos;
+	t_fvector2d		dir;
+	t_fvector2d		plan;
 	float			angle;
 	float			move_speed;
 	float			rotate_speed;

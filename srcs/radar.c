@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 19:23:37 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:47:51 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ static void draw_fov(t_env *e, t_player *player, int len_tile)
 	col.r = 0;
 	col.g = 190;
 	col.b = 25;
-	to.x1 = (player->pos_x) * len_tile;
-	to.y1 = (player->pos_y) * len_tile;
-	to.x2 = (player->pos_x + player->dir_x + player->plan_x) * len_tile;
-	to.y2 = (player->pos_y + player->dir_y + player->plan_y) * len_tile;
+	to.x1 = (player->pos.x) * len_tile;
+	to.y1 = (player->pos.y) * len_tile;
+	to.x2 = (player->pos.x + player->dir.x + player->plan.x) * len_tile;
+	to.y2 = (player->pos.y + player->dir.y + player->plan.y) * len_tile;
 	mlxji_draw_line(e->img, &col, &to);
-	to.x1 = (player->pos_x) * len_tile;
-	to.y1 = (player->pos_y) * len_tile;
-	to.x2 = (player->pos_x + player->dir_x - player->plan_x) * len_tile;
-	to.y2 = (player->pos_y + player->dir_y - player->plan_y) * len_tile;
+	to.x1 = (player->pos.x) * len_tile;
+	to.y1 = (player->pos.y) * len_tile;
+	to.x2 = (player->pos.x + player->dir.x - player->plan.x) * len_tile;
+	to.y2 = (player->pos.y + player->dir.y - player->plan.y) * len_tile;
 	mlxji_draw_line(e->img, &col, &to);
 }
 
@@ -73,10 +73,10 @@ static void draw_vector_dir(t_env *e, t_player *player, int len_tile)
 	col.r = 255;
 	col.g = 155;
 	col.b = 20;
-	to.x1 = player->pos_x * len_tile;
-	to.y1 = player->pos_y * len_tile;
-	to.x2 = (player->pos_x + player->dir_x) * len_tile;
-	to.y2 = (player->pos_y + player->dir_y) * len_tile;
+	to.x1 = player->pos.x * len_tile;
+	to.y1 = player->pos.y * len_tile;
+	to.x2 = (player->pos.x + player->dir.x) * len_tile;
+	to.y2 = (player->pos.y + player->dir.y) * len_tile;
 	mlxji_draw_line(e->img, &col, &to);
 }
 
@@ -89,12 +89,12 @@ static void draw_pos_player(t_env *e, t_player *player, int len_tile)
 	col.r = 20;
 	col.g = 155;
 	col.b = 255;
-	coef = (int)(player->pos_x * 100) % 100;
-	to.x1 = (int)player->pos_x * len_tile + (len_tile * coef / 100) - len_tile / 5;
-	to.x2 = (int)player->pos_x * len_tile + (len_tile * coef / 100) + len_tile / 5;
-	coef = (int)(player->pos_y * 100) % 100;
-	to.y1 = (int)player->pos_y * len_tile + (len_tile * coef / 100) - len_tile / 5;
-	to.y2 = (int)player->pos_y * len_tile + (len_tile * coef / 100) + len_tile / 5;
+	coef = (int)(player->pos.x * 100) % 100;
+	to.x1 = (int)player->pos.x * len_tile + (len_tile * coef / 100) - len_tile / 5;
+	to.x2 = (int)player->pos.x * len_tile + (len_tile * coef / 100) + len_tile / 5;
+	coef = (int)(player->pos.y * 100) % 100;
+	to.y1 = (int)player->pos.y * len_tile + (len_tile * coef / 100) - len_tile / 5;
+	to.y2 = (int)player->pos.y * len_tile + (len_tile * coef / 100) + len_tile / 5;
 	mlxji_draw_case(e->img, &to, &col);
 }
 

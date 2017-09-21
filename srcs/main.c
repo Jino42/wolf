@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 19:24:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:46:32 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	init_radar(t_env *e, t_radar *radar)
 void	init_player(t_env *e, t_player *player)
 {
 	(void)e;
-	player->pos_x = 3.2;
-	player->pos_y = 4.1;
+	player->pos.x = 3.2;
+	player->pos.y = 4.1;
 	player->move_speed = 0.05;
 	player->rotate_speed = 0.04;
 
-	player->dir_x = 1;
-	player->plan_y = 0.66;
+	player->dir.x = 1;
+	player->plan.y = 0.66;
 	player->len_screen = e->width;
 }
 

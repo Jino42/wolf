@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 17:40:19 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:47:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	raycast_wolf_aff_2d(t_env *e, t_player *player,
 	e->col.r = 100;
 	e->col.g = 0;
 	e->col.b = 0;
-	e->to.x1 = player->pos_x * lt;
-	e->to.y1 = player->pos_y * lt;
+	e->to.x1 = player->pos.x * lt;
+	e->to.y1 = player->pos.y * lt;
 	e->to.x2 = ray->end.x * lt;
 	e->to.y2 = ray->end.y * lt;
 	mlxji_draw_line(e->img, &e->col, &e->to);
@@ -42,12 +42,9 @@ static void	aff_3d_basic(t_env *e, int nb_cast, int start_y, int end_y)
 	e->col.b = 50;
 	e->col.g = 100;
 	e->to.x1 = (nb_cast+1);
-//	to.x1 = ((nb_cast+1)) * e->width / player->len_screen;
 	e->to.y1 = start_y;
 	e->to.x2 = (nb_cast+1);
-//	to.x2 = ((nb_cast+2)) * e->width / player->len_screen;
 	e->to.y2 = end_y;
-//	mlxji_draw_case(e->img, &to, &col); LEEN
 	draw_y_line(e->img, &e->col, &e->to);
 }
 
@@ -153,10 +150,10 @@ void		raycast_wolf(t_env *e, t_player *player)
 	while (s_screen < e->player.len_screen)
 	{
 		cam = (2 * s_screen) / player->len_screen - 1; //inter [-1 1]
-		ray_dir.x = player->dir_x + player->plan_x * cam;
-		ray_dir.y = player->dir_y + player->plan_y * cam;
-		ray_start.x = player->pos_x;
-		ray_start.y = player->pos_y;	
+		ray_dir.x = player->dir.x + player->plan.x * cam;
+		ray_dir.y = player->dir.y + player->plan.y * cam;
+		ray_start.x = player->pos.x;
+		ray_start.y = player->pos.y;	
 		raycast(&ray, &e->map, ray_start, ray_dir);
 		raycast_wolf_aff_2d(e, player, &ray, e->radar.lt);
 		if (e->flag & F_3D)

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 21:02:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 22:42:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:42:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,60 +82,94 @@ int			set_bmp(t_bmp *bmp, int *fd, char *file)
 	return (1);
 }
 
-int			write_img(unsigned char *datas, char *file_out, size_t size)
+int			write_img(t_bmp *bmp, unsigned char *datas, char *file_out, size_t size)
 {
 	int	fd_out;
 
 	fd_out = open(file_out, O_WRONLY | O_CREAT | O_TRUNC);
 	if (!fd_out)
 		return (ft_ret_error("Erreur sur le fichier de sortie\n"));
+	write(fd_out, &bmp->width, sizeof(int));
+	write(fd_out, &bmp->height, sizeof(int));
 	write(fd_out, datas, size);
 	close(fd_out);
 	return (1);
 }
 
-int			main(int argc, char **argv)
+int			print_img(char **argv)
+{
+	int		fd;
+	void	*mlx;
+	t_img	*img;
+	int		height;
+	int		width;
+	void *win;
+	int x, y;
+	unsigned char tab[4];
+
+	fd = open(argv[2], O_RDONLY);
+	if (!(fd))
+		return (ft_ret_error("Fichier non conforme\n"));
+	mlx = mlx_init();
+
+	read(fd, &width, sizeof(int));
+	read(fd, &height, sizeof(int));
+	img = mlxji_new_img(mlx, width, height);
+	win = mlx_new_window(mlx, width, height, "test img");
+
+	ft_printf("Width : [%i] Height : [%i]\n", width, height);
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			read(fd, tab, 4);
+			img->data[x * 4 + y * img->size_line] = tab[0];
+			img->data[x * 4 + y * img->size_line + 1] = tab[1];
+			img->data[x * 4 + y * img->size_line + 2] = tab[2];
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(mlx, win, img->img, 0, 0);
+	mlx_loop(mlx);
+	mlx_destroy_image(mlx, win);
+	mlx_destroy_window(mlx, img->img);
+	return (1);
+}
+
+void		make_img(char **argv)
 {
 	int fd;
 	unsigned char	*datas;
 	t_bmp bmp;
 
-/*	
-	   fd = open(argv[1], O_RDONLY);
-	   if (!(fd))
-	   return (0);
-	   void *mlx = mlx_init();
-	   t_img *img = mlxji_new_img(mlx, 2000, 1500);
-	   void *win;
-	   win = mlx_new_window(mlx, 2000, 1500, "Wolf3d");
-	   int x, y;
-	   unsigned char tab[4];
-	   y = 0;
-	   while (y < 1200) //362)
-	   {
-	   x = 0;
-	   while (x < 1920)//644)
-	   {
-		   read(fd, tab, 4);
-		   img->data[x * 4 + y * img->size_line] = tab[0];
-		   img->data[x * 4 + y * img->size_line + 1] = tab[1];
-		   img->data[x * 4 + y * img->size_line + 2] = tab[2];
-		   x++;
-	   }
-	   y++;
-	   }
-	   mlx_put_image_to_window(mlx, win, img->img, 0, 0);
-	   mlx_loop(mlx);
-*/	   
-	if (argc != 3)
-		return (ft_ret_error("Nombre d'arguments incorrects"));
-	if (!(set_bmp(&bmp, &fd, argv[1])))
+	if (!(set_bmp(&bmp, &fd, argv[2])))
 		ft_ret_error(("Erreur sur le BMP !\n"));
 	if (!(datas = ft_memalloc((bmp.height * bmp.width * 4))))
 		exit(0);
 	read_bmp(bmp, fd, datas);
 	close(fd);
-	write_img(datas, argv[2], bmp.width * bmp.height * 4);
+	write_img(&bmp, datas, argv[3], bmp.width * bmp.height * 4);
 	free(datas);
+}
+
+int			main(int argc, char **argv)
+{
+	if (argv[1][0] == '1')
+	{
+		if (argc != 3)
+			return (ft_ret_error("Nombre d'arguments incorrects"));
+		print_img(argv);
+	}
+	else if (argv[1][0] == '2')
+	{
+		if (argc != 4)
+			return (ft_ret_error("Nombre d'arguments incorrects"));
+		make_img(argv);
+	}
+	else
+		return (ft_ret_error("./convert_to_bmp [1 texture.img] [2 texture.png texture.img\n"));
 	return (0);
 }
