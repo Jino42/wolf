@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:22:32 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 19:42:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 21:10:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	vector_rotation(float *x, float *y, float rotation)
 	*x = tmp;
 }
 
-void	mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col)
+void	mlxji_draw_case(t_img *img, t_pxtopx *px, int col)
 {
 	int x;
 	int y;
@@ -60,7 +60,7 @@ void	mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col)
 		x = px->x1;
 		while (x != px->x2)
 		{
-			mlxji_put_pixel(img, x, y, mlxji_rgb_to_int(col));
+			mlxji_put_pixel(img, x, y, col);
 			x += dir_x;
 		}
 		//mlxji_put_pixel(img, x, y, col);

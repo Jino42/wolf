@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 19:38:19 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 21:12:35 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 # define COL_GREEN_SMOOTH 0x228B22
 # define COL_GREEN_CLEAR 0x00FF7F
 # define COL_ORANGE_CLEAR 0xD2691E
+# define COL_MAP_2D 0x8B0000
+# define COL_PLAYER_2D 0x00BFFF
+
 
 # define SIZE_REALLOC_MAP 10
 
@@ -168,7 +171,7 @@ int				ft_max(int a, int b);
 int				ft_min(int a, int b);
 
 int				mlxji_rgb_to_int(t_px *col);
-void			mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col);
+void			mlxji_draw_case(t_img *img, t_pxtopx *px, int col);
 void			mlxji_draw_y_line(t_img *img, t_pxtopx *to, int col);
 void			mlxji_draw_x_line(t_img *img, t_pxtopx *to, t_px *px);
 void			vector_rotation(float *x, float *y, float rotation);

@@ -6,14 +6,16 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/20 19:26:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 22:25:10 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-///////Glissement sur MUR ! Car deux etape
-/////// Besoin de voir Sin Cos omgbb
+/*
+**Glissement sur MUR ! Car deux etape
+**Besoin de voir Sin Cos omgbb
+*/
 
 void		update_fps(t_fps *fps)
 {
