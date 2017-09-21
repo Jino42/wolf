@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 18:45:20 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 19:38:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,19 @@
 # define F_AFF_BASIC (1 << 0)
 # define F_3D (1 << 1)
 
+# define COL_RED_SMOOTH 0xDC143C
+# define COL_GREEN_SMOOTH 0x228B22
+# define COL_GREEN_CLEAR 0x00FF7F
+# define COL_ORANGE_CLEAR 0xD2691E
+
 # define SIZE_REALLOC_MAP 10
+
+typedef struct	s_tex
+{
+	unsigned char	*tex;
+	int				width;
+	int				height;
+}				t_tex;
 
 typedef struct	s_map
 {
@@ -113,6 +125,7 @@ typedef struct	s_env
 	void		*win;
 	t_img		*img;
 	t_px		col;
+	int			icol;
 	t_pxtopx	to;
 	int			flag;
 
@@ -153,6 +166,10 @@ int				round_to_inf(float nb);
 int				round_to_up(float nb);
 int				ft_max(int a, int b);
 int				ft_min(int a, int b);
+
+int				mlxji_rgb_to_int(t_px *col);
 void			mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col);
+void			mlxji_draw_y_line(t_img *img, t_pxtopx *to, int col);
+void			mlxji_draw_x_line(t_img *img, t_pxtopx *to, t_px *px);
 void			vector_rotation(float *x, float *y, float rotation);
 #endif

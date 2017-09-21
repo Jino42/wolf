@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:22:32 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/18 18:17:06 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 19:42:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,39 @@ void	mlxji_draw_case(t_img *img, t_pxtopx *px, t_px *col)
 		x = px->x1;
 		while (x != px->x2)
 		{
-			mlxji_put_pixel(img, x, y, col);
+			mlxji_put_pixel(img, x, y, mlxji_rgb_to_int(col));
 			x += dir_x;
 		}
 		//mlxji_put_pixel(img, x, y, col);
 		y += dir_y;
+	}
+}
+
+int			mlxji_rgb_to_int(t_px *col)
+{
+	return(((col->r << 16) + (col->g << 8) + col->b));
+}
+
+void		mlxji_draw_y_line(t_img *img, t_pxtopx *to, int col)
+{
+	int x;
+
+	x = to->x1 << 2;
+	while (to->y1 < to->y2)
+	{
+		*((int *)&img->data[x + to->y1 * img->size_line]) = col;
+		to->y1++;
+	}
+}
+
+void		mlxji_draw_x_line(t_img *img, t_pxtopx *to, t_px *px)
+{
+	int y;
+
+	y = to->y1 * img->size_line;
+	while (to->x1 < to->x2)
+	{
+		*((int *)&img->data[(to->x1 << 2) + y]) = ((px->r << 16) + (px->g << 8) + px->b);
+		to->x1++;
 	}
 }

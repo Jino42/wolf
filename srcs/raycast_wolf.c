@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 18:47:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 19:41:42 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,20 @@
 static void	raycast_wolf_aff_2d(t_env *e, t_player *player,
 		t_ray *ray, int lt)
 {
-	e->col.r = 100;
-	e->col.g = 0;
-	e->col.b = 0;
 	e->to.x1 = player->pos.x * lt;
 	e->to.y1 = player->pos.y * lt;
 	e->to.x2 = ray->end.x * lt;
 	e->to.y2 = ray->end.y * lt;
-	mlxji_draw_line(e->img, &e->col, &e->to);
-}
-
-void		draw_y_line(t_img *img, t_px *px, t_pxtopx *to)
-{
-	while (to->y1 < to->y2)
-	{
-		img->data[to->x1 * 4 + to->y1 * img->size_line] = px->b;
-		img->data[to->x1 * 4 + to->y1 * img->size_line + 1] = px->g;
-		img->data[to->x1 * 4 + to->y1 * img->size_line + 2] = px->r;
-		to->y1++;
-	}
+	mlxji_draw_line(e->img, &e->to, COL_RED_SMOOTH);
 }
 
 static void	aff_3d_basic(t_env *e, int nb_cast, int start_y, int end_y)
 {
-	e->col.r = 10;
-	e->col.b = 50;
-	e->col.g = 100;
 	e->to.x1 = (nb_cast+1);
 	e->to.y1 = start_y;
 	e->to.x2 = (nb_cast+1);
 	e->to.y2 = end_y;
-	draw_y_line(e->img, &e->col, &e->to);
+	mlxji_draw_y_line(e->img, &e->to, COL_GREEN_SMOOTH);
 }
 
 static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast, int start_y, float len_pp)
@@ -67,12 +50,10 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast, int start_y, float le
 		{
 			if (e->to.y1 < 0)
 				e->to.y1 = 0;
-			e->col.b = e->text[place_x * 4 + i * TEXT_Y * 4 + 0];
-			e->col.g = e->text[place_x * 4 + i * TEXT_Y * 4 + 1];
-			e->col.r = e->text[place_x * 4 + i * TEXT_Y * 4 + 2];
+			e->icol = *((int *)&e->text[(place_x << 2) + i * (TEXT_Y << 2)]);
 			if (e->to.y2 >= e->size_side)
 				e->to.y2 = e->size_side - 1;
-			draw_y_line(e->img, &e->col, &e->to);
+			mlxji_draw_y_line(e->img, &e->to, e->icol);
 		}
 		len += len_pp;
 		i++;
@@ -95,12 +76,10 @@ static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int start_y, int end)
 	{
 		e->to.y1 = e->to.y2;
 		e->to.y2 = e->to.y1 + 1;
-		e->col.b = e->skybox[text_x * 4 + i * 1920 * 4 + 0];
-		e->col.g = e->skybox[text_x * 4 + i * 1920 * 4 + 1];
-		e->col.r = e->skybox[text_x * 4 + i * 1920 * 4 + 2];
+		e->icol = *((int *)&e->skybox[(text_x << 2) + i * (1920 << 2)]);
 		if (e->to.y2 >= e->size_side)
 			e->to.y2 = e->size_side - 1;
-		draw_y_line(e->img, &e->col, &e->to);
+		mlxji_draw_y_line(e->img, &e->to, e->icol);
 		i++;
 	}
 }
@@ -149,7 +128,7 @@ void		raycast_wolf(t_env *e, t_player *player)
 	s_screen = 0;
 	while (s_screen < e->player.len_screen)
 	{
-		cam = (2 * s_screen) / player->len_screen - 1; //inter [-1 1]
+		cam = (s_screen * 2) / player->len_screen - 1; //inter [-1 1]
 		ray_dir.x = player->dir.x + player->plan.x * cam;
 		ray_dir.y = player->dir.y + player->plan.y * cam;
 		ray_start.x = player->pos.x;

@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 18:47:51 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/21 19:39:28 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void	draw_map(t_env *e, int len_tile)
+static void		draw_map(t_env *e, int len_tile)
 {
 	int 		x;
 	int			y;
@@ -44,43 +44,35 @@ void	draw_map(t_env *e, int len_tile)
 	}
 }
 
-static void draw_fov(t_env *e, t_player *player, int len_tile)
+static void		draw_fov(t_env *e, t_player *player, int len_tile)
 {
-	t_px col;
 	t_pxtopx to;
 
-	col.r = 0;
-	col.g = 190;
-	col.b = 25;
 	to.x1 = (player->pos.x) * len_tile;
 	to.y1 = (player->pos.y) * len_tile;
 	to.x2 = (player->pos.x + player->dir.x + player->plan.x) * len_tile;
 	to.y2 = (player->pos.y + player->dir.y + player->plan.y) * len_tile;
-	mlxji_draw_line(e->img, &col, &to);
+	mlxji_draw_line(e->img, &to, COL_GREEN_CLEAR);
 	to.x1 = (player->pos.x) * len_tile;
 	to.y1 = (player->pos.y) * len_tile;
 	to.x2 = (player->pos.x + player->dir.x - player->plan.x) * len_tile;
 	to.y2 = (player->pos.y + player->dir.y - player->plan.y) * len_tile;
-	mlxji_draw_line(e->img, &col, &to);
+	mlxji_draw_line(e->img, &to, COL_GREEN_CLEAR);
 }
 
-static void draw_vector_dir(t_env *e, t_player *player, int len_tile)
+static void		draw_vector_dir(t_env *e, t_player *player, int len_tile)
 {
-	t_px col;
 	t_pxtopx to;
 
 
-	col.r = 255;
-	col.g = 155;
-	col.b = 20;
 	to.x1 = player->pos.x * len_tile;
 	to.y1 = player->pos.y * len_tile;
 	to.x2 = (player->pos.x + player->dir.x) * len_tile;
 	to.y2 = (player->pos.y + player->dir.y) * len_tile;
-	mlxji_draw_line(e->img, &col, &to);
+	mlxji_draw_line(e->img, &to, COL_ORANGE_CLEAR);
 }
 
-static void draw_pos_player(t_env *e, t_player *player, int len_tile)
+static void		draw_pos_player(t_env *e, t_player *player, int len_tile)
 {
 	int coef;
 	t_px col;
