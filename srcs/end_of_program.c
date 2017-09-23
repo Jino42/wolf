@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:31:40 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 13:57:34 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 18:09:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 static void		free_env(t_env *e)
 {
-	(void)e;
+	int i;
+
+	i = 0;
+	while (i < NB_TEX)
+	{
+		ft_strdel((void *)&e->tex[i].tex);
+		i++;
+	}
 }
 
 static void		free_mlx(t_env *e)

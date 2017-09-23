@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 15:45:53 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 18:43:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define COL_ORANGE_CLEAR 0xD2691E
 # define COL_MAP_2D 0x8B0000
 # define COL_PLAYER_2D 0x00BFFF
+# define COL_EN_2D 0xffa29f
 
 # define TEX_MAX 1400
 
@@ -76,6 +77,12 @@ typedef struct	s_ivector2d
 	int			x;
 	int			y;
 }				t_ivector2d;
+
+typedef struct	s_sprite
+{
+	t_fvector2d	pos;
+	char		*sprite;
+}				t_sprite;
 
 typedef struct	s_ray
 {
@@ -147,6 +154,7 @@ typedef struct	s_env
 	t_radar		radar;
 	t_player	player;
 	t_tex		tex[NB_TEX];
+	t_sprite	sprite;
 	int			size_side;
 	int			size_half_side;
 	int			rez;

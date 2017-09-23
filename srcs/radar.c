@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 21:27:32 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 22:02:30 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,21 @@ static void		draw_pos_player(t_env *e, t_player *player, int len_tile)
 	mlxji_draw_case(e->img, &e->to, COL_PLAYER_2D);
 }
 
+static void		draw_sprite(t_env *e, t_sprite *sprite, int len_tile)
+{
+	int		coef;
+	float	range_player;
+
+	range_player = len_tile / 6;
+	coef = len_tile * (sprite->pos.x - (int)sprite->pos.x);
+	e->to.x1 = (int)sprite->pos.x * len_tile + coef - range_player;
+	e->to.x2 = (int)sprite->pos.x * len_tile + coef + range_player;
+	coef = len_tile * ((sprite->pos.y - (int)sprite->pos.y));
+	e->to.y1 = (int)sprite->pos.y * len_tile + coef - range_player;
+	e->to.y2 = (int)sprite->pos.y * len_tile + coef + range_player;
+	mlxji_draw_case(e->img, &e->to, COL_EN_2D);
+}
+
 void			radar(t_env *e)
 {
 	t_radar *radar;
@@ -86,4 +101,5 @@ void			radar(t_env *e)
 	draw_pos_player(e, &e->player, radar->lt);
 	draw_fov(e, &e->player, radar->lt);
 	draw_vector_dir(e, &e->player, radar->lt);
+	draw_sprite(e, &e->sprite, radar->lt);
 }

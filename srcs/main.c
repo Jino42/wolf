@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 14:11:52 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 18:44:36 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int			main(int argc, char **argv)
 		return (0);
 	print_map(&e);
 	init_var(&e);
+	//temp
+	e.sprite.pos.x = 6.5;
+	e.sprite.pos.y = 4.1;
 	ft_printf("Bef\n");
 	if (!(import_texture(&e)))
 		return (ft_ret_error("Erreur de textures\n")); //free	

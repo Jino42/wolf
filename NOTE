@@ -11,8 +11,29 @@ all pb
 more intel
 
 Text :
-add tab text /!\
-all pb
+Need make gen Tex
 
 Rayprinting
 aff_3dtex & sky ->tosame
+
+//transform sprite with the inverse camera matrix
+// [ planeX   dirX ] -1  [ dirY      -dirX ]
+// [               ]   =  1/(planeX*dirY-dirX*planeY) *   [                 ]
+// [ planeY   dirY ]     [ -planeY  planeX ]
+
+X = invDet * (dirY * spriteX - dirX * spriteY);
+Y = invDet * (-planeY * spriteX + planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
+
+
+//translate sprite position to relative to camera
+double spriteX = sprite[spriteOrder[i]].x - posX;
+double spriteY = sprite[spriteOrder[i]].y - posY;
+
+//transform sprite with the inverse camera matrix
+
+double invDet = 1.0 / (planeX * dirY - dirX * planeY); //required for correct matrix multiplication
+
+double transformX = invDet * (dirY * spriteX - dirX * spriteY);
+double transformY = invDet * (-planeY * spriteX + planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
+
+int spriteScreenX = int((w / 2) * (1 + transformX / transformY));

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 16:20:24 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 16:35:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
 									int start_y, float len_pp)
 {
 	float		len;
-	float		len_y;
 	int			i;
-	float		step_y;
 	int			place_x;
 
 	e->to.x1 = nb_cast + 1;
@@ -45,8 +43,6 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
 	place_x = (ray->percent_wall * e->tex[1].width);
 	i = 0;
 	len = 0;
-	step_y = 1;
-	len_y = 0;
 	while (i < ft_min(e->tex[1].height, e->tex[1].width))
 	{
 		e->to.y1 = e->to.y2;
@@ -55,13 +51,12 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
 		{
 			if (e->to.y1 < 0)
 				e->to.y1 = 0;
-			e->icol = *((int *)&e->tex[1].tex[(place_x << 2) + (int)len_y *
+			e->icol = *((int *)&e->tex[1].tex[(place_x << 2) + i *
 								(e->tex[1].width << 2)]);
 			if (e->to.y2 >= e->size_side)
 				e->to.y2 = e->size_side - 1;
 			mlxji_draw_y_line(e->img, &e->to, e->icol);
 		}
-		len_y += step_y;
 		len += len_pp;
 		i++;
 	}
