@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 22:50:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 15:45:53 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@
 # define COL_MAP_2D 0x8B0000
 # define COL_PLAYER_2D 0x00BFFF
 
+# define TEX_MAX 1400
+
+# define TEX_SKY 0
+
+# define NB_TEX 2
 
 # define SIZE_REALLOC_MAP 10
 
@@ -141,10 +146,10 @@ typedef struct	s_env
 	t_map		map;
 	t_radar		radar;
 	t_player	player;
-	unsigned char	*text;
-	unsigned char	*skybox;
+	t_tex		tex[NB_TEX];
 	int			size_side;
 	int			size_half_side;
+	int			rez;
 }				t_env;
 
 int				loop(t_env *e);

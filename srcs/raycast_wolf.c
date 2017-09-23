@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 23:04:34 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 16:20:24 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,19 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
 									int start_y, float len_pp)
 {
 	float		len;
+	float		len_y;
 	int			i;
+	float		step_y;
 	int			place_x;
 
 	e->to.x1 = nb_cast + 1;
 	e->to.y2 = start_y;
-	place_x = ray->percent_wall * 64;
+	place_x = (ray->percent_wall * e->tex[1].width);
 	i = 0;
 	len = 0;
-	while (i < 64)
+	step_y = 1;
+	len_y = 0;
+	while (i < ft_min(e->tex[1].height, e->tex[1].width))
 	{
 		e->to.y1 = e->to.y2;
 		e->to.y2 = start_y + len;
@@ -51,11 +55,13 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
 		{
 			if (e->to.y1 < 0)
 				e->to.y1 = 0;
-			e->icol = *((int *)&e->text[(place_x << 2) + i * (TEXT_Y << 2)]);
+			e->icol = *((int *)&e->tex[1].tex[(place_x << 2) + (int)len_y *
+								(e->tex[1].width << 2)]);
 			if (e->to.y2 >= e->size_side)
 				e->to.y2 = e->size_side - 1;
 			mlxji_draw_y_line(e->img, &e->to, e->icol);
 		}
+		len_y += step_y;
 		len += len_pp;
 		i++;
 	}
@@ -72,12 +78,13 @@ static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int end)
 	i = 0;
 	text_x = e->to.x1 + e->player.angle * 300;
 	if (text_x < 0)
-		text_x = 1920 - text_x;
+		text_x = e->tex[TEX_SKY].width - text_x;
 	while (i < end)
 	{
 		e->to.y1 = e->to.y2;
 		e->to.y2 = e->to.y1 + 1;
-		e->icol = *((int *)&e->skybox[(text_x << 2) + i * (1920 << 2)]);
+		e->icol = *((int *)&e->tex[TEX_SKY].tex[(text_x << 2) + i *
+									(e->tex[TEX_SKY].width << 2)]);
 		if (e->to.y2 >= e->size_side)
 			e->to.y2 = e->size_side - 1;
 		mlxji_draw_y_line(e->img, &e->to, e->icol);
@@ -105,7 +112,7 @@ static void	raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 	}
 	else
 	{
-		len_pp = (float)(end_y - start_y) / TEXT_Y;
+		len_pp = (float)(end_y - start_y) / ft_min(e->tex[1].height, e->tex[1].width);
 		aff_3d_text(e, ray, nb_cast, start_y, len_pp);
 	}
 	if (end_y >= e->size_side)

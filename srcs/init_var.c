@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:46:31 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 22:57:44 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 15:40:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void		init_env(t_env *e)
 	e->size_side = e->height;
 	e->size_half_side = e->height / 2;
 	e->flag |= F_3D;
+	e->rez = (1 << 6) ;
 }
 
 static void	init_radar(t_env *e, t_radar *radar)

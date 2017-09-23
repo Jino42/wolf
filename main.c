@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 21:02:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 18:42:52 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 15:17:21 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int			write_img(t_bmp *bmp, unsigned char *datas, char *file_out, size_t size)
 		return (ft_ret_error("Erreur sur le fichier de sortie\n"));
 	write(fd_out, &bmp->width, sizeof(int));
 	write(fd_out, &bmp->height, sizeof(int));
+	ft_printf("W %i H %i\n", bmp->width, bmp->height);
 	write(fd_out, datas, size);
 	close(fd_out);
 	return (1);
@@ -146,7 +147,7 @@ void		make_img(char **argv)
 	t_bmp bmp;
 
 	if (!(set_bmp(&bmp, &fd, argv[2])))
-		ft_ret_error(("Erreur sur le BMP !\n"));
+		exit(ft_ret_error(("Erreur sur le BMP !\n")));
 	if (!(datas = ft_memalloc((bmp.height * bmp.width * 4))))
 		exit(0);
 	read_bmp(bmp, fd, datas);

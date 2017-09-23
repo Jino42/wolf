@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 22:24:38 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/23 16:00:25 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,12 @@ int			event_key_on(int keycode, t_env *e)
 		else
 			e->radar.lt = e->radar.len_tile_fs;
 	}
+	if (keycode == 92)
+	{
+		ft_printf("Size ; %i\n", e->rez);
+		e->rez <<= 1;
+	}
+	if (keycode == 88)
+		e->rez >>= 1;
 	return (1);
 }
