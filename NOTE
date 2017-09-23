@@ -31,6 +31,23 @@ double spriteY = sprite[spriteOrder[i]].y - posY;
 
 //transform sprite with the inverse camera matrix
 
+1	void draw_object (BITMAP *bmp, BITMAP *obj, float angle, float x, float y)
+2	{
+	3	  float xInc = (64 - x);
+	4	  float yInc = (128 - y);
+	5	  float thetaTemp = atan2(yInc, xInc);
+	6	  thetaTemp *= 180/M_PI;
+	7	  if (thetaTemp < 0) thetaTemp += 360;
+	8	  float yTmp = angle + 30 - thetaTemp;
+	9	  if (thetaTemp > 270 && angle < 90)
+	10	    yTmp = angle + 30 - thetaTemp + 360;
+	11	  if (angle > 270 && thetaTemp < 90) 
+	12	    yTmp = angle + 30 - thetaTemp - 360;
+	13	 
+	14	  float xTmp = yTmp * 320 / 60.0;
+	15	  draw_sprite(bmp,obj,xTmp,10);
+	16	}
+
 double invDet = 1.0 / (planeX * dirY - dirX * planeY); //required for correct matrix multiplication
 
 double transformX = invDet * (dirY * spriteX - dirX * spriteY);
