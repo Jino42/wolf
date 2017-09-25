@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/25 22:25:13 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 22:49:40 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ void		update_fps(t_fps *fps)
 
 void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
 {
-	int	height_half_wall;
+	int	height_half_sprite;
 
 	if (!sprite->hit)
 		return ;
 	(void)player;
-	height_half_wall = (int)((float)e->size_side /  2);
-	e->to.x1 = sprite->col - sprite->len_x / 2;
-	e->to.x2 = sprite->col + sprite->len_x / 2;
-	e->to.y1 = height_half_wall - sprite->len_y / 2;
-	e->to.y2 = height_half_wall + sprite->len_y / 2;
+	height_half_sprite = (50 / sprite->dist / 2);
+	e->to.x1 = (sprite->col - height_half_sprite);
+	e->to.x2 = (sprite->col + height_half_sprite);
+	e->to.y1 = (e->size_half_side - height_half_sprite);
+	e->to.y2 = (e->size_half_side + height_half_sprite);
 	int x = 0, y = 0;
-	while (x < sprite->len_x)
+	while (e->to.x1 < e->to.x2)
 	{
-		e->to.y1 = height_half_wall - sprite->len_y / 2;
+		e->to.y1 = (e->size_half_side - height_half_sprite);
 		printf("%.2f < %.2f (%i)\n", sprite->dist,
 					e->dist[(sprite->col - sprite->len_x + x)],
 					(sprite->col - sprite->len_x + x));
