@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 16:35:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 22:19:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static void	raycast_wolf_aff_2d(t_env *e, t_player *player,
+void	raycast_wolf_aff_2d(t_env *e, t_player *player,
 		t_ray *ray, int lt)
 {
 	e->to.x1 = player->pos.x * lt;
@@ -32,7 +32,7 @@ static void	aff_3d_basic(t_env *e, int nb_cast, int start_y, int end_y)
 }
 
 static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
-									int start_y, float len_pp)
+		int start_y, float len_pp)
 {
 	float		len;
 	int			i;
@@ -52,7 +52,7 @@ static void	aff_3d_text(t_env *e, t_ray *ray, int nb_cast,
 			if (e->to.y1 < 0)
 				e->to.y1 = 0;
 			e->icol = *((int *)&e->tex[1].tex[(place_x << 2) + i *
-								(e->tex[1].width << 2)]);
+					(e->tex[1].width << 2)]);
 			if (e->to.y2 >= e->size_side)
 				e->to.y2 = e->size_side - 1;
 			mlxji_draw_y_line(e->img, &e->to, e->icol);
@@ -79,7 +79,7 @@ static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int end)
 		e->to.y1 = e->to.y2;
 		e->to.y2 = e->to.y1 + 1;
 		e->icol = *((int *)&e->tex[TEX_SKY].tex[(text_x << 2) + i *
-									(e->tex[TEX_SKY].width << 2)]);
+				(e->tex[TEX_SKY].width << 2)]);
 		if (e->to.y2 >= e->size_side)
 			e->to.y2 = e->size_side - 1;
 		mlxji_draw_y_line(e->img, &e->to, e->icol);
@@ -117,6 +117,16 @@ static void	raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 	aff_3d_sky(e, ray, nb_cast, start_y);
 }
 
+void		test(t_env *e)
+{
+	t_fvector2d rela;
+
+	rela.x = e->player.pos.x - e->sprite.pos.x;
+	rela.y = e->player.pos.y - e->sprite.pos.y;
+
+	int angle = atan2f(rela.y, rela.x) * 180 / 3.1415;(void)angle;
+}
+
 void		raycast_wolf(t_env *e, t_player *player)
 {
 	t_fvector2d	ray_dir;
@@ -124,20 +134,39 @@ void		raycast_wolf(t_env *e, t_player *player)
 	float		cam;
 	float		s_screen;
 	t_ray		ray;
+	t_fvector2d rela;
 
+	rela.x = e->sprite.pos.x - e->player.pos.x;
+	rela.y = e->sprite.pos.y - e->player.pos.y;
+
+	int angle;
+	angle = (int)(atan2f(rela.y, rela.x) * 600);
+//	printf("Angle : %i\n%.2f %.2f\n", angle, rela.x, rela.y);
+	e->sprite.hit = 0;
 	ft_bzero(&ray, sizeof(t_ray));
 	s_screen = 0;
-	while (s_screen < e->player.len_screen)
+	while (s_screen < e->player.len_screen + 2)
 	{
 		cam = (s_screen * 2) / player->len_screen - 1; //inter [-1 1]
 		ray_dir.x = player->dir.x + player->plan.x * cam;
 		ray_dir.y = player->dir.y + player->plan.y * cam;
+		int loc;
+	   	loc	= (int)(atan2f(ray_dir.y, ray_dir.x) * 600);
+		if (loc == angle)
+		{
+//			printf("KK [[[%.1f]]]\n", s_screen);
+			e->sprite.col = s_screen;
+			e->sprite.dist = sqrt(pow(rela.y, 2) + pow(rela.x, 2));
+			e->sprite.hit = 1;
+		}
 		ray_start.x = player->pos.x;
 		ray_start.y = player->pos.y;
 		raycast(&ray, &e->map, ray_start, ray_dir);
 		raycast_wolf_aff_2d(e, player, &ray, e->radar.lt);
 		if (e->flag & F_3D)
 			raycast_wolf_aff_3d(e, &ray, s_screen);
+		e->dist[(int)s_screen] = ray.dist_wall;
 		s_screen++;
 	}
+	test(e);
 }

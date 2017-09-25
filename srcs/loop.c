@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 23:13:17 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 22:25:13 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,33 @@ void		update_fps(t_fps *fps)
 
 void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
 {
-	t_fvector2d	d;
+	int	height_half_wall;
 
-	int lt;
-
-	lt = e->radar.len_tile;
-	(void)e;
-	d.x = sprite->pos.x - player->pos.x;
-	d.y = sprite->pos.y - player->pos.y;
-	float inv = 1 / (player->plan.x * player->dir.y - player->dir.x * player->plan.y);
-	t_fvector2d test;
-
-	test.x = inv * (d.x * player->dir.y - d.y * player->dir.x);
-	test.y = inv * (d.x * -player->plan.y + d.y * player->plan.x);
-	printf("[%.2f][%.2f]\n", test.x / test.y, test.y);
-	t_pxtopx to;
-
-	to.x1 = (e->player.len_screen / 2) * (test.x / test.y) + (e->player.len_screen / 2)- 5;
-	// / 2 car mid plan_x
-	to.x2 = to.x1 + 5;
-	to.y1 = e->height / 2 + 5;
-	to.y2 = e->height / 2 - 5;
-	if (to.x1 < e->width - 10)
-		mlxji_draw_case(e->img, &to, COL_EN_2D);
-	int lx, ly;
-	lx= player->plan.x + player->dir.x;
-	ly= player->plan.y + player->dir.y;
-	to.x1 = (test.x+lx) * lt - 5;
-	to.x2 = (test.x+lx) * lt + 5;
-	to.y1 = (test.y+ly) * lt + 5;
-	to.y2 = (test.y+ly) * lt - 5;
-	if (to.x1 < e->width - 10)
-		mlxji_draw_case(e->img, &to, COL_EN_2D);
+	if (!sprite->hit)
+		return ;
+	(void)player;
+	height_half_wall = (int)((float)e->size_side /  2);
+	e->to.x1 = sprite->col - sprite->len_x / 2;
+	e->to.x2 = sprite->col + sprite->len_x / 2;
+	e->to.y1 = height_half_wall - sprite->len_y / 2;
+	e->to.y2 = height_half_wall + sprite->len_y / 2;
+	int x = 0, y = 0;
+	while (x < sprite->len_x)
+	{
+		e->to.y1 = height_half_wall - sprite->len_y / 2;
+		printf("%.2f < %.2f (%i)\n", sprite->dist,
+					e->dist[(sprite->col - sprite->len_x + x)],
+					(sprite->col - sprite->len_x + x));
+		if (sprite->dist < e->dist[(sprite->col - sprite->len_x + x)])
+		{
+			y= 0;
+			mlxji_draw_y_line(e->img, &e->to, 0x00FF00);
+		}
+		x++;
+		e->to.x1++;
+	}
 }
+
 
 int			loop(t_env *e)
 {

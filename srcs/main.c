@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 18:44:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 21:37:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ int			main(int argc, char **argv)
 	//temp
 	e.sprite.pos.x = 6.5;
 	e.sprite.pos.y = 4.1;
+	e.sprite.len_x = 50;
+	e.sprite.len_y = 50;
+	e.sprite.sprite = ft_memalloc(50 * 50 * 4);
+	e.wall.x = 6.5;
+	e.wall.y = 4.1;
+	e.endw.x = 7.5;
+	e.endw.y = 8.1;
 	ft_printf("Bef\n");
 	if (!(import_texture(&e)))
 		return (ft_ret_error("Erreur de textures\n")); //free	

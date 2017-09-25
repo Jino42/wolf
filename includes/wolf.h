@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 18:43:39 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 22:17:48 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ typedef struct	s_ivector2d
 typedef struct	s_sprite
 {
 	t_fvector2d	pos;
+	int			col;
+	int			len_x;
+	int			len_y;
+	int			hit;
+	float		dist;
 	char		*sprite;
 }				t_sprite;
 
@@ -149,12 +154,15 @@ typedef struct	s_env
 
 	int			key[269];
 
+	float		dist[WIN_WIDTH + 10];//////
 	t_fps		fps;
 	t_map		map;
 	t_radar		radar;
 	t_player	player;
 	t_tex		tex[NB_TEX];
 	t_sprite	sprite;
+	t_fvector2d wall;
+	t_fvector2d endw;
 	int			size_side;
 	int			size_half_side;
 	int			rez;

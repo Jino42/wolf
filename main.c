@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 21:02:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 15:17:21 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 21:34:45 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int			set_bmp(t_bmp *bmp, int *fd, char *file)
 	read(*fd, &bmp->type, BMP_HEAD_TYPE);
 	read(*fd, &bmp->file_size, BMP_HEAD_FILE);
 	read(*fd, &bmp->info_reader_size, BMP_HEAD);
+	printf("%i %i %i\n", bmp->compression, bmp->bpp, bmp->type);
 	if (bmp->compression || bmp->bpp != 24 || bmp->type != BMP_TYPE_BM)
 		return (0);
 	lseek(*fd, bmp->offset, SEEK_SET);

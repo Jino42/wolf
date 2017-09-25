@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 22:02:30 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 11:48:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,25 @@ static void		draw_sprite(t_env *e, t_sprite *sprite, int len_tile)
 	mlxji_draw_case(e->img, &e->to, COL_EN_2D);
 }
 
+void	draw_line(t_env *e, t_player *player, int lt)
+{
+	(void)player;
+
+	e->to.x1 = e->wall.x * lt;
+	e->to.x2 = e->endw.x * lt ;
+	e->to.y1 = e->wall.y* lt;
+	e->to.y2 = e->endw.y *lt;
+	mlxji_draw_line(e->img, &e->to, COL_EN_2D);
+}
+
 void			radar(t_env *e)
 {
 	t_radar *radar;
 
 	radar = &e->radar;
-	draw_map(e, radar->lt);
+	//if (0)
+		draw_map(e, radar->lt);
+	draw_line(e, &e->player, radar->lt);
 	draw_pos_player(e, &e->player, radar->lt);
 	draw_fov(e, &e->player, radar->lt);
 	draw_vector_dir(e, &e->player, radar->lt);
