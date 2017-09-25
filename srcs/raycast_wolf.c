@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/25 22:19:52 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 23:14:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void		raycast_wolf(t_env *e, t_player *player)
 
 	int angle;
 	angle = (int)(atan2f(rela.y, rela.x) * 600);
-//	printf("Angle : %i\n%.2f %.2f\n", angle, rela.x, rela.y);
 	e->sprite.hit = 0;
 	ft_bzero(&ray, sizeof(t_ray));
 	s_screen = 0;
@@ -151,13 +150,16 @@ void		raycast_wolf(t_env *e, t_player *player)
 		ray_dir.x = player->dir.x + player->plan.x * cam;
 		ray_dir.y = player->dir.y + player->plan.y * cam;
 		int loc;
-	   	loc	= (int)(atan2f(ray_dir.y, ray_dir.x) * 600);
-		if (loc == angle)
+		if (!e->sprite.hit) //sprite besoin + :3 VERIF SI PAS OBLIGER ATAN ALL TIME
+			//Une fois et si inter alors ok et find
 		{
-//			printf("KK [[[%.1f]]]\n", s_screen);
-			e->sprite.col = s_screen;
-			e->sprite.dist = sqrt(pow(rela.y, 2) + pow(rela.x, 2));
-			e->sprite.hit = 1;
+		   	loc	= (int)(atan2f(ray_dir.y, ray_dir.x) * 600);
+			if (loc == angle)
+			{
+				e->sprite.col = s_screen;
+				e->sprite.dist = sqrt(pow(rela.y, 2) + pow(rela.x, 2));
+				e->sprite.hit = 1;
+			}
 		}
 		ray_start.x = player->pos.x;
 		ray_start.y = player->pos.y;

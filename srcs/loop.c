@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/25 22:49:40 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/25 23:13:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,24 @@ void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
 	e->to.y1 = (e->size_half_side - height_half_sprite);
 	e->to.y2 = (e->size_half_side + height_half_sprite);
 	int x = 0, y = 0;
+	if (e->to.x1 < 0)
+		e->to.x1 = 0;
+	if (e->to.y1 < 0)
+		e->to.y1 = 0;
+	if (e->to.y2 > e->height)
+		e->to.y2 = e->height - 1;
+	if (e->to.x2 > e->width)
+		e->to.x2 = e->width - 1;
+	if (e->to.y1 >= e->to.y2 || e->to.x1 >= e->to.x2)
+		return ;
 	while (e->to.x1 < e->to.x2)
 	{
 		e->to.y1 = (e->size_half_side - height_half_sprite);
-		printf("%.2f < %.2f (%i)\n", sprite->dist,
-					e->dist[(sprite->col - sprite->len_x + x)],
-					(sprite->col - sprite->len_x + x));
-		if (sprite->dist < e->dist[(sprite->col - sprite->len_x + x)])
+		if (e->to.y1 < 0)
+			e->to.y1 = 0;
+		if (sprite->dist < e->dist[(sprite->col - sprite->len_x + x)]) //mais plus base sur len_x
 		{
-			y= 0;
+			y = 0;
 			mlxji_draw_y_line(e->img, &e->to, 0x00FF00);
 		}
 		x++;
