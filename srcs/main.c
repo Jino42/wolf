@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/25 21:37:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 21:43:28 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ int			main(int argc, char **argv)
 	print_map(&e);
 	init_var(&e);
 	//temp
-	e.sprite.pos.x = 6.5;
-	e.sprite.pos.y = 4.1;
-	e.sprite.len_x = 50;
-	e.sprite.len_y = 50;
-	e.sprite.sprite = ft_memalloc(50 * 50 * 4);
+	e.sprite[0].pos.x = 6.5;
+	e.sprite[0].pos.y = 4.1;
 	e.wall.x = 6.5;
 	e.wall.y = 4.1;
 	e.endw.x = 7.5;

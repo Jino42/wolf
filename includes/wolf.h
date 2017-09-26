@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 15:36:34 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 21:43:03 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 # define TEX_SKY 0
 
 # define NB_TEX 2
+
+# define NB_SPRITE 2
 
 # define SIZE_REALLOC_MAP 10
 
@@ -160,7 +162,7 @@ typedef struct	s_env
 	t_radar		radar;
 	t_player	player;
 	t_tex		tex[NB_TEX];
-	t_sprite	sprite;
+	t_sprite	sprite[NB_SPRITE];
 	t_fvector2d wall;
 	t_fvector2d endw;
 	int			size_side;
