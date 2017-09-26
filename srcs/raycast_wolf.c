@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 15:37:55 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 16:11:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void		raycast_wolf(t_env *e, t_player *player)
 	rela.y = e->sprite.pos.y - e->player.pos.y;
 
 	int angle;
-	angle = (int)(atan2f(rela.y, rela.x) * 600);
+	angle = (int)(atan2f(rela.y, rela.x) * 300);
 	e->sprite.hit = 0;
 	ft_bzero(&ray, sizeof(t_ray));
 	s_screen = 0;
@@ -140,17 +140,6 @@ void		raycast_wolf(t_env *e, t_player *player)
 		ray_dir.x = player->dir.x + player->plan.x * cam;
 		ray_dir.y = player->dir.y + player->plan.y * cam;
 		int loc;
-		if (!e->sprite.hit) //sprite besoin + :3 VERIF SI PAS OBLIGER ATAN ALL TIME
-			//Une fois et si inter alors ok et find
-		{
-		   	loc	= (int)(atan2f(ray_dir.y, ray_dir.x) * 600);
-			if (loc == angle)
-			{
-				e->sprite.col = s_screen;
-				e->sprite.dist = sqrt(pow(rela.y, 2) + pow(rela.x, 2));
-				e->sprite.hit = 1;
-			}
-		}
 		ray_start.x = player->pos.x;
 		ray_start.y = player->pos.y;
 		raycast(&ray, &e->map, ray_start, ray_dir);
@@ -158,6 +147,21 @@ void		raycast_wolf(t_env *e, t_player *player)
 		if (e->flag & F_3D)
 			raycast_wolf_aff_3d(e, &ray, s_screen);
 		e->dist[(int)s_screen] = ray.dist_wall;
+		if (!e->sprite.hit) //sprite besoin + :3 VERIF SI PAS OBLIGER ATAN ALL TIME
+			//Une fois et si inter alors ok et find
+		{
+		   	loc	= (int)(atan2f(ray_dir.y, ray_dir.x) * 300);
+			if (loc == angle)
+			{
+				e->sprite.col = s_screen;
+	//			e->sprite.dist = sqrt(pow(rela.y, 2) + pow(rela.x, 2));
+				if (ray.side == 'x')
+					e->sprite.dist = rela.x / ray.dir.x;
+				else
+					e->sprite.dist = rela.y / ray.dir.y;
+				e->sprite.hit = 1;
+			}
+		}
 //		if (s_screen == player->len_screen / 2)
 //			printf("Dist_wall : %.2f\nDist sprite %.2f\n", ray.dist_wall,
 //					e->sprite.dist);

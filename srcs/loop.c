@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 15:36:02 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 16:17:51 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
 	printf("Col %i\n [%.2f][%.2f]", sprite->col, sprite->dist, e->dist[sprite->col]);
 	height_half_sprite = (sprite->len_x / sprite->dist / 2);
 	int len_sprite = height_half_sprite * 2;
+	e->to.x1 = e->sprite.col;
+	e->to.y1 = 0;
+	e->to.y2 = e->height / 2 - 20;
+	mlxji_draw_y_line(e->img, &e->to, 0x0000FF);
 	e->to.x1 = (sprite->col - height_half_sprite);
 	e->to.x2 = (sprite->col + height_half_sprite);
 	e->to.y1 = (e->size_half_side - height_half_sprite);

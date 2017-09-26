@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:10:13 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 22:40:56 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 15:54:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,21 @@ void		update_key_event(t_env *e)
 	player = &e->player;
 
 	/*changer ? Car chaque fram*/
-	if (e->key[123])
+	if (e->key[123] || e->key[1])
 	{
-		e->player.angle -= e->player.rotate_speed;
+		if (e->key[123])
+			e->player.angle -= e->player.rotate_speed;
+		else
+			e->player.angle -= 0.01;
 		fvector_rotation(&player->dir, -player->rotate_speed);
 		fvector_rotation(&player->plan, -player->rotate_speed);
 	}
-	if (e->key[124])
+	if (e->key[124] || e->key[2])
 	{
-		e->player.angle += e->player.rotate_speed;
+		if (e->key[124])
+			e->player.angle += e->player.rotate_speed;
+		else
+			e->player.angle += 0.01;
 		fvector_rotation(&player->dir, player->rotate_speed);
 		fvector_rotation(&player->plan, player->rotate_speed);
 	}
