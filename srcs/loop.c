@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 16:17:51 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 16:57:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,8 @@ void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
 		return ;
 	(void)player;
 	printf("Col %i\n [%.2f][%.2f]", sprite->col, sprite->dist, e->dist[sprite->col]);
-	height_half_sprite = (sprite->len_x / sprite->dist / 2);
-	int len_sprite = height_half_sprite * 2;
-	e->to.x1 = e->sprite.col;
-	e->to.y1 = 0;
-	e->to.y2 = e->height / 2 - 20;
-	mlxji_draw_y_line(e->img, &e->to, 0x0000FF);
+	int len_sprite = sprite->len_x / sprite->dist;
+	height_half_sprite = len_sprite / 2;
 	e->to.x1 = (sprite->col - height_half_sprite);
 	e->to.x2 = (sprite->col + height_half_sprite);
 	e->to.y1 = (e->size_half_side - height_half_sprite);
@@ -59,16 +55,18 @@ void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
 		e->to.x2 = e->width - 1;
 	if (e->to.y1 >= e->to.y2 || e->to.x1 >= e->to.x2)
 		return ;
+	int status = sprite->col - len_sprite / 2 - 1;
 	while (e->to.x1 < e->to.x2)
 	{
 		e->to.y1 = (e->size_half_side - height_half_sprite);
 		if (e->to.y1 < 0)
 			e->to.y1 = 0;
-		if ((sprite->col - len_sprite + x) > 0 && (sprite->col - len_sprite + x) < e->player.len_screen && sprite->dist < e->dist[(sprite->col - len_sprite + x)]) //mais plus base sur len_x
+		if (status > 0 && status < e->player.len_screen && sprite->dist < e->dist[status]) //mais plus base sur len_x
 		{
 			y = 0;
 			mlxji_draw_y_line(e->img, &e->to, 0x00FF00);
 		}
+		status++;
 		x++;
 		e->to.x1++;
 	}
