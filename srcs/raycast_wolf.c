@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/25 23:14:09 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 15:37:55 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,6 @@ static void	raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 	aff_3d_sky(e, ray, nb_cast, start_y);
 }
 
-void		test(t_env *e)
-{
-	t_fvector2d rela;
-
-	rela.x = e->player.pos.x - e->sprite.pos.x;
-	rela.y = e->player.pos.y - e->sprite.pos.y;
-
-	int angle = atan2f(rela.y, rela.x) * 180 / 3.1415;(void)angle;
-}
-
 void		raycast_wolf(t_env *e, t_player *player)
 {
 	t_fvector2d	ray_dir;
@@ -168,7 +158,9 @@ void		raycast_wolf(t_env *e, t_player *player)
 		if (e->flag & F_3D)
 			raycast_wolf_aff_3d(e, &ray, s_screen);
 		e->dist[(int)s_screen] = ray.dist_wall;
+//		if (s_screen == player->len_screen / 2)
+//			printf("Dist_wall : %.2f\nDist sprite %.2f\n", ray.dist_wall,
+//					e->sprite.dist);
 		s_screen++;
 	}
-	test(e);
 }

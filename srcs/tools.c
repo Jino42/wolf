@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:22:32 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 15:26:28 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/26 14:39:10 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		mlxji_draw_case(t_img *img, t_pxtopx *px, int col)
 			mlxji_put_pixel(img, x, y, col);
 			x += dir_x;
 		}
-		mlxji_put_pixel(img, x, y, col);
+//		mlxji_put_pixel(img, x, y, col);
 		y += dir_y;
 	}
 }
