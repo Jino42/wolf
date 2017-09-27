@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:46:31 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/23 15:40:19 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/27 23:43:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	init_player(t_env *e, t_player *player)
 	player->pos.x = 3.2;
 	player->pos.y = 4.1;
 	player->move_speed = 0.05;
-	player->rotate_speed = 0.04;
+	player->rotate_speed = 0.01;
 	player->dir.x = 1;
 	player->plan.y = 0.66;
 	player->len_screen = e->width;

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 18:37:44 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 00:32:54 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 00:29:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		sprite_search(t_env *e, t_player *player)
 	dif += 33;
 	dif /= 100;
 	float test;
-	test = 600 / a * (sp - a);
+	test = 600 / a * (sp - my);
 	printf("\033[32m%.2f\033[0m\n", test);
 	perc = ((float)player->len_screen) / (float)0.66;
 //	printf("Dif %.2f | perc %.2f\n", dif, perc);

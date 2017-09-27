@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/27 19:12:14 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 00:12:02 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ static void	raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 
 
 /*
-** Une verif avant ? pour voir si ils sont au moins dans le champ de vision ?
-*/
+ ** Une verif avant ? pour voir si ils sont au moins dans le champ de vision ?
+ */
 
 void		raycast_wolf(t_env *e, t_player *player)
 {
@@ -130,6 +130,16 @@ void		raycast_wolf(t_env *e, t_player *player)
 	float		s_screen;
 	t_ray		ray;
 
+	int loc;
+	t_fvector2d rela;
+
+	rela.x = e->sprite[0].pos.x - e->player.pos.x;
+	rela.y = e->sprite[0].pos.y - e->player.pos.y;
+
+	int angle;
+	loc = 0;
+	angle = (int)(atan2f(rela.y, rela.x) * 300);
+	e->sprite[0].hit = 0;
 	ft_bzero(&ray, sizeof(t_ray));
 	s_screen = 0;
 	while (s_screen < e->player.len_screen + 2)
@@ -141,10 +151,33 @@ void		raycast_wolf(t_env *e, t_player *player)
 		ray_start.y = player->pos.y;
 		raycast(&ray, &e->map, ray_start, ray_dir);
 		raycast_wolf_aff_2d(e, player, &ray, e->radar.lt);
+		e->dist[(int)s_screen] = ray.dist_wall;
+		e->side_touch[(int)s_screen] = ray.side;
 		if (e->flag & F_3D)
 			raycast_wolf_aff_3d(e, &ray, s_screen);
-//		e->dist[(int)s_screen] = ray.dist_wall;
-//		e->side_touch[(int)s_screen] = ray.side;
-		s_screen++;
+
+		if (!e->sprite[0].hit)
+		{
+			loc	= (int)(atan2f(ray_dir.y, ray_dir.x) * 300);
+			if (loc == angle)
+			{
+				e->sprite[0].col = s_screen;
+				if (ray.side == 'x')
+					e->sprite[0].dist = rela.x / ray.dir.x;
+				else
+					e->sprite[0].dist = rela.y / ray.dir.y;
+				e->sprite[0].hit = 1;
+				int lt = e->radar.lt;
+				e->to.x1 = player->pos.x * lt;
+				e->to.y1 = player->pos.y * lt;
+				e->to.x2 = (player->pos.x + ray_dir.x) * lt;
+				e->to.y2 = (player->pos.y + ray_dir.y) * lt;
+				mlxji_draw_line(e->img, &e->to, 0x0FFFF0);
+//				ft_printf("Bas %i\n", (int)s_screen);
+//				printf("Raydir cast [%.2f][%.10f]\n", ray_dir.x, ray_dir.y);
+			}
+		}
+		
+			s_screen++;
 	}
 }
