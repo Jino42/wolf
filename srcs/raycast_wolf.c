@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/27 18:51:38 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/27 19:12:14 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ void		raycast_wolf(t_env *e, t_player *player)
 		raycast_wolf_aff_2d(e, player, &ray, e->radar.lt);
 		if (e->flag & F_3D)
 			raycast_wolf_aff_3d(e, &ray, s_screen);
-		e->dist[(int)s_screen] = ray.dist_wall;
+//		e->dist[(int)s_screen] = ray.dist_wall;
+//		e->side_touch[(int)s_screen] = ray.side;
 		s_screen++;
 	}
 }

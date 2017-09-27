@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 18:37:44 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/27 18:52:43 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/27 19:11:18 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,16 @@ void		sprite_search(t_env *e, t_player *player)
 	float sp;
 	my = (atan2f(player->dir.y, player->dir.x) * 180 / 3.1514);
 	sp = (atan2f(rela.y, rela.x) * 180 / 3.1514);
-	printf("My [%.2f] Sp [%.2f]\n", my, sp);
 	float dif;
 	dif = sp - my;
-	printf("Dif %.2f\n", dif);
 	float perc;
 
 	dif += 33;
 	dif /= 100;
 	perc = player->len_screen / 0.66;
 	perc = perc * dif;
-	if (perc > 0 && perc < e->width)
-	{
-		e->sprite[0].hit = 1;
+//	if (perc > 0 && perc < e->width)
+//	{
 		e->sprite[0].col = (int)perc;
 		float dist = (float)1 / ((float)33);
 		dist = dist * (float)(dif * 100) - 1;
@@ -48,6 +45,14 @@ void		sprite_search(t_env *e, t_player *player)
 		e->to.y1 = player->pos.y * lt;
 		e->to.x2 = (player->pos.x + ray_dir.x) * lt;
 		e->to.y2 = (player->pos.y + ray_dir.y) * lt;
-		mlxji_draw_line(e->img, &e->to, 0x0FFFF0);
-	}
+	//	mlxji_draw_line(e->img, &e->to, 0x0FFFF0);
+/*		if ((int)perc >0 && (int)perc < e->width && e->side_touch[(int)perc] == 'x')
+			e->sprite[0].dist = rela.x / ray_dir.x;
+		else
+			e->sprite[0].dist = rela.y / ray_dir.y;*/
+		e->sprite[0].dist = sqrt(pow(rela.x, 2) + pow(rela.y, 2));
+		int len_sprite = e->sprite[0].len_min / e->sprite[0].dist;
+		if ((int)perc + len_sprite >=0 || (int)perc - len_sprite < e->width)
+			e->sprite[0].hit = 1;
+//	}
 }

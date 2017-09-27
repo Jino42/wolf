@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/27 18:49:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/27 19:11:35 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ typedef struct	s_env
 	int			key[269];
 
 	float		dist[WIN_WIDTH + 10];//////
+	int			side_touch[WIN_WIDTH + 10];//////
 	t_fps		fps;
 	t_map		map;
 	t_radar		radar;
