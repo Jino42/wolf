@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 22:41:17 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/27 18:51:38 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,18 +129,9 @@ void		raycast_wolf(t_env *e, t_player *player)
 	float		cam;
 	float		s_screen;
 	t_ray		ray;
-	t_fvector2d rela;
-	int loc;
 
-	rela.x = e->sprite[0].pos.x - e->player.pos.x;
-	rela.y = e->sprite[0].pos.y - e->player.pos.y;
-
-	int angle;
-	angle = (int)(atan2f(rela.y, rela.x) * 300);
-	e->sprite[0].hit = 0;
 	ft_bzero(&ray, sizeof(t_ray));
 	s_screen = 0;
-	loc = 0;//
 	while (s_screen < e->player.len_screen + 2)
 	{
 		cam = (s_screen * 2) / player->len_screen - 1; //inter [-1 1]
@@ -153,20 +144,6 @@ void		raycast_wolf(t_env *e, t_player *player)
 		if (e->flag & F_3D)
 			raycast_wolf_aff_3d(e, &ray, s_screen);
 		e->dist[(int)s_screen] = ray.dist_wall;
-		if (!e->sprite[0].hit)
-		{
-		   	loc	= (int)(atan2f(ray_dir.y, ray_dir.x) * 300);
-			if (loc == angle)
-			{
-				e->sprite[0].col = s_screen;
-				if (ray.side == 'x')
-					e->sprite[0].dist = rela.x / ray.dir.x;
-				else
-					e->sprite[0].dist = rela.y / ray.dir.y;
-				e->sprite[0].hit = 1;
-			}
-			
-		}
 		s_screen++;
 	}
 }

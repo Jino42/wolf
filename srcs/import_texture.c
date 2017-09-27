@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:12:57 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 21:45:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/27 16:43:53 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	temp(t_env *e, int itex, char *path)
 	read(fd, &e->sprite[itex].len_y, sizeof(int));
 	size_tex = e->sprite[itex].len_x * e->sprite[itex].len_y * 4;
 	ft_printf("%i %i _ %i\n", size_tex, e->sprite[itex].len_x, e->sprite[itex].len_x);
+	e->sprite[itex].len_min = ft_min(e->sprite[itex].len_x, e->sprite[itex].len_y);
 	if (itex && (e->sprite[itex].len_x > TEX_MAX ||
 			e->sprite[itex].len_x > TEX_MAX ||
 			e->sprite[itex].len_y < 0 || e->sprite[itex].len_y < 0))

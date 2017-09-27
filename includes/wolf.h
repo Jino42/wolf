@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 21:43:03 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/27 18:49:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct	s_sprite
 	int			col;
 	int			len_x;
 	int			len_y;
+	int			len_min;
 	int			hit;
 	float		dist;
 	char		*sprite;
@@ -185,8 +186,12 @@ void			radar(t_env *e);
 void			radar_full_screen(t_env *e);
 void			raycast_wolf(t_env *e, t_player *player);
 
+void			sprite_wolf(t_env *e, t_sprite *sprite, t_player *player);
+
 int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 void			init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
+
+void			sprite_search(t_env *e, t_player *player);
 
 int				round_to_inf(float nb);
 int				round_to_up(float nb);
