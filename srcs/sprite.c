@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 16:39:25 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 00:06:17 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:22:27 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@ static void	set_sprite(t_env *e)
 }
 */
 
-void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
+void		sprite_wolf(t_env *e, t_sprite *sprite)
 {
 	int len_sprite;
 
 	if (!sprite->hit)
 		return ;
 
-	(void)player;
 	float len;
 	float len_pp;
 
@@ -72,5 +71,4 @@ void		sprite_wolf(t_env *e, t_sprite *sprite, t_player *player)
 		e->to.x1++;
 		x += len_xp;
 	}
-	ft_printf("Len %i\n", len_sprite);
 }

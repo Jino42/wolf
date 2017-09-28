@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/27 19:11:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 15:55:05 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ typedef struct	s_ivector2d
 typedef struct	s_sprite
 {
 	t_fvector2d	pos;
+	t_fvector2d	rela;
+	t_fvector2d	ray_dir;
+	int			spe_angle;
 	int			col;
 	int			len_x;
 	int			len_y;
@@ -158,15 +161,12 @@ typedef struct	s_env
 	int			key[269];
 
 	float		dist[WIN_WIDTH + 10];//////
-	int			side_touch[WIN_WIDTH + 10];//////
 	t_fps		fps;
 	t_map		map;
 	t_radar		radar;
 	t_player	player;
 	t_tex		tex[NB_TEX];
 	t_sprite	sprite[NB_SPRITE];
-	t_fvector2d wall;
-	t_fvector2d endw;
 	int			size_side;
 	int			size_half_side;
 	int			rez;
@@ -187,7 +187,7 @@ void			radar(t_env *e);
 void			radar_full_screen(t_env *e);
 void			raycast_wolf(t_env *e, t_player *player);
 
-void			sprite_wolf(t_env *e, t_sprite *sprite, t_player *player);
+void			sprite_wolf(t_env *e, t_sprite *sprite);
 
 int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 void			init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);

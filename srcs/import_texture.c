@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:12:57 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/27 16:43:53 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 15:15:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int		import_texture(t_env *e)
 		return (0);
 	//import sprite
 	temp(e, 0, "mob.img");
+	temp(e, 1, "sprite_lol.img");
 	return (1);
 }

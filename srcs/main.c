@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 21:43:28 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 15:31:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,10 @@ int			main(int argc, char **argv)
 	//temp
 	e.sprite[0].pos.x = 6.5;
 	e.sprite[0].pos.y = 4.1;
-	e.wall.x = 6.5;
-	e.wall.y = 4.1;
-	e.endw.x = 7.5;
-	e.endw.y = 8.1;
-	ft_printf("Bef\n");
+	e.sprite[1].pos.x = 8.2;
+	e.sprite[1].pos.y = 7.77;
 	if (!(import_texture(&e)))
 		return (ft_ret_error("Erreur de textures\n")); //free	
-	ft_printf("Aff\n");
 	mlx_loop_hook(e.mlx, &loop, &e);
 	mlx_loop(e.mlx);
 	return (0);

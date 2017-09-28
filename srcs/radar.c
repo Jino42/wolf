@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/26 21:44:45 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 15:46:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static void		draw_fov(t_env *e, t_player *player, int len_tile)
 	mlxji_draw_line(e->img, &e->to, COL_GREEN_CLEAR);
 }
 
-static void		draw_vector_dir(t_env *e, t_player *player, int len_tile)
+static void		draw_vector_on_player(t_env *e, t_fvector2d *vec, int len_tile, int col)
 {
-	e->to.x1 = player->pos.x * len_tile;
-	e->to.y1 = player->pos.y * len_tile;
-	e->to.x2 = (player->pos.x + player->dir.x) * len_tile;
-	e->to.y2 = (player->pos.y + player->dir.y) * len_tile;
-	mlxji_draw_line(e->img, &e->to, COL_ORANGE_CLEAR);
+	e->to.x1 = e->player.pos.x * len_tile;
+	e->to.y1 = e->player.pos.y * len_tile;
+	e->to.x2 = (e->player.pos.x + vec->x) * len_tile;
+	e->to.y2 = (e->player.pos.y + vec->y) * len_tile;
+	mlxji_draw_line(e->img, &e->to, col);
 }
 
 static void		draw_pos_player(t_env *e, t_player *player, int len_tile)
@@ -82,7 +82,7 @@ static void		draw_sprite(t_env *e, t_sprite *sprite, int len_tile)
 	int		coef;
 	float	range_player;
 
-	range_player = len_tile / 6;
+	range_player = len_tile >> 3;
 	coef = len_tile * (sprite->pos.x - (int)sprite->pos.x);
 	e->to.x1 = (int)sprite->pos.x * len_tile + coef - range_player;
 	e->to.x2 = (int)sprite->pos.x * len_tile + coef + range_player;
@@ -90,29 +90,23 @@ static void		draw_sprite(t_env *e, t_sprite *sprite, int len_tile)
 	e->to.y1 = (int)sprite->pos.y * len_tile + coef - range_player;
 	e->to.y2 = (int)sprite->pos.y * len_tile + coef + range_player;
 	mlxji_draw_case(e->img, &e->to, COL_EN_2D);
-}
-
-void	draw_line(t_env *e, t_player *player, int lt)
-{
-	(void)player;
-
-	e->to.x1 = e->wall.x * lt;
-	e->to.x2 = e->endw.x * lt ;
-	e->to.y1 = e->wall.y* lt;
-	e->to.y2 = e->endw.y *lt;
-	mlxji_draw_line(e->img, &e->to, COL_EN_2D);
+	draw_vector_on_player(e, &sprite->ray_dir, len_tile, 0x00F0BC);
 }
 
 void			radar(t_env *e)
 {
 	t_radar *radar;
+	int		i;
 
 	radar = &e->radar;
-	//if (0)
-		draw_map(e, radar->lt);
-	draw_line(e, &e->player, radar->lt);
+	draw_map(e, radar->lt);
 	draw_pos_player(e, &e->player, radar->lt);
 	draw_fov(e, &e->player, radar->lt);
-	draw_vector_dir(e, &e->player, radar->lt);
-	draw_sprite(e, &e->sprite[0], radar->lt);
+	draw_vector_on_player(e, &e->player.dir, radar->lt, 0x70F188);
+	i = 0;
+	while (i < NB_SPRITE)
+	{
+		draw_sprite(e, &e->sprite[i], radar->lt);
+		i++;
+	}
 }
