@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 15:55:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 17:29:27 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,18 @@
 # define NB_SPRITE 2
 
 # define SIZE_REALLOC_MAP 10
+
+typedef struct	s_tool_sprite
+{
+	float		len_y;
+	float		len_pp_y;
+	float		len_pp_x;
+	float		x;
+	int			len_sprite;
+	int			i;
+	int			start_y;
+	int			col;
+}				t_ts;
 
 typedef struct	s_tex
 {
