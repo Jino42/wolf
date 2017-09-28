@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 22:34:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 23:04:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ typedef struct	s_radar
 
 typedef struct	s_fps
 {
+	struct timeval	step2;
 	struct timeval	step;
 	struct timeval	cur;
 	int				fps;
@@ -179,6 +180,7 @@ typedef struct	s_env
 	float		dist[WIN_WIDTH + 10];//////
 	t_ray		ray;
 	t_fps		fps;
+	float		time_frame;
 	t_map		map;
 	t_radar		radar;
 	t_player	player;

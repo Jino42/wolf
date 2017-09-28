@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 22:28:39 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 23:12:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 **Besoin de voir Sin Cos omgbb
 */
 
-void		update_fps(t_fps *fps)
+static void	update_fps(t_env *e, t_fps *fps)
 {
+	gettimeofday(&fps->step2, NULL);
+	//dif seconde too 
+	e->time_frame = (float)(fps->step2.tv_usec - fps->cur.tv_usec) / 1000000;
 	gettimeofday(&fps->cur, NULL);
 	if (fps->cur.tv_sec - fps->step.tv_sec)
 	{
@@ -55,10 +58,13 @@ void		vec_test(t_env *e)
 	int i;
 	t_sprite *sprite;
 	float	speed;
+	float delta_frame;
 
+	delta_frame = 0.017;
 	t_fvector2d temp;
 	speed = 2;
-	float delta_frame = 0.017;
+//	if (e->fps.ret_fps)
+//		delta_frame = 1 / (float)e->fps.ret_fps;
 	t_fvector2d vel;
 	t_fvector2d nor;
 	t_fvector2d dist;
@@ -75,7 +81,6 @@ void		vec_test(t_env *e)
 		vel.y = nor.y * speed;
 		temp.x = sprite->pos.x + vel.x * delta_frame;
 		temp.y = sprite->pos.y + vel.y * delta_frame;
-//		printf("Vec %.2f, %.2f\n", vel.x, vel.y);
 		if (e->map.map[(int)sprite->pos.y][(int)temp.x] == B_VOID)
 			sprite->pos.x = temp.x;
 		if (e->map.map[(int)temp.y][(int)sprite->pos.x] == B_VOID)
@@ -86,7 +91,7 @@ void		vec_test(t_env *e)
 
 int			loop(t_env *e)
 {
-	update_fps(&e->fps);
+	update_fps(e, &e->fps);
 	update_key_event(e);
 	update_sprite_position(e, &e->player);
 	ft_bzero(e->img->data, e->height * e->width * 4);

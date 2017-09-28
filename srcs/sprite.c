@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 16:39:25 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 17:30:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 23:19:00 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	loop_w(t_env *e, t_sprite *sprite, t_ts *ts)
 					break ;
 				ts->col = *((int *)&sprite->sprite[((int)ts->x << 2) +
 						ts->i * (sprite->len_x << 2)]);
+				if (ts->col != 0xFFFFFF)
 				mlxji_draw_y_line(e->img, &e->to, ts->col);
 				ts->len_y += ts->len_pp_y;
 				ts->i++;
