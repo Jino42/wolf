@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 17:29:27 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 22:34:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 # define NB_TEX 2
 
 # define NB_SPRITE 2
+
+# define ITEM_SEGFAULT -1
 
 # define SIZE_REALLOC_MAP 10
 
@@ -97,6 +99,8 @@ typedef struct	s_sprite
 	t_fvector2d	pos;
 	t_fvector2d	rela;
 	t_fvector2d	ray_dir;
+	t_fvector2d dir;
+	int			item;
 	int			spe_angle;
 	int			col;
 	int			len_x;
@@ -173,6 +177,7 @@ typedef struct	s_env
 	int			key[269];
 
 	float		dist[WIN_WIDTH + 10];//////
+	t_ray		ray;
 	t_fps		fps;
 	t_map		map;
 	t_radar		radar;
@@ -204,21 +209,26 @@ void			sprite_wolf(t_env *e, t_sprite *sprite);
 int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 void			init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 
-void			sprite_search(t_env *e, t_player *player);
-
 int				round_to_inf(float nb);
 int				round_to_up(float nb);
 int				ft_max(int a, int b);
 int				ft_min(int a, int b);
 
-int				mlxji_rgb_to_int(t_px *col);
-void			mlxji_draw_case(t_img *img, t_pxtopx *px, int col);
-void			mlxji_draw_y_line(t_img *img, t_pxtopx *to, int col);
-void			mlxji_draw_x_line(t_img *img, t_pxtopx *to, t_px *px);
 void			fvector_rotation(t_fvector2d *vec, float rotation);
 
 void			init_var(t_env *e);
 void			init_env(t_env *e);
 int				init_map(t_env *e, char *s);
+
+void			sprite_hit(t_env *e, t_ray *ray, int s_screen);
+
+void			raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast);
+
+
+float			fvector2d_magnitude(t_fvector2d vec);
+float			fvector2d_distance(t_fvector2d a, t_fvector2d b);
+t_fvector2d		fvector2d_normalized(t_fvector2d vec);
+void			fvector2d_normalize(t_fvector2d *vec);
+char			fvector2d_aequals(t_fvector2d a, t_fvector2d b);
 
 #endif

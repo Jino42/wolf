@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 15:54:46 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/28 22:28:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,42 @@ void		update_sprite_position(t_env *e, t_player *player)
 	}
 }
 
+void		vec_test(t_env *e)
+{
+	t_player *player;
+	player = &e->player;
+	int i;
+	t_sprite *sprite;
+	float	speed;
+
+	t_fvector2d temp;
+	speed = 2;
+	float delta_frame = 0.017;
+	t_fvector2d vel;
+	t_fvector2d nor;
+	t_fvector2d dist;
+	i = 0;
+	while (i < NB_SPRITE)
+	{
+		sprite = &e->sprite[i];
+		dist.x = e->player.pos.x - sprite->pos.x;
+		dist.y = e->player.pos.y - sprite->pos.y;
+		float len = sqrt(fabs(dist.x)*2 + fabs(dist.y)*2);
+		nor.x = dist.x / len;
+		nor.y = dist.y / len;
+		vel.x = nor.x * speed;
+		vel.y = nor.y * speed;
+		temp.x = sprite->pos.x + vel.x * delta_frame;
+		temp.y = sprite->pos.y + vel.y * delta_frame;
+//		printf("Vec %.2f, %.2f\n", vel.x, vel.y);
+		if (e->map.map[(int)sprite->pos.y][(int)temp.x] == B_VOID)
+			sprite->pos.x = temp.x;
+		if (e->map.map[(int)temp.y][(int)sprite->pos.x] == B_VOID)
+			sprite->pos.y = temp.y;
+		i++;
+	}
+}
+
 int			loop(t_env *e)
 {
 	update_fps(&e->fps);
@@ -55,10 +91,10 @@ int			loop(t_env *e)
 	update_sprite_position(e, &e->player);
 	ft_bzero(e->img->data, e->height * e->width * 4);
 	raycast_wolf(e, &e->player);
-	sprite_search(e, &e->player);
 	sprite_wolf(e, &e->sprite[0]);
 	sprite_wolf(e, &e->sprite[1]);
 	radar(e);
+	vec_test(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	return (1);
 }

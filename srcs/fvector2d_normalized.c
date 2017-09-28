@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_search.c                                    :+:      :+:    :+:   */
+/*   fvector2d_normalized.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/27 18:37:44 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 15:09:57 by ntoniolo         ###   ########.fr       */
+/*   Created: 2017/09/28 20:53:54 by ntoniolo          #+#    #+#             */
+/*   Updated: 2017/09/28 20:56:43 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		sprite_search(t_env *e, t_player *player)
+t_fvector2d		fvector2d_normalized(t_fvector2d vec)
 {
-	(void)e;(void)player;
+	t_fvector2d new;
+
+	new.x = vec.x / fvector2d_magnitude(vec);
+	new.y = vec.y / fvector2d_magnitude(vec);
+	return (new);
 }
