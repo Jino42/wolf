@@ -61,7 +61,8 @@ typedef struct	s_tool_sprite
 	float		len_pp_y;
 	float		len_pp_x;
 	float		x;
-	int			len_sprite;
+	int			len_sprite_y;
+	int			len_sprite_x;
 	int			i;
 	int			start_y;
 	int			col;
@@ -175,7 +176,7 @@ typedef struct	s_env
 	int			height;
 	int			width;
 
-	int			key[269];
+	int			key[69999];//269];
 
 	float		dist[WIN_WIDTH + 10];//////
 	t_ray		ray;
@@ -189,6 +190,7 @@ typedef struct	s_env
 	int			size_side;
 	int			size_half_side;
 	int			rez;
+	long		s;
 }				t_env;
 
 int				loop(t_env *e);

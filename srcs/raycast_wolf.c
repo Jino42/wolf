@@ -29,9 +29,6 @@ void		raycast_wolf(t_env *e, t_player *player)
 	float		cam;
 	float		s_screen;
 
-	int loc;
-
-	loc = 0;
 	ft_bzero(&e->ray, sizeof(t_ray));
 	s_screen = 0;
 	while (s_screen < e->player.len_screen + 2)

@@ -20,7 +20,8 @@ void		init_env(t_env *e)
 	e->size_side = e->height;
 	e->size_half_side = e->height / 2;
 	e->flag |= F_3D;
-	e->rez = (1 << 6) ;
+	e->rez = (1 << 6);
+	e->time_frame = 0.017;
 }
 
 static void	init_radar(t_env *e, t_radar *radar)
@@ -39,8 +40,8 @@ static void	init_player(t_env *e, t_player *player)
 	(void)e;
 	player->pos.x = 3.2;
 	player->pos.y = 4.1;
-	player->move_speed = 0.05;
-	player->rotate_speed = 0.03;
+	player->move_speed = 3;
+	player->rotate_speed = 0.04;
 	player->dir.x = 1;
 	player->plan.y = 0.66;
 	player->len_screen = e->width;

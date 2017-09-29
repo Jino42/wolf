@@ -103,7 +103,7 @@ typedef struct	s_xvar
   Colormap	cmap;
   int		private_cmap;
   t_win_list	*win_list;
-  int		(*loop_hook)();
+  int		(*loop_hook)(void *);
   void		*loop_param;
   int		use_xshm;
   int		pshm_format;
@@ -119,6 +119,7 @@ int	mlx_int_anti_resize_win();
 int	mlx_int_wait_first_expose();
 int	mlx_int_rgb_conversion();
 int	mlx_int_deal_shm();
+int	mlx_int_set_win_event_mask(t_xvar *xvar);
 void	*mlx_int_new_xshm_image();
 char    **mlx_int_str_to_wordtab();
 void	*mlx_new_image();

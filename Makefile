@@ -55,12 +55,12 @@ DIR_LFT = libft/
 
 DIR_MLXJI = libmlxji/
 
-#DIR_MLX = minilibx/
-DIR_MLX = minilibxcaptain/
+DIR_MLX = minilibx/
+#DIR_MLX = minilibxcaptain/
 #DIR_MLX = minilibx_macos/
 
-FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
-#FRAMEWORK = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -lm
+#FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
+FRAMEWORK = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -lm
 
 DIR_LIB = libs/
 

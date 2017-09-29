@@ -32,7 +32,7 @@
 #define	MLX_H
 
 
-void	*mlx_init();
+void	*mlx_init(void);
 /*
 **  needed before everything else.
 **  return (void *)0 if failed
@@ -85,7 +85,7 @@ int	mlx_mouse_hook (void *win_ptr, int (*funct_ptr)(), void *param);
 int	mlx_key_hook (void *win_ptr, int (*funct_ptr)(), void *param);
 int	mlx_expose_hook (void *win_ptr, int (*funct_ptr)(), void *param);
 
-int	mlx_loop_hook (void *mlx_ptr, int (*funct_ptr)(), void *param);
+int	mlx_loop_hook (void *mlx_ptr, int (*funct_ptr)(void *), void *param);
 int	mlx_loop (void *mlx_ptr);
 
 

@@ -14,14 +14,14 @@
 
 int			event_key_on(int keycode, t_env *e)
 {
-	if (keycode == 53)
+	if (keycode == 53 || keycode == 65307)//
 		exit(end_of_program(e, NULL));
 	if (keycode)
 		e->key[keycode] = 1;
-	if (keycode == 6)
+	if (keycode == 6 || keycode == 99)//
 		e->flag & F_AFF_BASIC ? (e->flag ^= F_AFF_BASIC) :
 								(e->flag |= F_AFF_BASIC);
-	if (keycode == 7)
+	if (keycode == 7 || keycode == 120)
 	{
 		e->flag & F_3D ? (e->flag ^= F_3D) : (e->flag |= F_3D);
 		if (e->flag & F_3D)

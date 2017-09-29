@@ -20,8 +20,12 @@
 static void	update_fps(t_env *e, t_fps *fps)
 {
 	gettimeofday(&fps->step2, NULL);
-	//dif seconde too 
-	e->time_frame = (float)(fps->step2.tv_usec - fps->cur.tv_usec) / 1000000;
+	if (e->s)
+	{
+		e->time_frame = (float)(fps->step2.tv_usec - fps->cur.tv_usec) / 1000000;
+		if (fps->cur.tv_sec != fps->step2.tv_sec)
+			e->time_frame = (float)(fps->step2.tv_usec + (1000000 - fps->cur.tv_usec)) / 1000000;
+	}
 	gettimeofday(&fps->cur, NULL);
 	if (fps->cur.tv_sec - fps->step.tv_sec)
 	{
@@ -29,6 +33,7 @@ static void	update_fps(t_env *e, t_fps *fps)
 		ft_printf("FPS [%i]\n", fps->ret_fps);
 		fps->fps = 0;
 		gettimeofday(&fps->step, NULL);
+		e->s++;
 	}
 	fps->fps++;
 }
@@ -51,22 +56,20 @@ void		update_sprite_position(t_env *e, t_player *player)
 	}
 }
 
+/*
+** Vector target ?
+** By the tip, what do we do ?
+*/
+
 void		vec_test(t_env *e)
 {
-	t_player *player;
-	player = &e->player;
 	int i;
 	t_sprite *sprite;
 	float	speed;
-	float delta_frame;
 
-	delta_frame = 0.017;
 	t_fvector2d temp;
 	speed = 2;
-//	if (e->fps.ret_fps)
-//		delta_frame = 1 / (float)e->fps.ret_fps;
 	t_fvector2d vel;
-	t_fvector2d nor;
 	t_fvector2d dist;
 	i = 0;
 	while (i < NB_SPRITE)
@@ -74,13 +77,10 @@ void		vec_test(t_env *e)
 		sprite = &e->sprite[i];
 		dist.x = e->player.pos.x - sprite->pos.x;
 		dist.y = e->player.pos.y - sprite->pos.y;
-		float len = sqrt(fabs(dist.x)*2 + fabs(dist.y)*2);
-		nor.x = dist.x / len;
-		nor.y = dist.y / len;
-		vel.x = nor.x * speed;
-		vel.y = nor.y * speed;
-		temp.x = sprite->pos.x + vel.x * delta_frame;
-		temp.y = sprite->pos.y + vel.y * delta_frame;
+		vel.x = fvector2d_normalized(dist).x * speed;
+		vel.y = fvector2d_normalized(dist).y * speed;
+		temp.x = sprite->pos.x + vel.x * e->time_frame;
+		temp.y = sprite->pos.y + vel.y * e->time_frame;
 		if (e->map.map[(int)sprite->pos.y][(int)temp.x] == B_VOID)
 			sprite->pos.x = temp.x;
 		if (e->map.map[(int)temp.y][(int)sprite->pos.x] == B_VOID)

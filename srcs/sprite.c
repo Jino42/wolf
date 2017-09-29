@@ -19,11 +19,12 @@
 
 static void	sprite_init_tool(t_env *e, t_sprite *sprite, t_ts *ts)
 {
-	ts->len_sprite = sprite->len_min / sprite->dist;
-	e->to.x1 = (sprite->col - (ts->len_sprite >> 1));
-	e->to.x2 = (sprite->col + (ts->len_sprite >> 1));
-	e->to.y1 = (e->size_half_side - (ts->len_sprite >> 1));
-	e->to.y2 = (e->size_half_side + (ts->len_sprite >> 1));
+	ts->len_sprite_x = sprite->len_x / sprite->dist;
+	ts->len_sprite_y = sprite->len_y / sprite->dist;
+	e->to.x1 = (sprite->col - (ts->len_sprite_x >> 1));
+	e->to.x2 = (sprite->col + (ts->len_sprite_x >> 1));
+	e->to.y1 = (e->size_half_side - (ts->len_sprite_y >> 1));
+	e->to.y2 = (e->size_half_side + (ts->len_sprite_y >> 1));
 	if (e->to.x2 >= e->width)
 		e->to.x2 = e->width - 1;
 	if (e->to.y1 < 0)
@@ -32,8 +33,8 @@ static void	sprite_init_tool(t_env *e, t_sprite *sprite, t_ts *ts)
 	ts->len_y = 0;
 	ts->x = 0;
 	ts->start_y = e->to.y1;
-	ts->len_pp_y = (float)ts->len_sprite / sprite->len_min;
-	ts->len_pp_x = (float)sprite->len_min / ts->len_sprite;
+	ts->len_pp_y = (float)ts->len_sprite_y / sprite->len_y;
+	ts->len_pp_x = (float)sprite->len_x / ts->len_sprite_x;
 }
 
 static void	loop_w(t_env *e, t_sprite *sprite, t_ts *ts)
@@ -45,7 +46,7 @@ static void	loop_w(t_env *e, t_sprite *sprite, t_ts *ts)
 			ts->i = 0;
 			ts->len_y = 0;
 			e->to.y2 = ts->start_y;
-			while (ts->len_y < ts->len_sprite)
+			while (ts->len_y < ts->len_sprite_y)
 			{
 				e->to.y1 = e->to.y2;
 				e->to.y2 = ts->start_y + ts->len_y;

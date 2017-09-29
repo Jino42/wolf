@@ -61,7 +61,7 @@ int		import_texture(t_env *e)
 {
 	if (!(import(e, 0, "skybox")))
 		return (0);
-	if (!(import(e, 1, "fichier.img")))
+	if (!(import(e, 1, "wall.img")))
 		return (0);
 	//import sprite
 	temp(e, 0, "mob.img");
