@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:51:54 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 19:20:47 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/01 19:27:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void		raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 	start_y = e->size_half_side - height_half_wall + e->player.jump;
 	end_y = height_half_wall + e->size_half_side + e->player.jump;
 	len_pp = (float)(end_y - start_y) /
-		ft_min(e->tex[1].height, e->tex[1].width);
+			ft_min(e->tex[1].height, e->tex[1].width);
 	if (e->flag & F_AFF_BASIC)
 		aff_3d_basic(e, nb_cast, start_y, end_y);
 	else
