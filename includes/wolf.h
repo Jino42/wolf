@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 16:58:45 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/01 18:21:29 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ int				event_key_off(int keycode, t_env *e);
 void			radar(t_env *e);
 void			radar_full_screen(t_env *e);
 void			raycast_wolf(t_env *e, t_player *player);
+void			raycast_wolf_ar(t_env *e, t_player *player);
 
 void			sprite_wolf(t_env *e, t_sprite *sprite);
 
@@ -230,6 +231,7 @@ int				init_map(t_env *e, char *s);
 void			sprite_hit(t_env *e, t_ray *ray, int s_screen);
 
 void			raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast);
+void			raycast_wolf_aff_3d_ar(t_env *e, t_ray *ray, int nb_cast);
 
 
 float			fvector2d_magnitude(t_fvector2d vec);

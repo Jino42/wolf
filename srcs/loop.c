@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 16:34:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/01 19:18:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ int			loop(t_env *e)
 	update_fps(e, &e->fps);
 	update_key_event(e);
 	update_sprite_position(e, &e->player);
-	ft_bzero(e->img->data, e->height * e->width * 4);
 	raycast_wolf(e, &e->player);
+	ft_bzero(e->img->data, e->width * 100 * 4);
+	raycast_wolf_ar(e, &e->player);
 	sprite_wolf(e, &e->sprite[0]);
 	sprite_wolf(e, &e->sprite[1]);
 	radar(e);

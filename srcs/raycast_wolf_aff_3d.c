@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:51:54 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 16:48:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/01 19:20:47 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,72 @@ static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int end)
 	}
 }
 
+static void	aff_3d_sol(t_env *e, t_ray *ray, int nb_cast, int start)
+{
+	t_pxtopx	to;
+
+	(void)ray;
+	to.x1 = nb_cast + 1;
+	to.y1 = start;
+	to.y2 = e->height - 1;
+	mlxji_draw_y_line(e->img, &to, 0);
+}
+
+static void	aff_3d_text_ar(t_env *e, int nb_cast,
+		int start_y, float len_pp, t_ray *ray)
+{
+	float		len;
+	int			i;
+	int			place_x;
+	int			icol;
+	t_pxtopx to;
+
+	ft_bzero(&to, sizeof(t_pxtopx));
+	to.x1 = nb_cast + 1;
+	to.y2 = start_y;
+	place_x = (ray->percent_wall * e->tex[1].width);
+	i = -1;
+	len = 0;
+	while (++i < ft_min(e->tex[1].height, e->tex[1].width))
+	{
+		to.y1 = to.y2;
+		to.y2 = start_y + len;
+		if (to.y2 > 0)
+		{
+			if (to.y1 < 0)
+				to.y1 = 0;
+			icol = *((int *)&e->tex[1].tex[(place_x << 2) + i *
+					(e->tex[1].width << 2)]);
+			if (to.y2 >= e->size_side)
+				to.y2 = e->size_side - 1;
+			mlxji_draw_y_line(e->img, &to, icol);
+		}
+		len += len_pp;
+	}
+}
+
+void		raycast_wolf_aff_3d_ar(t_env *e, t_ray *ray, int nb_cast)
+{
+	int		height_half_wall;
+	int		start_y;
+	int		end_y;
+	float	len_pp;
+
+	height_half_wall = 200 / ray->dist_wall / 2;
+	start_y = 100 - height_half_wall;
+	end_y = height_half_wall + 100;
+	if (start_y < 0)
+		start_y = 0;
+	if (end_y > 200)
+		end_y = 200;
+	len_pp = (float)(end_y - start_y) /
+		ft_min(e->tex[1].height, e->tex[1].width);
+	if (e->flag & F_AFF_BASIC)
+		aff_3d_basic(e, nb_cast, start_y, end_y);
+	else
+		aff_3d_text_ar(e, nb_cast, start_y, len_pp, ray);
+}
+
 void		raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 {
 	int		height_half_wall;
@@ -110,4 +176,5 @@ void		raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 	if (start_y < 0)
 		start_y = 0;
 	aff_3d_sky(e, ray, nb_cast, start_y);
+	aff_3d_sol(e, ray, nb_cast, end_y);
 }
