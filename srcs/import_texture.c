@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:12:57 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 23:10:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/09/30 15:56:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		import_texture(t_env *e)
 {
 	if (!(import(e, 0, "skybox")))
 		return (0);
-	if (!(import(e, 1, "wall.img")))
+	if (!(import(e, 1, "wall_herbe.img")))
 		return (0);
 	//import sprite
 	temp(e, 0, "mob.img");

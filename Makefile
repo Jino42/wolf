@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/09/28 22:26:15 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/09/30 14:43:12 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,12 +55,12 @@ DIR_LFT = libft/
 
 DIR_MLXJI = libmlxji/
 
-DIR_MLX = minilibx/
+#DIR_MLX = minilibx/
 #DIR_MLX = minilibxcaptain/
-#DIR_MLX = minilibx_macos/
+DIR_MLX = minilibx_macos/
 
-#FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
-FRAMEWORK = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -lm
+FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
+#FRAMEWORK = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -lm
 
 DIR_LIB = libs/
 

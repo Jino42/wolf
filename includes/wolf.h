@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 23:04:44 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/01 16:58:45 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../libft/includes/libft.h"
 #include "../libmlxji/includes/mlxji.h"
 #include <stdio.h> ////////////
+#include <pthread.h>
 #include "mlx.h"
 #include <math.h>
 #include <sys/types.h>
@@ -54,6 +55,8 @@
 # define ITEM_SEGFAULT -1
 
 # define SIZE_REALLOC_MAP 10
+
+# define NB_THREAD 4
 
 typedef struct	s_tool_sprite
 {

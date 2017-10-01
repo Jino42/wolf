@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:51:54 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 18:16:08 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/01 16:48:05 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,48 @@
 
 static void	aff_3d_basic(t_env *e, int nb_cast, int start_y, int end_y)
 {
+	t_pxtopx to;
+
+	ft_bzero(&to, sizeof(t_pxtopx));
 	if (end_y >= e->size_side)
 		end_y = e->size_side - 1;
 	if (start_y < 0)
 		start_y = 0;
-	e->to.x1 = (nb_cast + 1);
-	e->to.y1 = start_y;
-	e->to.x2 = (nb_cast + 1);
-	e->to.y2 = end_y;
-	mlxji_draw_y_line(e->img, &e->to, COL_GREEN_SMOOTH);
+	to.x1 = (nb_cast + 1);
+	to.y1 = start_y;
+	to.x2 = (nb_cast + 1);
+	to.y2 = end_y;
+	mlxji_draw_y_line(e->img, &to, COL_GREEN_SMOOTH);
 }
 
 static void	aff_3d_text(t_env *e, int nb_cast,
-		int start_y, float len_pp)
+		int start_y, float len_pp, t_ray *ray)
 {
 	float		len;
 	int			i;
 	int			place_x;
+	int			icol;
+	t_pxtopx to;
 
-	e->to.x1 = nb_cast + 1;
-	e->to.y2 = start_y;
-	place_x = (e->ray.percent_wall * e->tex[1].width);
+	ft_bzero(&to, sizeof(t_pxtopx));
+	to.x1 = nb_cast + 1;
+	to.y2 = start_y;
+	place_x = (ray->percent_wall * e->tex[1].width);
 	i = -1;
 	len = 0;
 	while (++i < ft_min(e->tex[1].height, e->tex[1].width))
 	{
-		e->to.y1 = e->to.y2;
-		e->to.y2 = start_y + len;
-		if (e->to.y2 > 0)
+		to.y1 = to.y2;
+		to.y2 = start_y + len;
+		if (to.y2 > 0)
 		{
-			if (e->to.y1 < 0)
-				e->to.y1 = 0;
-			e->icol = *((int *)&e->tex[1].tex[(place_x << 2) + i *
+			if (to.y1 < 0)
+				to.y1 = 0;
+			icol = *((int *)&e->tex[1].tex[(place_x << 2) + i *
 					(e->tex[1].width << 2)]);
-			if (e->to.y2 >= e->size_side)
-				e->to.y2 = e->size_side - 1;
-			mlxji_draw_y_line(e->img, &e->to, e->icol);
+			if (to.y2 >= e->size_side)
+				to.y2 = e->size_side - 1;
+			mlxji_draw_y_line(e->img, &to, icol);
 		}
 		len += len_pp;
 	}
@@ -59,23 +65,26 @@ static void	aff_3d_sky(t_env *e, t_ray *ray, int nb_cast, int end)
 {
 	int			i;
 	int			text_x;
+	t_pxtopx	to;
+	int			icol;
 
+	ft_bzero(&to, sizeof(t_pxtopx));
 	(void)ray;
-	e->to.x1 = nb_cast + 1;
-	e->to.y2 = 0;
+	to.x1 = nb_cast + 1;
+	to.y2 = 0;
 	i = 0;
-	text_x = e->to.x1 + e->player.angle * 300;
+	text_x = to.x1 + e->player.angle * 300;
 	if (text_x < 0)
 		text_x = e->tex[TEX_SKY].width - text_x;
 	while (i < end)
 	{
-		e->to.y1 = e->to.y2;
-		e->to.y2 = e->to.y1 + 1;
-		e->icol = *((int *)&e->tex[TEX_SKY].tex[(text_x << 2) + i *
+		to.y1 = to.y2;
+		to.y2 = to.y1 + 1;
+		icol = *((int *)&e->tex[TEX_SKY].tex[(text_x << 2) + i *
 				(e->tex[TEX_SKY].width << 2)]);
-		if (e->to.y2 >= e->size_side)
-			e->to.y2 = e->size_side - 1;
-		mlxji_draw_y_line(e->img, &e->to, e->icol);
+		if (to.y2 >= e->size_side)
+			to.y2 = e->size_side - 1;
+		mlxji_draw_y_line(e->img, &to, icol);
 		i++;
 	}
 }
@@ -95,7 +104,7 @@ void		raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast)
 	if (e->flag & F_AFF_BASIC)
 		aff_3d_basic(e, nb_cast, start_y, end_y);
 	else
-		aff_3d_text(e, nb_cast, start_y, len_pp);
+		aff_3d_text(e, nb_cast, start_y, len_pp, ray);
 	if (end_y >= e->size_side)
 		end_y = e->size_side - 1;
 	if (start_y < 0)

@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/21 22:36:22 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/01 16:33:12 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static void		direction_raycast(t_ray *ray)
+void		direction_raycast(t_ray *ray)
 {
 	if (ray->dir.x < 0)
 	{
@@ -53,7 +53,7 @@ void			init_raycast(t_ray *ray, t_map *map,
 	direction_raycast(ray);
 }
 
-static int		raycast_hit(t_ray *ray)
+int		raycast_hit(t_ray *ray)
 {
 	ray->hit = 0;
 	ray->side = 0;
@@ -72,12 +72,14 @@ static int		raycast_hit(t_ray *ray)
 			ray->side = 'y';
 		}
 		if (ray->map->map[ray->pos_map.y][ray->pos_map.x] != B_VOID)
+		{
 			ray->hit = 1;
+		}
 	}
 	return (ray->hit);
 }
 
-static void		raycast_dist_wall(t_ray *ray)
+void		raycast_dist_wall(t_ray *ray)
 {
 	if (ray->side == 'x')
 		ray->dist_wall = (ray->pos_map.x - ray->start.x +
