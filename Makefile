@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/09/30 14:43:12 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/10/17 19:42:23 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ fvector2d_distance.c \
 fvector2d_normalize.c \
 fvector2d_normalized.c \
 fvector2d_aequals.c \
+event_fire.c \
 end_of_program.c
 
 OBJ_DIR = objs/

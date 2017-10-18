@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 19:18:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 21:10:20 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /*
 **Glissement sur MUR ! Car deux etape
-**Besoin de voir Sin Cos omgbb
 */
 
 static void	update_fps(t_env *e, t_fps *fps)
@@ -23,6 +22,8 @@ static void	update_fps(t_env *e, t_fps *fps)
 	if (e->s)
 	{
 		e->time_frame = (float)(fps->step2.tv_usec - fps->cur.tv_usec) / 1000000;
+		if (e->time_frame < 0.005)
+			e->time_frame = 0.005;
 		if (fps->cur.tv_sec != fps->step2.tv_sec)
 			e->time_frame = (float)(fps->step2.tv_usec + (1000000 - fps->cur.tv_usec)) / 1000000;
 	}
@@ -40,19 +41,21 @@ static void	update_fps(t_env *e, t_fps *fps)
 
 void		update_sprite_position(t_env *e, t_player *player)
 {
-	//ia move ?
 	t_sprite	*sprite;
+	t_list		*lst;
 	int			i;
 
 	i = 0;
-	while (i < NB_SPRITE)
+	lst = e->sprite;
+	while (lst)
 	{
-		sprite = &e->sprite[i];
+		sprite = lst->content;
 		sprite->rela.x = sprite->pos.x - player->pos.x;
 		sprite->rela.y = sprite->pos.y - player->pos.y;
 		sprite->spe_angle = (int)(atan2f(sprite->rela.y, sprite->rela.x) * 300);
 		sprite->hit = 0;
 		i++;
+		lst = lst->next;
 	}
 }
 
@@ -61,44 +64,99 @@ void		update_sprite_position(t_env *e, t_player *player)
 ** By the tip, what do we do ?
 */
 
+void		fvector2d_limit(t_fvector2d *a, const float limit)
+{
+	if (fvector2d_magnitude(*a) > limit)
+	{
+		fvector2d_normalize(a);
+		a->x *= limit;
+		a->y *= limit;
+	}
+	return ;
+}
+
 void		vec_test(t_env *e)
 {
 	int i;
+	t_list *lst;
 	t_sprite *sprite;
 	float	speed;
 
 	t_fvector2d temp;
 	speed = 2;
-	t_fvector2d vel;
 	t_fvector2d dist;
 	i = 0;
-	while (i < NB_SPRITE)
+	lst = e->sprite;
+	while (lst)
 	{
-		sprite = &e->sprite[i];
-		dist.x = e->player.pos.x - sprite->pos.x;
-		dist.y = e->player.pos.y - sprite->pos.y;
-		vel.x = fvector2d_normalized(dist).x * speed;
-		vel.y = fvector2d_normalized(dist).y * speed;
-		temp.x = sprite->pos.x + vel.x * e->time_frame;
-		temp.y = sprite->pos.y + vel.y * e->time_frame;
-		if (e->map.map[(int)sprite->pos.y][(int)temp.x] == B_VOID)
-			sprite->pos.x = temp.x;
-		if (e->map.map[(int)temp.y][(int)sprite->pos.x] == B_VOID)
-			sprite->pos.y = temp.y;
+		sprite = lst->content;
+		if (e->flag & SP_GRAVITY)
+		{
+			dist.x = e->player.pos.x - sprite->pos.x;
+			dist.y = e->player.pos.y - sprite->pos.y;
+			if (dist.x && dist.y)
+			{
+				sprite->acceleration.x = fvector2d_normalized(dist).x * 0.2;
+				sprite->acceleration.y = fvector2d_normalized(dist).y * 0.2;
+				sprite->velocity.x += sprite->acceleration.x;
+				sprite->velocity.y += sprite->acceleration.y;
+			}
+			else
+			{
+				sprite->velocity.x = 0.01;
+				sprite->velocity.y = 0.01;
+			}
+		}
+		fvector2d_limit(&sprite->velocity, 3);
+		//temp.x = sprite->pos.x + sprite->velocity.x * e->time_frame;
+		//temp.y = sprite->pos.y + sprite->velocity.y * e->time_frame; //Segfault background
+		temp.x = sprite->pos.x + sprite->velocity.x * e->time_frame;
+		temp.y = sprite->pos.y + sprite->velocity.y * e->time_frame;
+
+		if ((int)sprite->pos.x < e->map.len_x &&
+			(int)sprite->pos.y < e->map.len_y)
+		{
+			if (e->map.map[(int)sprite->pos.y][(int)temp.x] == B_VOID)
+				sprite->pos.x = temp.x;
+			else
+				sprite->velocity.x = -sprite->velocity.x;
+			if (e->map.map[(int)temp.y][(int)sprite->pos.x] == B_VOID)
+				sprite->pos.y = temp.y;
+			else
+				sprite->velocity.y = -sprite->velocity.y;
+		}
 		i++;
+		lst = lst->next;
 	}
+}
+
+void 		wolf_free_btree(void *item)
+{
+	(void)item;
+	return ;
 }
 
 int			loop(t_env *e)
 {
+	ft_bzero(e->apply, sizeof(int) * (WIN_WIDTH + 10));
 	update_fps(e, &e->fps);
 	update_key_event(e);
 	update_sprite_position(e, &e->player);
 	raycast_wolf(e, &e->player);
-	ft_bzero(e->img->data, e->width * 100 * 4);
-	raycast_wolf_ar(e, &e->player);
-	sprite_wolf(e, &e->sprite[0]);
-	sprite_wolf(e, &e->sprite[1]);
+	/*t_list *lst;
+
+	lst = e->sprite;
+	while (lst)
+	{
+		sprite_wolf(e, lst->content);
+		lst = lst->next;
+	}*/
+	if (e->sprite_aff)
+	{
+		btree_env_apply_infix(e, e->sprite_aff, &sprite_wolf);
+		btree_apply_free(e->sprite_aff, &wolf_free_btree);
+		e->sprite_aff = NULL;
+	}
 	radar(e);
 	vec_test(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);

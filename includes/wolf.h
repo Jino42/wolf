@@ -3,12 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 18:21:29 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 19:47:50 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+TODO
+	-BTREE SPRITE
+	-PARS ?
+	-CLEAN
+	-MAKE FINAL TEX
+	-CLEAN
+	-LEAKS
+	-REVI
+	-PUSH
+TODO
+*/
+
+
+
 
 #ifndef WOLF_H
 # define WOLF_H
@@ -23,6 +39,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/time.h>
+# include <stdbool.h>
 
 # define WIN_WIDTH 1200
 # define WIN_HEIGHT 720
@@ -35,6 +52,8 @@
 
 # define F_AFF_BASIC (1 << 0)
 # define F_3D (1 << 1)
+
+# define SP_GRAVITY (1 << 10)
 
 # define COL_RED_SMOOTH 0xDC143C
 # define COL_GREEN_SMOOTH 0x228B22
@@ -104,6 +123,8 @@ typedef struct	s_sprite
 	t_fvector2d	rela;
 	t_fvector2d	ray_dir;
 	t_fvector2d dir;
+	t_fvector2d acceleration;
+	t_fvector2d velocity;
 	int			item;
 	int			spe_angle;
 	int			col;
@@ -112,7 +133,7 @@ typedef struct	s_sprite
 	int			len_min;
 	int			hit;
 	float		dist;
-	char		*sprite;
+	t_tex		*sprite;
 }				t_sprite;
 
 typedef struct	s_ray
@@ -179,9 +200,10 @@ typedef struct	s_env
 	int			height;
 	int			width;
 
-	int			key[69999];//269];
+	int			key[269];
 
-	float		dist[WIN_WIDTH + 10];//////
+	float		dist[WIN_WIDTH + 10];
+	int			apply[WIN_WIDTH + 10];
 	t_ray		ray;
 	t_fps		fps;
 	float		time_frame;
@@ -189,7 +211,10 @@ typedef struct	s_env
 	t_radar		radar;
 	t_player	player;
 	t_tex		tex[NB_TEX];
-	t_sprite	sprite[NB_SPRITE];
+	t_list		*sprite;
+	t_btree		*sprite_aff;
+	t_tex		tex_sprite[NB_SPRITE];
+	//t_sprite	sprite[NB_SPRITE];
 	int			size_side;
 	int			size_half_side;
 	int			rez;
@@ -212,7 +237,7 @@ void			radar_full_screen(t_env *e);
 void			raycast_wolf(t_env *e, t_player *player);
 void			raycast_wolf_ar(t_env *e, t_player *player);
 
-void			sprite_wolf(t_env *e, t_sprite *sprite);
+void			sprite_wolf(void *e, void  *sprite);
 
 int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 void			init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
@@ -223,6 +248,8 @@ int				ft_max(int a, int b);
 int				ft_min(int a, int b);
 
 void			fvector_rotation(t_fvector2d *vec, float rotation);
+
+void			event_fire(t_env *e, t_player *player);
 
 void			init_var(t_env *e);
 void			init_env(t_env *e);

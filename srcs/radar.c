@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   radar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/28 15:46:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/17 18:48:51 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,13 @@ void			radar(t_env *e)
 	draw_fov(e, &e->player, radar->lt);
 	draw_vector_on_player(e, &e->player.dir, radar->lt, 0x70F188);
 	i = 0;
-	while (i < NB_SPRITE)
+	t_list *lst;
+
+	lst = e->sprite;
+	while (lst)
 	{
-		draw_sprite(e, &e->sprite[i], radar->lt);
+		draw_sprite(e, lst->content, radar->lt);
 		i++;
+		lst = lst->next;
 	}
 }

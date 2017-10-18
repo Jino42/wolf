@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_texture.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:12:57 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/09/30 15:56:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/17 18:56:40 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ static int	temp(t_env *e, int itex, char *path)
 
 	if (!(fd = open(path, O_RDONLY)))
 		return (0);
-	read(fd, &e->sprite[itex].len_x, sizeof(int));
-	read(fd, &e->sprite[itex].len_y, sizeof(int));
-	size_tex = e->sprite[itex].len_x * e->sprite[itex].len_y * 4;
-	ft_printf("%i %i _ %i\n", size_tex, e->sprite[itex].len_x, e->sprite[itex].len_x);
-	e->sprite[itex].len_min = ft_min(e->sprite[itex].len_x, e->sprite[itex].len_y);
-	if (itex && (e->sprite[itex].len_x > TEX_MAX ||
-			e->sprite[itex].len_x > TEX_MAX ||
-			e->sprite[itex].len_y < 0 || e->sprite[itex].len_y < 0))
+	read(fd, &e->tex_sprite[itex].width, sizeof(int));
+	read(fd, &e->tex_sprite[itex].height, sizeof(int));
+	size_tex = e->tex_sprite[itex].width * e->tex_sprite[itex].height * 4;
+	ft_printf("%i %i _ %i\n", size_tex, e->tex_sprite[itex].width, e->tex_sprite[itex].width);
+	//e->tex_sprite[itex].len_min = ft_min(e->tex_sprite[itex].width, e->tex_sprite[itex].height);
+	if (itex && (e->tex_sprite[itex].width > TEX_MAX ||
+			e->tex_sprite[itex].width > TEX_MAX ||
+			e->tex_sprite[itex].height < 0 || e->tex_sprite[itex].height < 0))
 		return (0);
-	if (!(e->sprite[itex].sprite = ft_memalloc(size_tex)))
+	if (!(e->tex_sprite[itex].tex = ft_memalloc(size_tex)))
 		return (0);
-	if ((read(fd, e->sprite[itex].sprite, size_tex)) != size_tex)
+	if ((read(fd, e->tex_sprite[itex].tex, size_tex)) != size_tex)
 		return (0);
 	return (1);
 }

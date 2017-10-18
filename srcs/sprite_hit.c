@@ -3,26 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_hit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:53:55 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 17:55:32 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 22:05:48 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
+float			cmp_dist(void *item, void *insert)
+{
+	return (((t_sprite *)insert)->dist -
+			((t_sprite *)item)->dist);
+}
+
 void		sprite_hit(t_env *e, t_ray *ray, int s_screen)
 {
 	t_sprite	*sprite;
-	int			i;
 	int			spe_angle_ray;
+	t_btree		*ret;
 
 	spe_angle_ray = (int)(atan2f(ray->dir.y, ray->dir.x) * 300);
-	i = 0;
-	while (i < NB_SPRITE)
+	t_list *lst;
+	lst = e->sprite;
+	while (lst)
 	{
-		sprite = &e->sprite[i];
+		sprite = lst->content;
 		if (!sprite->hit && spe_angle_ray == sprite->spe_angle)
 		{
 			sprite->col = s_screen;
@@ -31,8 +38,11 @@ void		sprite_hit(t_env *e, t_ray *ray, int s_screen)
 			else
 				sprite->dist = sprite->rela.y / ray->dir.y;
 			sprite->hit = 1;
+			if (!(ret = btree_create_leaf(sprite)))
+				exit(end_of_program(e, "Leaf doesnt create\n"));
+			btree_finsert_infix_data(&e->sprite_aff, ret->content, &cmp_dist);
 			sprite->ray_dir = ray->dir;
 		}
-		i++;
+		lst = lst->next;
 	}
 }
