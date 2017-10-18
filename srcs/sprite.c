@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 16:39:25 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 22:11:32 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:46:54 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	loop_w(t_env *e, t_sprite *sprite, t_ts *ts)
 			ts->i = 0;
 			ts->len_y = 0;
 			e->to.y2 = ts->start_y;
-			while (ts->len_y < ts->len_sprite_y)
+			while (ts->len_y < ts->len_sprite_y - 1)
 			{
 				e->to.y1 = e->to.y2;
 				e->to.y2 = ts->start_y + ts->len_y;
@@ -54,8 +54,8 @@ static void	loop_w(t_env *e, t_sprite *sprite, t_ts *ts)
 					break ;
 				ts->col = *((int *)&sprite->sprite->tex[((int)ts->x << 2) +
 						ts->i * (sprite->len_x << 2)]);
-				if (ts->col != 0xFFFFFF)
-				mlxji_draw_y_line(e->img, &e->to, ts->col);
+				if (ts->col != 0xFFFFFF && (ts->col & 0x00FF00) < 0x00EE00)
+					mlxji_draw_y_line(e->img, &e->to, ts->col);
 				ts->len_y += ts->len_pp_y;
 				ts->i++;
 			}
@@ -73,7 +73,6 @@ void		sprite_wolf(void *e, void *sprite)
 		return ;
 	if (((t_env *)e)->apply[((t_sprite*)sprite)->col])
 		return ;
-	//((t_env *)e)->apply[((t_sprite*)sprite)->col] = 1;
 	sprite_init_tool((t_env *)e, (t_sprite*)sprite, &ts);
 	loop_w((t_env *)e, (t_sprite*)sprite, &ts);
 }

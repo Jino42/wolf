@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 21:10:20 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:30:43 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void		fvector2d_limit(t_fvector2d *a, const float limit)
 
 void		vec_test(t_env *e)
 {
-	int i;
 	t_list *lst;
 	t_sprite *sprite;
 	float	speed;
@@ -85,7 +84,6 @@ void		vec_test(t_env *e)
 	t_fvector2d temp;
 	speed = 2;
 	t_fvector2d dist;
-	i = 0;
 	lst = e->sprite;
 	while (lst)
 	{
@@ -108,8 +106,6 @@ void		vec_test(t_env *e)
 			}
 		}
 		fvector2d_limit(&sprite->velocity, 3);
-		//temp.x = sprite->pos.x + sprite->velocity.x * e->time_frame;
-		//temp.y = sprite->pos.y + sprite->velocity.y * e->time_frame; //Segfault background
 		temp.x = sprite->pos.x + sprite->velocity.x * e->time_frame;
 		temp.y = sprite->pos.y + sprite->velocity.y * e->time_frame;
 
@@ -125,7 +121,6 @@ void		vec_test(t_env *e)
 			else
 				sprite->velocity.y = -sprite->velocity.y;
 		}
-		i++;
 		lst = lst->next;
 	}
 }
@@ -138,7 +133,10 @@ void 		wolf_free_btree(void *item)
 
 int			loop(t_env *e)
 {
+	if (!(e->flag & F_3D))
+		ft_bzero(e->img->data, e->width * e->height * 4);
 	ft_bzero(e->apply, sizeof(int) * (WIN_WIDTH + 10));
+	ft_bzero(e->ray_end, sizeof(t_fvector2d) * (WIN_WIDTH + 10));
 	update_fps(e, &e->fps);
 	update_key_event(e);
 	update_sprite_position(e, &e->player);

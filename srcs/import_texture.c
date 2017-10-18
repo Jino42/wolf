@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:12:57 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/17 18:56:40 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:03:33 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,20 @@ static int	temp(t_env *e, int itex, char *path)
 
 int		import_texture(t_env *e)
 {
-	if (!(import(e, 0, "skybox")))
+	if (!(import(e, 0, "tex/skybox")))
 		return (0);
-	if (!(import(e, 1, "wall_herbe.img")))
+	if (!(import(e, 1, "tex/wall_herbe.img")))
+		return (0);
+	if (!(import(e, 2, "tex/wall.img")))
+		return (0);
+	if (!(import(e, 3, "tex/wall_stone.img")))
+		return (0);
+	if (!(import(e, 4, "tex/wall_stone_plant.img")))
+		return (0);
+	if (!(import(e, 5, "tex/wall_brick.img")))
 		return (0);
 	//import sprite
-	temp(e, 0, "mob.img");
-	temp(e, 1, "prevo.img");
+	temp(e, 0, "tex/potato.img");
+	temp(e, 1, "tex/prevo.img");
 	return (1);
 }

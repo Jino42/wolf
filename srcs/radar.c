@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/17 18:48:51 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:31:41 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		draw_map(t_env *e, int len_tile)
 		x = 0;
 		while (x < e->map.len_x)
 		{
-			if (e->map.map[y][x] == '1')
+			if (e->map.map[y][x] != '0')
 			{
 				e->to.x1 = x * len_tile;
 				e->to.x2 = e->to.x1 + len_tile;
@@ -90,7 +90,6 @@ static void		draw_sprite(t_env *e, t_sprite *sprite, int len_tile)
 	e->to.y1 = (int)sprite->pos.y * len_tile + coef - range_player;
 	e->to.y2 = (int)sprite->pos.y * len_tile + coef + range_player;
 	mlxji_draw_case(e->img, &e->to, COL_EN_2D);
-	draw_vector_on_player(e, &sprite->ray_dir, len_tile, 0x00F0BC);
 }
 
 void			radar(t_env *e)

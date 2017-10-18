@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:51:54 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/17 23:33:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:17:49 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ static void	aff_3d_text(t_env *e, int nb_cast,
 	int			place_x;
 	int			icol;
 	t_pxtopx to;
+	int			tex;
 
+	tex = ray->get - '0';
 	ft_bzero(&to, sizeof(t_pxtopx));
 	to.x1 = nb_cast + 1;
 	to.y2 = start_y;
-	place_x = (ray->percent_wall * e->tex[1].width);
+	place_x = (ray->percent_wall * e->tex[tex].width);
 	i = -1;
 	len = 0;
-	while (++i < ft_min(e->tex[1].height, e->tex[1].width))
+	while (++i < ft_min(e->tex[tex].height, e->tex[tex].width))
 	{
 		to.y1 = to.y2;
 		to.y2 = start_y + len;
@@ -51,8 +53,8 @@ static void	aff_3d_text(t_env *e, int nb_cast,
 		{
 			if (to.y1 < 0)
 				to.y1 = 0;
-			icol = *((int *)&e->tex[1].tex[(place_x << 2) + i *
-					(e->tex[1].width << 2)]);
+			icol = *((int *)&e->tex[tex].tex[(place_x << 2) + i *
+					(e->tex[tex].width << 2)]);
 			if (to.y2 >= e->size_side)
 				to.y2 = e->size_side - 1;
 			mlxji_draw_y_line(e->img, &to, icol);

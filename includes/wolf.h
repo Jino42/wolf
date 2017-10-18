@@ -6,18 +6,16 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 19:47:50 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:33:22 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 TODO
-	-BTREE SPRITE
-	-PARS ?
 	-CLEAN
 	-MAKE FINAL TEX
-	-CLEAN
 	-LEAKS
+	-CLEAN
 	-REVI
 	-PUSH
 TODO
@@ -67,7 +65,7 @@ TODO
 
 # define TEX_SKY 0
 
-# define NB_TEX 2
+# define NB_TEX 6
 
 # define NB_SPRITE 2
 
@@ -153,6 +151,7 @@ typedef struct	s_ray
 	int			step_y;
 	int			side;
 	t_ivector2d	pos_map;
+	int			get;
 }				t_ray;
 
 typedef struct	s_player
@@ -215,6 +214,7 @@ typedef struct	s_env
 	t_btree		*sprite_aff;
 	t_tex		tex_sprite[NB_SPRITE];
 	//t_sprite	sprite[NB_SPRITE];
+	t_fvector2d	ray_end[WIN_WIDTH + 10];
 	int			size_side;
 	int			size_half_side;
 	int			rez;

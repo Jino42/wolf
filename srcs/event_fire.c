@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 22:45:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 15:04:37 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 22:19:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ void	create_sprite(t_env *e, t_tex *tex)
 void		event_fire(t_env *e, t_player *player)
 {
 	(void)player;(void)e;
-	create_sprite(e, &e->tex_sprite[1]);
+	create_sprite(e, &e->tex_sprite[0]);
 }

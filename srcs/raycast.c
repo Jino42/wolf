@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/01 16:33:12 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:17:58 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		raycast_hit(t_ray *ray)
 		}
 		if (ray->map->map[ray->pos_map.y][ray->pos_map.x] != B_VOID)
 		{
+			ray->get = ray->map->map[ray->pos_map.y][ray->pos_map.x];
 			ray->hit = 1;
 		}
 	}

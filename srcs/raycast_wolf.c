@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/17 18:36:18 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/18 23:26:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,15 @@ typedef struct		s_ptr_env
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
-void	raycast_wolf_aff_2d(t_env *e, t_player *player,
-		t_ray *ray, int lt, int i)
+void	raycast_wolf_aff_2d(t_env *e, t_player *player, int lt, int i)
 {
 	t_pxtopx to;
 
 	to.x1 = player->pos.x * lt;
 	to.y1 = player->pos.y * lt;
-	to.x2 = ray->end.x * lt;
-	to.y2 = ray->end.y * lt;
+	to.x2 = e->ray_end[i].x * lt;
+	to.y2 = e->ray_end[i].y * lt;
 	mlxji_draw_line(e->img, &to, COL_RED_SMOOTH);
-	(void)i;
 }
 
 void		*raycast_wolf_part(void *ptr)
@@ -62,6 +60,7 @@ void		*raycast_wolf_part(void *ptr)
 		if (p->e->flag & F_3D)
 			raycast_wolf_aff_3d(p->e, &ray, s_screen);
 //		raycast_wolf_aff_2d(p->e, p->player, &ray, p->e->radar.lt);
+		p->e->ray_end[(int)s_screen] = ray.end;
 		pthread_mutex_lock (&mutex);
 		sprite_hit(p->e, &ray, s_screen);
 		pthread_mutex_unlock (&mutex);
@@ -98,4 +97,6 @@ void		raycast_wolf(t_env *e, t_player *player)
 		i++;
 	}
 	pthread_mutex_destroy(&mutex);
+	for (int i = 0; i < e->width; i++)
+		raycast_wolf_aff_2d(e, &e->player, e->radar.lt, i);
 }
