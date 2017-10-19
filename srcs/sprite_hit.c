@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:53:55 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 22:05:48 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 18:34:48 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 float			cmp_dist(void *item, void *insert)
 {
-	return (((t_sprite *)insert)->dist -
-			((t_sprite *)item)->dist);
+	return (((t_sprite *)insert)->dist - ((t_sprite *)item)->dist);
 }
 
-void		sprite_hit(t_env *e, t_ray *ray, int s_screen)
+void			sprite_hit(t_env *e, t_ray *ray, int s_screen)
 {
 	t_sprite	*sprite;
 	int			spe_angle_ray;
 	t_btree		*ret;
+	t_list		*lst;
 
 	spe_angle_ray = (int)(atan2f(ray->dir.y, ray->dir.x) * 300);
-	t_list *lst;
 	lst = e->sprite;
 	while (lst)
 	{

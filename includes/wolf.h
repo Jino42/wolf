@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 18:26:01 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 20:08:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ TODO
 
 # define WIN_WIDTH 1200
 # define WIN_HEIGHT 720
-
-# define TEXT_X 64
-# define TEXT_Y 64
 
 # define B_VOID '0'
 # define B_WALL '1'
@@ -194,6 +191,7 @@ typedef struct	s_env
 	t_px		col;
 	int			icol;
 	t_pxtopx	to;
+	pthread_mutex_t mutex;
 	int			flag;
 
 	int			height;
@@ -219,6 +217,15 @@ typedef struct	s_env
 	int			size_half_side;
 	long		s;
 }				t_env;
+
+typedef struct		s_ptr_env
+{
+	t_env 			*e;
+	t_player		*player;
+	float			start;
+	float			end;
+	int				nb;
+}					t_ptr_env;
 
 int				loop(t_env *e);
 
@@ -259,9 +266,13 @@ int				init_map(t_env *e, char *s);
 
 void			sprite_hit(t_env *e, t_ray *ray, int s_screen);
 
-void			raycast_wolf_aff_3d(t_env *e, t_ray *ray, int nb_cast);
-void			raycast_wolf_aff_3d_ar(t_env *e, t_ray *ray, int nb_cast);
-
+void			raycast_aff(t_env *e, t_ray *ray, int nb_cast);
+void  			raycast_aff_view_2d(t_env *e, t_player *player);
+void			raycast_aff_floor(t_env *e, int nb_cast, int start);
+void			raycast_aff_sky(t_env *e, int nb_cast, int end);
+void			raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y);
+void			raycast_aff_tex(t_env *e, int nb_cast,
+					int start_y, float len_pp, t_ray *ray);
 
 float			fvector2d_magnitude(t_fvector2d vec);
 float			fvector2d_distance(t_fvector2d a, t_fvector2d b);
@@ -269,5 +280,6 @@ t_fvector2d		fvector2d_normalized(t_fvector2d vec);
 void			fvector2d_normalize(t_fvector2d *vec);
 char			fvector2d_aequals(t_fvector2d a, t_fvector2d b);
 void			fvector2d_limit(t_fvector2d *a, const float limit);
+t_fvector2d		fvector2d_construct(float x, float y);
 
 #endif
