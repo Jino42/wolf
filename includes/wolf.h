@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 17:34:55 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 18:26:01 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,6 @@ typedef struct	s_env
 	t_fvector2d	ray_end[WIN_WIDTH + 10];
 	int			size_side;
 	int			size_half_side;
-	int			rez;
 	long		s;
 }				t_env;
 
@@ -225,6 +224,8 @@ int				loop(t_env *e);
 
 void			update_key_event(t_env *e);
 void			update_sprite_position(t_env *e);
+void 			update_fps(t_env *e, t_fps *fps);
+
 
 void			move_player(t_env *e, int dir);
 

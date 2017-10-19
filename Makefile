@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/10/19 17:34:41 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/10/19 18:23:21 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ event/event_fire.c \
 update/loop.c \
 update/update_key_event.c \
 update/update_sprite_position.c \
+update/update_fps.c \
 raycast.c \
 raycast_wolf.c \
 raycast_wolf_aff_3d.c \
