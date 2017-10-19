@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/10/19 20:07:48 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/10/19 20:46:51 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ raycast_aff/raycast_aff_sky.c \
 raycast_aff/raycast_aff_basic.c \
 raycast_aff/raycast_aff_tex.c \
 raycast_aff/raycast_aff.c \
+sprite/sprite.c \
+sprite/sprite_hit.c \
 raycast.c \
 raycast_wolf.c \
 radar.c \
@@ -43,8 +45,6 @@ move.c \
 tools.c \
 init_var.c \
 init_map.c \
-sprite.c \
-sprite_hit.c \
 import_texture.c \
 fvector2d/fvector2d_magnitude.c \
 fvector2d/fvector2d_distance.c \
@@ -98,7 +98,7 @@ $(OBJ_DIR) :
 	@mkdir $(OBJ_DIR)/event
 	@mkdir $(OBJ_DIR)/update
 	@mkdir $(OBJ_DIR)/raycast_aff
-
+	@mkdir $(OBJ_DIR)/sprite
 
 $(OBJ_DIR)%.o: $(addprefix $(SRC_DIR), %.c) $(INC_FILES)
 	$(CC) $(CFLAGS) -I ./$(INC) -o $@ -c $<

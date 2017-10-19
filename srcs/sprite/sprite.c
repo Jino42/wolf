@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 16:39:25 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 23:46:54 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 20:39:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	sprite_init_tool(t_env *e, t_sprite *sprite, t_ts *ts)
 	ts->len_pp_x = (float)sprite->len_x / ts->len_sprite_x;
 }
 
-static void	loop_w(t_env *e, t_sprite *sprite, t_ts *ts)
+static void	aff_sprite(t_env *e, t_sprite *sprite, t_ts *ts)
 {
 	while (e->to.x1 < e->to.x2)
 	{
@@ -74,5 +74,5 @@ void		sprite_wolf(void *e, void *sprite)
 	if (((t_env *)e)->apply[((t_sprite*)sprite)->col])
 		return ;
 	sprite_init_tool((t_env *)e, (t_sprite*)sprite, &ts);
-	loop_w((t_env *)e, (t_sprite*)sprite, &ts);
+	aff_sprite((t_env *)e, (t_sprite*)sprite, &ts);
 }
