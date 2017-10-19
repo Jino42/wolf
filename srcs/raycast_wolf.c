@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 20:08:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 23:05:35 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		*raycast_wolf_part(void *ptr)
 	ft_bzero(&ray, sizeof(t_ray));
 	while (p->start < p->end)
 	{
-		cam = (p->start * 2) / p->player->len_screen - 1;
+		cam = (p->start * 2) / p->e->width - 1;
 		raycast(&ray, &p->e->map,
 			fvector2d_construct(p->player->pos.x, p->player->pos.y),
 			fvector2d_construct(p->player->dir.x + p->player->plan.x * cam,
@@ -31,9 +31,7 @@ void		*raycast_wolf_part(void *ptr)
 			raycast_aff(p->e, &ray, p->start);
 		p->e->ray_end[(int)p->start] = ray.end;
 		p->e->dist[(int)p->start] = ray.dist_wall;
-		pthread_mutex_lock(&p->e->mutex);
-		sprite_hit(p->e, &ray, p->start);
-		pthread_mutex_unlock(&p->e->mutex);
+		sprite_hit(p, p->e, &ray, p->start);
 		p->start++;
 	}
 	pthread_exit(NULL);
@@ -48,7 +46,7 @@ void		raycast_wolf(t_env *e, t_player *player)
 	int			col_per_th;
 
 	pthread_mutex_init(&e->mutex, NULL);
-	col_per_th = player->len_screen / NB_THREAD;
+	col_per_th = e->width / NB_THREAD;
 	i = 0;
 	while (i < NB_THREAD)
 	{

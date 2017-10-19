@@ -6,11 +6,25 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 18:33:10 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 23:01:03 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+static void cac_sprite(t_env *e)
+{
+	t_list		*lst;
+	t_sprite	*sprite;
+
+	lst = e->sprite;
+	while (lst)
+	{
+		sprite = lst->content;
+		sprite->pos = e->player.pos;
+		lst = lst->next;
+	}
+}
 
 int			event_key_on(int keycode, t_env *e)
 {
@@ -28,8 +42,10 @@ int			event_key_on(int keycode, t_env *e)
 										e->radar.len_tile_fs);
 	}
 	if (keycode == 18)
-		e->flag & F_3D ? (e->flag ^= SP_GRAVITY) : (e->flag |= SP_GRAVITY);
-	if (keycode == 49)
-		event_fire(e, &e->player);
+		e->flag & SP_GRAVITY ? (e->flag ^= SP_GRAVITY) : (e->flag |= SP_GRAVITY);
+	if (keycode == 42)
+		free_lst_sprite(e);
+	if (keycode == 30)
+		cac_sprite(e);
 	return (1);
 }

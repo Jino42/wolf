@@ -6,25 +6,19 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 20:48:06 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 23:01:20 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static void			wolf_free_btree(void *item)
-{
-	(void)item;
-	return ;
-}
-
 static void			wolf_aff_sprite(t_env *e)
 {
 	if (e->sprite_aff)
 	{
-		btree_env_apply_infix(e, e->sprite_aff, &sprite_wolf);
-		btree_apply_free(e->sprite_aff, &wolf_free_btree);
-		e->sprite_aff = NULL;
+		if (e->flag & F_3D && e->nb_sprite < 100)
+			btree_env_apply_infix(e, e->sprite_aff, &sprite_wolf);
+		free_btree_sprite(e);
 	}
 }
 
@@ -43,8 +37,7 @@ int					loop(t_env *e)
 	update_sprite_position(e);
 	//
 	raycast_wolf(e, &e->player);
-	if (e->flag & F_3D)
-		wolf_aff_sprite(e);
+	wolf_aff_sprite(e);
 	raycast_aff_view_2d(e, &e->player);
 	radar(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);

@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/10/19 20:46:51 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/10/19 22:44:16 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ sprite/sprite.c \
 sprite/sprite_hit.c \
 raycast.c \
 raycast_wolf.c \
+free.c \
 radar.c \
 move.c \
 tools.c \
@@ -53,6 +54,7 @@ fvector2d/fvector2d_normalized.c \
 fvector2d/fvector2d_aequals.c \
 fvector2d/fvector2d_limit.c \
 fvector2d/fvector2d_construct.c \
+fvector2d/fvector2d_rotation.c \
 end_of_program.c
 
 OBJ_DIR = objs/

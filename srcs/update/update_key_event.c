@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:10:13 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/17 18:50:08 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 23:04:10 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ static void	update_key_player(t_env *e, t_player *player)
 		move_player(e, 1);
 	if (e->key[125])
 		move_player(e, -1);
-	if (e->key[91])
-		player->jump += 1;
-	if (e->key[84])
-		player->jump -= 1;
 	if (e->key[78])
 	{
 		player->dir.x *= 0.9;
@@ -60,4 +56,6 @@ static void	update_key_player(t_env *e, t_player *player)
 void		update_key_event(t_env *e)
 {
 	update_key_player(e, &e->player);
+	if (e->key[49])
+		event_fire(e, &e->player);
 }

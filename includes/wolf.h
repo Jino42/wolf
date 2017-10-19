@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 20:08:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 23:14:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ TODO
 
 #include "../libft/includes/libft.h"
 #include "../libmlxji/includes/mlxji.h"
-#include <stdio.h> ////////////
 #include <pthread.h>
 #include "mlx.h"
 #include <math.h>
@@ -65,8 +64,6 @@ TODO
 # define NB_TEX 6
 
 # define NB_SPRITE 2
-
-# define ITEM_SEGFAULT -1
 
 # define SIZE_REALLOC_MAP 10
 
@@ -116,8 +113,6 @@ typedef struct	s_sprite
 {
 	t_fvector2d	pos;
 	t_fvector2d	rela;
-	t_fvector2d	ray_dir;
-	t_fvector2d dir;
 	t_fvector2d acceleration;
 	t_fvector2d velocity;
 	int			item;
@@ -153,16 +148,12 @@ typedef struct	s_ray
 
 typedef struct	s_player
 {
-	int				cart_pos_y;
-	int				cart_pos_x;
 	t_fvector2d		pos;
 	t_fvector2d		dir;
 	t_fvector2d		plan;
 	float			angle;
 	float			move_speed;
 	float			rotate_speed;
-	float			jump;
-	int				len_screen;
 }				t_player;
 
 typedef struct	s_radar
@@ -188,7 +179,6 @@ typedef struct	s_env
 	void		*mlx;
 	void		*win;
 	t_img		*img;
-	t_px		col;
 	int			icol;
 	t_pxtopx	to;
 	pthread_mutex_t mutex;
@@ -199,6 +189,7 @@ typedef struct	s_env
 
 	int			key[269];
 
+	int			nb_sprite;
 	float		dist[WIN_WIDTH + 10];
 	int			apply[WIN_WIDTH + 10];
 	t_ray		ray;
@@ -211,7 +202,6 @@ typedef struct	s_env
 	t_list		*sprite;
 	t_btree		*sprite_aff;
 	t_tex		tex_sprite[NB_SPRITE];
-	//t_sprite	sprite[NB_SPRITE];
 	t_fvector2d	ray_end[WIN_WIDTH + 10];
 	int			size_side;
 	int			size_half_side;
@@ -251,8 +241,6 @@ void			sprite_wolf(void *e, void  *sprite);
 int				raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 void			init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 
-int				round_to_inf(float nb);
-int				round_to_up(float nb);
 int				ft_max(int a, int b);
 int				ft_min(int a, int b);
 
@@ -264,7 +252,7 @@ void			init_var(t_env *e);
 void			init_env(t_env *e);
 int				init_map(t_env *e, char *s);
 
-void			sprite_hit(t_env *e, t_ray *ray, int s_screen);
+void			sprite_hit(t_ptr_env *p, t_env *e, t_ray *ray, int s_screen);
 
 void			raycast_aff(t_env *e, t_ray *ray, int nb_cast);
 void  			raycast_aff_view_2d(t_env *e, t_player *player);
@@ -281,5 +269,12 @@ void			fvector2d_normalize(t_fvector2d *vec);
 char			fvector2d_aequals(t_fvector2d a, t_fvector2d b);
 void			fvector2d_limit(t_fvector2d *a, const float limit);
 t_fvector2d		fvector2d_construct(float x, float y);
+
+void			free_lst_sprite(t_env *e);
+void			free_btree_sprite(t_env *e);
+void			free_mlx(t_env *e);
+void			free_env(t_env *e);
+
+
 
 #endif

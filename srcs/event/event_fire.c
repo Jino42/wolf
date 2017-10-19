@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 22:45:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 20:51:09 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 23:10:03 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ void			create_sprite(t_env *e, t_tex *tex)
 	sprite.velocity.x = fvector2d_normalized(e->player.dir).x * 1.5;
 	sprite.velocity.y = fvector2d_normalized(e->player.dir).y * 1.5;
 	sprite.sprite = tex;
-	sprite.dir = e->player.dir;
 	if (!(ret = ft_lstnew(&sprite, sizeof(t_sprite))))
 		exit(end_of_program(e, NULL));
 	ft_lstinsert(&e->sprite, ret);
+	e->nb_sprite++;
 }
 
 void			event_fire(t_env *e, t_player *player)
 {
 	(void)player;
-	create_sprite(e, &e->tex_sprite[1]);
+	if (e->nb_sprite < 5000)
+		create_sprite(e, &e->tex_sprite[1]);
+	ft_printf("Sprite : %i\n", e->nb_sprite);
 }

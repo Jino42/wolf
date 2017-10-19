@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fvector2d_construct.c                              :+:      :+:    :+:   */
+/*   fvector2d_rotation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/19 21:44:40 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 21:44:45 by ntoniolo         ###   ########.fr       */
+/*   Created: 2017/10/19 21:45:01 by ntoniolo          #+#    #+#             */
+/*   Updated: 2017/10/19 21:45:02 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-t_fvector2d		fvector2d_construct(float x, float y)
+void		fvector_rotation(t_fvector2d *vec, float rotation)
 {
-	t_fvector2d new;
+	float tmp;
 
-	new.x = x;
-	new.y = y;
-	return (new);
+	tmp = vec->x * cos(rotation) - vec->y * sin(rotation);
+	vec->y = vec->y * cos(rotation) + vec->x * sin(rotation);
+	vec->x = tmp;
 }
