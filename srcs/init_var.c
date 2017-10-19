@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:46:31 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:16:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 23:20:08 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	init_player(t_env *e, t_player *player)
 		}
 		y++;
 	}
-	end_of_program(e, "Joueur non rensigné\n");
 }
 
 static void	init_mlx(t_env *e)
