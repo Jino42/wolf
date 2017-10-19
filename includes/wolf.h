@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 23:33:22 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/19 17:34:55 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ typedef struct	s_env
 int				loop(t_env *e);
 
 void			update_key_event(t_env *e);
+void			update_sprite_position(t_env *e);
 
 void			move_player(t_env *e, int dir);
 
@@ -266,5 +267,6 @@ float			fvector2d_distance(t_fvector2d a, t_fvector2d b);
 t_fvector2d		fvector2d_normalized(t_fvector2d vec);
 void			fvector2d_normalize(t_fvector2d *vec);
 char			fvector2d_aequals(t_fvector2d a, t_fvector2d b);
+void			fvector2d_limit(t_fvector2d *a, const float limit);
 
 #endif
