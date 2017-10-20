@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 19:36:33 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 18:24:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 19:04:30 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,60 @@ static void			wolf_aff_sprite(t_env *e)
 		free_btree_sprite(e);
 	}
 }
+float			cmp_dist2(void *item, void *insert)
+{
+	return (((t_sprite *)insert)->dist - ((t_sprite *)item)->dist);
+}
 
 void  				test(t_env *e)
 {
-	t_fvector2d s, d, c;
 
-	s.x = e->player.dir.x + e->player.plan.x;
-	s.y = e->player.dir.y + e->player.plan.y;
-	d.x = e->player.dir.x - e->player.plan.x;
-	d.y = e->player.dir.y - e->player.plan.y;
-	//printf("At : %f %f %f\n", atan2f(s.y, s.x), atan2f(d.y, d.x), atan2f(s.y, s.x) - atan2f(d.y, d.x));
-	if (e->sprite)
+	/*
+		dist = save ray per x_screen//////////////////
+		////////////////////////////////////////////
+		/////////////////////////////////////////
+		/////////////////////////////////////////
+		/////////////////////////////////////////
+		/////////////////////////////////////////
+		/////////////////////////////////////////
+		/////////////////////////////////////////
+	*/
+	t_list *lst;
+	t_btree		*ret;
+	t_sprite *sprite;
+	float all;
+	float new;
+
+	all = atan2f(e->player.right.y, e->player.right.x) - atan2f(e->player.left.y, e->player.left.x);
+	lst = e->sprite;
+	while (lst)
 	{
-		t_sprite *sprite = e->sprite->content;
-		c = sprite->rela;
-		fvector2d_normalize(&c);
-		//c.x -= e->player.dir.x;
-		//c.y -= e->player.dir.y;
-		fvector2d_normalize(&s);
-		fvector2d_normalize(&d);
-		float all = atan2f(s.y, s.x) - atan2f(d.y, d.x);
-		float new = atan2f(c.y, c.x) - atan2f(d.y, d.x);//atan2f(e->player.dir.y, e->player.dir.x);
-		printf ("D %f H %f G %f\n", atan2f(s.y, s.x), atan2f(e->player.dir.y, e->player.dir.x), atan2f(d.y, d.x));
-		printf ("_____O %f___\n", atan2f(c.y, c.x));
-		printf("So %f / %f | %% %f\n\n", new, all, new/all);
-		//printf ("rela : %f\n", atan2f(c.y, c.x));
-		//printf ("%% : %f\n", atan2f(c.y, c.x) / (atan2f(s.y, s.x) - atan2f(d.y, d.x)));
+		sprite = lst->content;
+		sprite->dir = sprite->rela;
+		new = atan2f(sprite->dir.y, sprite->dir.x) - atan2f(e->player.left.y, e->player.left.x);
+		float save = all - new;
+		new /= all;
+		sprite->dist = fvector2d_magnitude(sprite->rela);
+		printf("Magnitude : %f\n", sprite->dist);
+		sprite->col = new * cos(save) * e->width;
+		if (sprite->col >= 0 && sprite->col < e->width)
+			sprite->hit = 1;
+		fvector2d_normalize(&sprite->dir);
+		if (!(ret = btree_create_leaf(sprite)))
+			exit(end_of_program(e, "Leaf doesnt create\n"));
+		btree_finsert_infix_data(&e->sprite_aff, ret->content, &cmp_dist2);
+		lst = lst->next;
 	}
+}
+
+static void 		update_vector(t_player *player)
+{
+	player->right.x = player->dir.x + player->plan.x;
+	player->right.y = player->dir.y + player->plan.y;
+	player->left.x = player->dir.x - player->plan.x;
+	player->left.y = player->dir.y - player->plan.y;
+	fvector2d_normalize(&player->left);
+	fvector2d_normalize(&player->right);
 }
 
 int					loop(t_env *e)
@@ -59,14 +86,15 @@ int					loop(t_env *e)
 	ft_bzero(e->ray_end, sizeof(t_fvector2d) * (WIN_WIDTH + 10));
 	//
 	//
+	update_vector(&e->player);
 	update_fps(e, &e->fps);
 	update_key_event(e);
 	update_sprite_position(e);
 	//
 	raycast_wolf(e, &e->player);
+	test(e);
 	wolf_aff_sprite(e);
 	raycast_aff_view_2d(e, &e->player);
-	test(e);
 	radar(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	return (1);

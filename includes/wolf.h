@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 17:53:37 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 18:39:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct	s_sprite
 	t_fvector2d	rela;
 	t_fvector2d acceleration;
 	t_fvector2d velocity;
+	t_fvector2d dir;
 	int			item;
 	int			spe_angle;
 	int			col;
@@ -155,6 +156,8 @@ typedef struct	s_player
 	t_fvector2d		pos;
 	t_fvector2d		dir;
 	t_fvector2d		plan;
+	t_fvector2d		left;
+	t_fvector2d		right;
 	float			angle;
 	float			move_speed;
 	float			rotate_speed;

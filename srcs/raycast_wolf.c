@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:05:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 18:38:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		*raycast_wolf_part(void *ptr)
 			raycast_aff(p->e, &ray, p->start);
 		p->e->ray_end[(int)p->start] = ray.end;
 		p->e->dist[(int)p->start] = ray.dist_wall;
-		sprite_hit(p, p->e, &ray, p->start);
+		//sprite_hit(p, p->e, &ray, p->start);
 		p->start++;
 	}
 	pthread_exit(NULL);
