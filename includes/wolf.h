@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 16:56:15 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 17:53:37 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ TODO
 #include "../libmlxji/includes/mlxji.h"
 #include <pthread.h>
 #include "mlx.h"
+#include <stdio.h>//////////////////
 #include <math.h>
 #include <sys/types.h>
 #include <sys/stat.h>
