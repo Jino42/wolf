@@ -6,13 +6,13 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:49:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:34:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:05:51 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static int 	verif_player(t_env *e)
+static int		verif_player(t_env *e)
 {
 	int y;
 	int x;
@@ -38,7 +38,25 @@ static int 	verif_player(t_env *e)
 	return (1);
 }
 
-static int	verif_border(t_env *e)
+static int		verif_nb_cases(t_env *e)
+{
+	int y;
+	int i;
+
+	y = 0;
+	i = 0;
+	while (y < e->map.len_y)
+	{
+		i += ft_strlen(e->map.map[y]);
+		y++;
+	}
+	ft_printf("%i\n", i);
+	if (i > 700)
+		return (end_of_program(e, "Nombre de case trop elevé\n"));
+	return (1);
+}
+
+static int		verif_border(t_env *e)
 {
 	int y;
 	int x;
@@ -60,16 +78,13 @@ static int	verif_border(t_env *e)
 	return (1);
 }
 
-static int	add_line(t_env *e, char **line)
+static int		add_line(t_env *e, char **line)
 {
-	int i;
-
 	if (e->map.len_y && !(e->map.len_y % SIZE_REALLOC_MAP))
 		if (!(e->map.map = (char **)ft_memrealloc((void *)e->map.map,
 		sizeof(char **) * e->map.len_y, sizeof(char **) *
 		e->map.len_y + sizeof(char **) * SIZE_REALLOC_MAP)))
 			return (end_of_program(e, "Realloc error\n"));
-	i = -1;
 	e->map.map[e->map.len_y] = *line;
 	e->map.len_x = ft_max(e->map.len_x, ft_strlen(*line));
 	*line = NULL;
@@ -77,7 +92,7 @@ static int	add_line(t_env *e, char **line)
 	return (1);
 }
 
-int			init_map(t_env *e, char *path_map)
+int				init_map(t_env *e, char *path_map)
 {
 	int		fd;
 	int		ret;
@@ -99,7 +114,7 @@ int			init_map(t_env *e, char *path_map)
 	}
 	if (ret == -1)
 		return (end_of_program(e, "Erreur de fichier\n"));
-	if (!verif_border(e) || !verif_player(e))
+	if (!verif_border(e) || !verif_player(e) || !verif_nb_cases(e))
 		return (0);
 	return (1);
 }

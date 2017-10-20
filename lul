@@ -1,0 +1,28 @@
+0000000100003ecf	e8 ac 0e 00 00 	callq	_ft_memalloc
+0000000100003ee9	48 8d 35 b3 a9 00 00 	leaq	0xa9b3(%rip), %rsi ## literal pool for: "Malencontreuse mallocationnage\n"
+0000000100004613	e8 68 07 00 00 	callq	_ft_memalloc
+0000000100004be0	e8 9b 01 00 00 	callq	_ft_memalloc
+_ft_memalloc:
+0000000100004d90	e8 f3 96 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+0000000100004e08	e8 73 ff ff ff 	callq	_ft_memalloc
+000000010000533a	e8 41 fa ff ff 	callq	_ft_memalloc
+0000000100005369	e8 12 fa ff ff 	callq	_ft_memalloc
+00000001000055d1	e8 aa f7 ff ff 	callq	_ft_memalloc
+0000000100005978	e8 03 f4 ff ff 	callq	_ft_memalloc
+000000010000624d	e8 2e eb ff ff 	callq	_ft_memalloc
+000000010000a118	e8 63 ac ff ff 	callq	_ft_memalloc
+000000010000a88e	e8 ed a4 ff ff 	callq	_ft_memalloc
+000000010000ae7c	e8 07 36 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000b0ce	e8 b5 33 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000b2ad	e8 d6 31 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000b31e	e8 65 31 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000b513	e8 70 2f 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000b584	e8 ff 2e 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000b773	e8 10 2d 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000b7e4	e8 9f 2c 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000c9cd	e8 b6 1a 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000d3d2	e8 b1 10 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000d825	e8 5e 0c 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000de79	e8 0a 06 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000dee9	e8 9a 05 00 00 	callq	0x10000e488 ## symbol stub for: _malloc
+000000010000df48	e8 3b 05 00 00 	callq	0x10000e488 ## symbol stub for: _malloc

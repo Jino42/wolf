@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:14:15 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:56:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ TODO
 	-CLEAN
 	-REVI
 	-PUSH
+
+	tex
+	leaks
 TODO
 */
 
@@ -243,6 +246,7 @@ void			init_raycast(t_ray *ray, t_map *map, t_fvector2d start, t_fvector2d dir);
 
 int				ft_max(int a, int b);
 int				ft_min(int a, int b);
+void			t_pxtopx_limit_map(t_env *e, t_pxtopx *to);
 
 void			fvector_rotation(t_fvector2d *vec, float rotation);
 

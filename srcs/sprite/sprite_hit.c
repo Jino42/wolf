@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:53:55 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:14:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:58:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,15 @@ void			sprite_hit(t_ptr_env*p, t_env *e, t_ray *ray, int x_screen)
 	t_sprite	*sprite;
 	int			spe_angle_ray;
 	t_list		*lst;
+	t_fvector2d norm;
 
 	spe_angle_ray = (int)(atan2f(ray->dir.y, ray->dir.x) * 300);
 	lst = e->sprite;
 	while (lst)
 	{
 		sprite = lst->content;
+		norm = sprite->rela;
+		fvector2d_normalize(&norm);
 		if (!sprite->hit && spe_angle_ray == sprite->spe_angle)
 		{
 			pthread_mutex_lock(&p->e->mutex);

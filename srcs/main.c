@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:58:33 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:54:01 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			main(int argc, char **argv)
 	print_map(&e);
 	init_var(&e);
 	if (!(import_texture(&e)))
-		return (ft_ret_error("Erreur de textures\n")); //free
+		return (end_of_program(&e, "Erreur de textures\n"));
 	mlx_loop_hook(e.mlx, &loop, &e);
 	mlx_loop(e.mlx);
 	return (0);

@@ -6,13 +6,13 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:01:03 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:53:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static void cac_sprite(t_env *e)
+static void	cac_sprite(t_env *e)
 {
 	t_list		*lst;
 	t_sprite	*sprite;
@@ -42,7 +42,8 @@ int			event_key_on(int keycode, t_env *e)
 										e->radar.len_tile_fs);
 	}
 	if (keycode == 18)
-		e->flag & SP_GRAVITY ? (e->flag ^= SP_GRAVITY) : (e->flag |= SP_GRAVITY);
+		e->flag & SP_GRAVITY ? (e->flag ^= SP_GRAVITY) :
+										(e->flag |= SP_GRAVITY);
 	if (keycode == 42)
 		free_lst_sprite(e);
 	if (keycode == 30)

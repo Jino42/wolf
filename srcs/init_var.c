@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:46:31 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 23:20:08 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:11:05 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void		init_env(t_env *e)
 static void	init_radar(t_env *e, t_radar *radar)
 {
 	radar->len_tile = ft_max(e->width, e->height) / 8;
-	radar->len_tile_fs = ft_min(e->width, e->height);
+	radar->len_tile_fs = ft_max(e->width, e->height);
 	radar->len_tile /= ft_max(e->map.len_x, e->map.len_y);
-	radar->len_tile_fs /= ft_min(e->map.len_x, e->map.len_y);
+	radar->len_tile_fs /= ft_max(e->map.len_x, e->map.len_y);
 	radar->len_x = radar->len_tile * e->map.len_x;
 	radar->len_y = radar->len_tile * e->map.len_y;
 	radar->lt = radar->len_tile;

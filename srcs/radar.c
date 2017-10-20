@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 22:35:03 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:20:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void		draw_sprite(t_env *e, t_sprite *sprite, int len_tile)
 	coef = len_tile * ((sprite->pos.y - (int)sprite->pos.y));
 	e->to.y1 = (int)sprite->pos.y * len_tile + coef - range_player;
 	e->to.y2 = (int)sprite->pos.y * len_tile + coef + range_player;
+	t_pxtopx_limit_map(e, &e->to);
 	mlxji_draw_case(e->img, &e->to, COL_EN_2D);
 }
 
