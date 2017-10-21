@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:46:31 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/21 20:52:21 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 22:48:06 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ static void	init_player(t_env *e, t_player *player)
 	}
 }
 
-static void	init_mlx(t_env *e)
+void		init_mlx(t_env *e)
 {
 	e->mlx = mlx_init();
 	e->img = mlxji_new_img(e->mlx, e->width, e->height);
 	if (!e->img)
-		exit(ft_ret_error("Img non cree\n"));
+		exit(end_of_program(e, "Img non cree\n"));
 	e->win = mlx_new_window(e->mlx, e->width, e->height, "Wolf3d");
 	mlx_hook(e->win, KEYPRESS, KEYPRESSMASK, &event_key_on, e);
 	mlx_hook(e->win, KEYRELEASE, KEYRELEASEMASK, &event_key_off, e);
@@ -78,5 +78,4 @@ void		init_var(t_env *e)
 {
 	init_player(e, &e->player);
 	init_radar(e, &e->radar);
-	init_mlx(e);
 }

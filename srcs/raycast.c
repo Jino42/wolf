@@ -6,13 +6,13 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/18 23:17:58 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 23:38:58 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		direction_raycast(t_ray *ray)
+static void		direction_raycast(t_ray *ray)
 {
 	if (ray->dir.x < 0)
 	{
@@ -36,7 +36,7 @@ void		direction_raycast(t_ray *ray)
 	}
 }
 
-void			init_raycast(t_ray *ray, t_map *map,
+static void		init_raycast(t_ray *ray, t_map *map,
 							t_fvector2d start, t_fvector2d dir)
 {
 	ray->map = map;
@@ -53,7 +53,7 @@ void			init_raycast(t_ray *ray, t_map *map,
 	direction_raycast(ray);
 }
 
-int		raycast_hit(t_ray *ray)
+static int		raycast_hit(t_ray *ray)
 {
 	ray->hit = 0;
 	ray->side = 0;
@@ -80,14 +80,30 @@ int		raycast_hit(t_ray *ray)
 	return (ray->hit);
 }
 
-void		raycast_dist_wall(t_ray *ray)
+static void		raycast_dist_wall(t_ray *ray)
 {
 	if (ray->side == 'x')
+	{
 		ray->dist_wall = (ray->pos_map.x - ray->start.x +
-							(1 - ray->step_x) / 2) / ray->dir.x;
+							(1 - ray->step_x) / 2) / ray->dir.x; //1 - truck pour avant ou aprés la case
+																//si pas div alors, tout droit
+	if (ray->x_screen == 600)
+	{
+	printf("%f vers %f\n", (ray->pos_map.x - ray->start.x +
+						(1 - ray->step_x) / 2),
+						(ray->pos_map.x - ray->start.x +
+											(1 - ray->step_x) / 2) / ray->dir.x);
+											printf("RD %f %f\n", ray->dir.x, ray->dir.y);
+										}
+	}
 	else
 		ray->dist_wall = (ray->pos_map.y - ray->start.y +
 							(1 - ray->step_y) / 2) / ray->dir.y;
+	ray->dist_wall = fabs(ray->dist_wall);
+/*	if (ray->side == 'x')
+		ray->dist_wall = sqrt(pow(ray->pos_map.x - ray->start.x + (1 - ray->step_x) / 2, 2) + pow(ray->pos_map.y - ray->start.y, 2));
+	else
+		ray->dist_wall = sqrt(pow(ray->pos_map.x - ray->start.x, 2) + pow(ray->pos_map.y - ray->start.y + (1 - ray->step_y) / 2, 2));*/
 	if (ray->side == 'x')
 		ray->percent_wall = ray->start.y + ray->dist_wall * ray->dir.y;
 	else

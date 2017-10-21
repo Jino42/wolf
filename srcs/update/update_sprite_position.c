@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 18:20:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 16:56:43 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 23:08:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void		update_sprite_acceleration(t_env *e, t_sprite *sprite)
 	dist.y = e->player.pos.y - sprite->pos.y;
 	if (dist.x && dist.y)
 	{
-		sprite->acceleration.x = fvector2d_normalized(dist).x * 0.2;
-		sprite->acceleration.y = fvector2d_normalized(dist).y * 0.2;
+		sprite->acceleration.x = fvector2d_normalized(dist).x * 0.1;
+		sprite->acceleration.y = fvector2d_normalized(dist).y * 0.1;
 		sprite->velocity.x += sprite->acceleration.x;
 		sprite->velocity.y += sprite->acceleration.y;
 	}

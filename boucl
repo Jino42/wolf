@@ -1,0 +1,4 @@
+while [ test ]
+do
+	leaks wolf3d
+done

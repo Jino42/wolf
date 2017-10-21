@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 15:55:15 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 15:55:17 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 22:36:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,15 @@ void		free_env(t_env *e)
 	i = 0;
 	while (i < NB_TEX)
 	{
-		ft_strdel((void *)&e->tex[i].tex);
+		if (e->tex[i].tex)
+			ft_strdel((void *)&e->tex[i].tex);
+		i++;
+	}
+	i = 0;
+	while (i < NB_SPRITE)
+	{
+		if (e->tex_sprite[i].tex)
+			ft_strdel((void *)&e->tex_sprite[i].tex);
 		i++;
 	}
 }

@@ -6,39 +6,25 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/08 16:25:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 15:54:01 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 22:48:31 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-
-void		print_map(t_env *e)
-{
-	int i;
-
-	ft_printf("_____________________________\n");
-	i = 0;
-	while (i < e->map.len_y)
-	{
-		ft_printf("%s\n", e->map.map[i]);
-		i++;
-	}
-	ft_printf("_____________________________\n\n");
-}
 
 int			main(int argc, char **argv)
 {
 	t_env e;
 
 	if (argc != 2)
-		return (ft_ret_error("Miss Args\n"));
+		return (ft_ret_error("usage: ./wolf3d [file]\n"));
 	init_env(&e);
 	if (!(init_map(&e, argv[1])))
 		return (0);
-	print_map(&e);
 	init_var(&e);
 	if (!(import_texture(&e)))
 		return (end_of_program(&e, "Erreur de textures\n"));
+	init_mlx(&e);
 	mlx_loop_hook(e.mlx, &loop, &e);
 	mlx_loop(e.mlx);
 	return (0);

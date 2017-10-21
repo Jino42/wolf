@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/21 21:03:47 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 21:10:03 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void		*raycast_wolf_part(void *ptr)
 	ft_bzero(&ray, sizeof(t_ray));
 	while (p->start < p->end)
 	{
+		ray.x_screen = (int)p->start;
 		cam = (p->start * 2) / p->e->width - 1;
 		raycast(&ray, &p->e->map,
 			fvector2d_construct(p->player->pos.x, p->player->pos.y),

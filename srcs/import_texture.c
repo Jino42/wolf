@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:12:57 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 19:59:28 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 22:44:27 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int			import_texture(t_env *e)
 		return (0);
 	if (!(import_tex(e->tex, 5, "tex/wall_brick.img")))
 		return (0);
-	import_tex(e->tex_sprite, 0, "tex/potato.img");
-	import_tex(e->tex_sprite, 1, "tex/prevo.img");
+	if (!(import_tex(e->tex_sprite, 0, "tex/potato.img")))
+		return (0);
+	if (!(import_tex(e->tex_sprite, 1, "tex/prevo.img")))
+		return (0);
 	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/21 20:35:32 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/21 20:47:31 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 21:11:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void	raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y, t_ray *ray)
+void	raycast_aff_basic(t_env *e, int start_y, int end_y, t_ray *ray)
 {
 	t_pxtopx to;
 
@@ -21,9 +21,9 @@ void	raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y, t_ray *ray
 		end_y = e->size_side - 1;
 	if (start_y < 0)
 		start_y = 0;
-	to.x1 = (nb_cast + 1);
+	to.x1 = (ray->x_screen + 1);
 	to.y1 = start_y;
-	to.x2 = (nb_cast + 1);
+	to.x2 = (ray->x_screen + 1);
 	to.y2 = end_y;
 	if (ray->side == 'x')
 	{
