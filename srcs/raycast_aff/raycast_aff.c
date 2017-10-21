@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_wolf_aff_3d.c                              :+:      :+:    :+:   */
+/*   raycast_aff.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:51:54 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/19 20:07:52 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 20:44:48 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		raycast_aff(t_env *e, t_ray *ray, int nb_cast)
 	len_pp = (float)(end_y - start_y) /
 			ft_min(e->tex[1].height, e->tex[1].width);
 	if (e->flag & F_AFF_BASIC)
-		raycast_aff_basic(e, nb_cast, start_y, end_y);
+		raycast_aff_basic(e, nb_cast, start_y, end_y, ray);
 	else
 		raycast_aff_tex(e, nb_cast, start_y, len_pp, ray);
 	if (end_y >= e->size_side)

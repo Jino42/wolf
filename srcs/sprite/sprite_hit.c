@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 17:53:55 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 17:54:19 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 21:02:57 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,16 @@ static void		sprite_is_hit(t_env *e, t_ray *ray,
 
 	sprite->col = x_screen;
 	if (ray->side == 'x')
-	{
 		sprite->dist = sprite->rela.x / ray->dir.x;
-		//printf("\033[31m%f / %f = %f\n\033[0m", sprite->rela.x, ray->dir.x, sprite->dist);
-	}
 	else
-	{
 		sprite->dist = sprite->rela.y / ray->dir.y;
-		//printf("\033[32m%f / %f = %f\n\033[0m", sprite->rela.x, ray->dir.x, sprite->dist);
-	}
 	sprite->hit = 1;
 	if (!(ret = btree_create_leaf(sprite)))
 		exit(end_of_program(e, "Leaf doesnt create\n"));
 	btree_finsert_infix_data(&e->sprite_aff, ret->content, &cmp_dist);
 }
 
-void			sprite_hit(t_ptr_env*p, t_env *e, t_ray *ray, int x_screen)
+void			sprite_hit(t_ptr_env *p, t_env *e, t_ray *ray, int x_screen)
 {
 	t_sprite	*sprite;
 	int			spe_angle_ray;

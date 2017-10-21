@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast_aff_basic.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/21 20:35:32 by ntoniolo          #+#    #+#             */
+/*   Updated: 2017/10/21 20:47:31 by ntoniolo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
-void	raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y)
+void	raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y, t_ray *ray)
 {
 	t_pxtopx to;
 
@@ -13,5 +25,18 @@ void	raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y)
 	to.y1 = start_y;
 	to.x2 = (nb_cast + 1);
 	to.y2 = end_y;
-	mlxji_draw_y_line(e->img, &to, COL_GREEN_SMOOTH);
+	if (ray->side == 'x')
+	{
+		if (ray->step_x == 1)
+			mlxji_draw_y_line(e->img, &to, 0xf46242);
+		else
+			mlxji_draw_y_line(e->img, &to, 0xaff441);
+	}
+	else
+	{
+		if (ray->step_y == 1)
+			mlxji_draw_y_line(e->img, &to, 0x41dff4);
+		else
+			mlxji_draw_y_line(e->img, &to, 0x9141f4);
+	}
 }

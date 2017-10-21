@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 17:56:13 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 20:35:13 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int			event_key_on(int keycode, t_env *e)
 		free_lst_sprite(e);
 	if (keycode == 30)
 		cac_sprite(e);
-		if (keycode == 11)
-			event_fire(e, &e->player);
+	if (keycode == 11)
+		event_fire(e, &e->player);
 	return (1);
 }

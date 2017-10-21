@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 16:39:25 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 16:29:51 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 17:54:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static int	sprite_init_tool(t_env *e, t_sprite *sprite, t_ts *ts)
 {
 	ts->len_sprite_x = sprite->len_x / sprite->dist;
 	ts->len_sprite_y = sprite->len_y / sprite->dist;
-	//if (sprite->dist < 0)
-		//return (0);
 	e->to.x1 = (sprite->col - (ts->len_sprite_x >> 1));
 	e->to.x2 = (sprite->col + (ts->len_sprite_x >> 1));
 	e->to.y1 = (e->size_half_side - (ts->len_sprite_y >> 1));

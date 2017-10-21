@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:46:31 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 16:11:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 20:52:21 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	init_mlx(t_env *e)
 	e->win = mlx_new_window(e->mlx, e->width, e->height, "Wolf3d");
 	mlx_hook(e->win, KEYPRESS, KEYPRESSMASK, &event_key_on, e);
 	mlx_hook(e->win, KEYRELEASE, KEYRELEASEMASK, &event_key_off, e);
+	mlx_hook(e->win, 17, (1 << 17), &event_red_cross, e);
 }
 
 void		init_var(t_env *e)

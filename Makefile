@@ -6,7 +6,7 @@
 #    By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/10/19 22:44:16 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/10/21 20:52:46 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = main.c \
 event/event_key_on.c \
 event/event_key_off.c \
 event/event_fire.c \
+event/event_red_cross.c \
 update/loop.c \
 update/update_key_event.c \
 update/update_sprite_position.c \

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 19:03:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 16:20:56 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 20:56:18 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void		draw_map(t_env *e, int len_tile)
 	}
 }
 
-static void		draw_vector_on_player(t_env *e, t_fvector2d vec, int len_tile, int col)
+static void		draw_vector_on_player(t_env *e, t_fvector2d vec,
+										int len_tile, int col)
 {
 	e->to.x1 = e->player.pos.x * len_tile;
 	e->to.y1 = e->player.pos.y * len_tile;

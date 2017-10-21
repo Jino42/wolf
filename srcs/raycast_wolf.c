@@ -6,13 +6,13 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 15:55:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 18:38:56 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 21:03:47 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		*raycast_wolf_part(void *ptr)
+static void		*raycast_wolf_part(void *ptr)
 {
 	t_ptr_env		*p;
 	float			cam;
@@ -31,14 +31,14 @@ void		*raycast_wolf_part(void *ptr)
 			raycast_aff(p->e, &ray, p->start);
 		p->e->ray_end[(int)p->start] = ray.end;
 		p->e->dist[(int)p->start] = ray.dist_wall;
-		//sprite_hit(p, p->e, &ray, p->start);
+		sprite_hit(p, p->e, &ray, p->start);
 		p->start++;
 	}
 	pthread_exit(NULL);
 	return (NULL);
 }
 
-void		raycast_wolf(t_env *e, t_player *player)
+void			raycast_wolf(t_env *e, t_player *player)
 {
 	t_ptr_env	p[NB_THREAD];
 	pthread_t	t[NB_THREAD];

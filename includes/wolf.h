@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 18:39:34 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/21 20:55:00 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,6 @@ typedef struct	s_player
 	t_fvector2d		pos;
 	t_fvector2d		dir;
 	t_fvector2d		plan;
-	t_fvector2d		left;
-	t_fvector2d		right;
 	float			angle;
 	float			move_speed;
 	float			rotate_speed;
@@ -255,6 +253,7 @@ void			t_pxtopx_limit_map(t_env *e, t_pxtopx *to);
 void			fvector_rotation(t_fvector2d *vec, float rotation);
 
 void			event_fire(t_env *e, t_player *player);
+int				event_red_cross(t_env *e);
 
 void			init_var(t_env *e);
 void			init_env(t_env *e);
@@ -266,7 +265,7 @@ void			raycast_aff(t_env *e, t_ray *ray, int nb_cast);
 void  			raycast_aff_view_2d(t_env *e, t_player *player);
 void			raycast_aff_floor(t_env *e, int nb_cast, int start);
 void			raycast_aff_sky(t_env *e, int nb_cast, int end);
-void			raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y);
+void			raycast_aff_basic(t_env *e, int nb_cast, int start_y, int end_y, t_ray *ray);
 void			raycast_aff_tex(t_env *e, int nb_cast,
 					int start_y, float len_pp, t_ray *ray);
 
