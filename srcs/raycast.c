@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/21 23:38:58 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/22 17:11:28 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,6 @@ static void		raycast_dist_wall(t_ray *ray)
 		ray->dist_wall = (ray->pos_map.x - ray->start.x +
 							(1 - ray->step_x) / 2) / ray->dir.x; //1 - truck pour avant ou aprés la case
 																//si pas div alors, tout droit
-	if (ray->x_screen == 600)
-	{
-	printf("%f vers %f\n", (ray->pos_map.x - ray->start.x +
-						(1 - ray->step_x) / 2),
-						(ray->pos_map.x - ray->start.x +
-											(1 - ray->step_x) / 2) / ray->dir.x);
-											printf("RD %f %f\n", ray->dir.x, ray->dir.y);
-										}
 	}
 	else
 		ray->dist_wall = (ray->pos_map.y - ray->start.y +
