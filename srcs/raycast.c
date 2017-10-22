@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/15 14:53:16 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/22 17:11:28 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/22 17:41:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,12 @@ static int		raycast_hit(t_ray *ray)
 static void		raycast_dist_wall(t_ray *ray)
 {
 	if (ray->side == 'x')
-	{
 		ray->dist_wall = (ray->pos_map.x - ray->start.x +
-							(1 - ray->step_x) / 2) / ray->dir.x; //1 - truck pour avant ou aprés la case
-																//si pas div alors, tout droit
-	}
+							(1 - ray->step_x) / 2) / ray->dir.x;
 	else
 		ray->dist_wall = (ray->pos_map.y - ray->start.y +
 							(1 - ray->step_y) / 2) / ray->dir.y;
 	ray->dist_wall = fabs(ray->dist_wall);
-/*	if (ray->side == 'x')
-		ray->dist_wall = sqrt(pow(ray->pos_map.x - ray->start.x + (1 - ray->step_x) / 2, 2) + pow(ray->pos_map.y - ray->start.y, 2));
-	else
-		ray->dist_wall = sqrt(pow(ray->pos_map.x - ray->start.x, 2) + pow(ray->pos_map.y - ray->start.y + (1 - ray->step_y) / 2, 2));*/
 	if (ray->side == 'x')
 		ray->percent_wall = ray->start.y + ray->dist_wall * ray->dir.y;
 	else
