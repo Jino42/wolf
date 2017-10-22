@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 15:48:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/21 23:15:17 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/22 18:04:17 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../libft/includes/libft.h"
 # include "../libmlxji/includes/mlxji.h"
 # include <pthread.h>
-# include <stdio.h>//////////////////
 # include "mlx.h"
 # include <math.h>
 # include <sys/types.h>

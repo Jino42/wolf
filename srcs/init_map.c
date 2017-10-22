@@ -6,7 +6,7 @@
 /*   By: ntoniolo <ntoniolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 22:49:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/10/20 16:05:51 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/10/22 18:10:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static int		verif_nb_cases(t_env *e)
 		i += ft_strlen(e->map.map[y]);
 		y++;
 	}
-	ft_printf("%i\n", i);
 	if (i > 700)
 		return (end_of_program(e, "Nombre de case trop elevé\n"));
 	return (1);
@@ -97,9 +96,11 @@ int				init_map(t_env *e, char *path_map)
 	int		fd;
 	int		ret;
 	char	*line;
+	int		incr;
 
 	fd = open(path_map, O_RDONLY);
 	line = NULL;
+	incr = 0;
 	if (!fd)
 		return (ft_ret_error("Erreur de fichier\n"));
 	if (!(e->map.map = ft_memalloc(sizeof(char **) * SIZE_REALLOC_MAP)))
@@ -107,10 +108,9 @@ int				init_map(t_env *e, char *path_map)
 	while ((ret = get_next_line(fd, &line)) == 1)
 	{
 		if (line)
-		{
-			if (!add_line(e, &line))
+			if (incr > 2000 || !add_line(e, &line))
 				return (end_of_program(e, "ERROR\n"));
-		}
+		incr++;
 	}
 	if (ret == -1)
 		return (end_of_program(e, "Erreur de fichier\n"));

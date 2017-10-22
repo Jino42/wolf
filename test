@@ -1,2 +1,0 @@
-cisence [2:45 AM] 
-astuce : avant de rendre un wolf3d, testez avec des \c pour le parse (genre echo "1 0 1 0 1 1\c" > test && ./wolf3d test) et fichier vide, je vois bcp de wolf crasher sur ça. et aussi des emoji (codés sur 4 octets)11∑
